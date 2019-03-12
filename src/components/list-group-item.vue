@@ -17,6 +17,7 @@ export default {
     disabled: Boolean,
     readonly: Boolean,
     isLink: Boolean,
+    href:{},
     isRouterLink: Boolean,
     routerLinkActive: Boolean,
     routerLinkExact: Boolean,
@@ -37,7 +38,7 @@ export default {
     if (!this.disabled) {
 
       if (this.isLink) {
-        tag = 'button'
+        tag = this.href ? 'a':'button'
         propsObject.on = { click: (e) => { self.$emit('click', e) } }
       }
       if (this.isRouterLink && this.to) {
