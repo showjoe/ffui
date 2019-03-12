@@ -1,9 +1,16 @@
 {
-  "name": "ffui",
+  "name": "@formfactory/ffui",
   "version": "0.1.0",
   "private": true,
-  "main":"./dist/ffui.common.js",
-  "module":"./dist/ffui.umd.js",
+  "main": "./dist/ffui.common.js",
+  "module": "./dist/ffui.umd.js",
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
