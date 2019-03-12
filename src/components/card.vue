@@ -21,28 +21,18 @@ export default {
     title: {
       type: String,
       default: '',
-      gui: { tag: 'textbox' }
     },
     subtitle: {
       type: String,
       default: '',
-      gui: { tag: 'textbox' }
     },
-    head: {
-      type: Boolean,
-      default: false,
-      gui: { tag: 'checkbox' }
-    },
+    head: Boolean,
     body: {
       type: Boolean,
       default: true,
-      gui: { tag: 'checkbox' }
     },
-    foot: {
-      type: Boolean,
-      default: false,
-      gui: { tag: 'checkbox' }
-    },
+    foot: Boolean,
+    imgOverlay: Boolean
   },
   render(h) {
     var cardChildren = []
@@ -73,14 +63,17 @@ export default {
       var header = h('div', { class: 'card-header' }, headerChildren)
       cardChildren.push(header)
     }
+    if(this.$slots.outerTop) cardChildren.push(this.$slots.outerTop)
     if (this.body) {
       if (!this.head && this.title) { bodyChildren.push(h('h5', { class: 'card-title' }, [this.title])) }
       if (!this.head && this.subtitle) { bodyChildren.push(h('h6', { class: 'card-subtitle' }, [this.subtitle])) }
       bodyChildren.push(this.$slots.default)
-      cardChildren.push(h('div', { class: 'card-body' }, bodyChildren))
+      cardChildren.push(h('div', { class: [this.imgOverlay ? 'card-img-overlay':'card-body'] }, bodyChildren))
+      
     } else {
       cardChildren.push(this.$slots.default)
     }
+    if(this.$slots.outerBottom) cardChildren.push(this.$slots.outerBottom)
     if (this.foot) {
       var footer = h('div', { class: 'card-footer' }, this.$slots.footer)
       cardChildren.push(footer)

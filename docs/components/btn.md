@@ -8,13 +8,13 @@ Add `<btn>My First Button</btn>` to the template in the `*.vue` file you are wor
 ## block
 add the `block` prop to make the button fill the available width:
 
-@[code lang=js transclude={12-12}](@/docs/components/btn.md)
+@[code lang=vue transclude={12-12}](@/docs/components/btn.md)
 <btn block> Block Button </btn>
 
 ## btn-class
 Add a btn-class prop to set the styling.  Outline mode is on by default.
 
-@[code lang=js transclude={18-26}](@/docs/components/btn.md)
+@[code lang=vue transclude={18-26}](@/docs/components/btn.md)
 <btn btn-class="primary">Primary</btn>
 <btn btn-class="secondary">Secondary</btn>
 <btn btn-class="success">Success</btn>
@@ -27,7 +27,7 @@ Add a btn-class prop to set the styling.  Outline mode is on by default.
 
 Or to not use the outline mode
 
-@[code lang=js transclude={31-39}](@/docs/components/btn.md)
+@[code lang=vue transclude={31-39}](@/docs/components/btn.md)
 <btn :outline="false" btn-class="primary">Primary</btn>
 <btn :outline="false" btn-class="secondary">Secondary</btn>
 <btn :outline="false" btn-class="success">Success</btn>
@@ -41,7 +41,7 @@ Or to not use the outline mode
 ## btn-size
 Add a btn-class prop to set the styling
 
-@[code lang=js transclude={45-46}](@/docs/components/btn.md)
+@[code lang=vue transclude={45-46}](@/docs/components/btn.md)
 <btn size="sm"> Small Button </btn>
 <btn size="lg"> Large Button </btn>
 
@@ -50,7 +50,7 @@ Using v-model with individual buttons.  By default they will act as boolean 'che
 
 <small>`{{records}}`</small>
 
-@[code lang=js transclude={54-58}](@/docs/components/btn.md)
+@[code lang=vue transclude={54-58}](@/docs/components/btn.md)
 <btn v-model="records.input_1">Input 1</btn>
 <btn btn-class="secondary" v-model="records.input_2">Input 2</btn>
 <btn btn-class="info" v-model="records.input_3">Input 3</btn>
@@ -89,16 +89,16 @@ input            |        | Emits input event on value change
 
 <script>
 export default {
-	data () {
-      	return {
-      		records:{
-      			input_1:true,
-      			input_2:true,
-      			input_3:true,
-      			input_4:true,
-      			input_5:true,
-      		},
-      	}
-  	},
+      data() {
+          return {
+              records: {
+                  input_1: true,
+                  input_2: true,
+                  input_3: true,
+                  input_4: true,
+                  input_5: true,
+              },
+          }
+      },
 }
 </script>

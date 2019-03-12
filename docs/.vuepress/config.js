@@ -3,10 +3,8 @@ module.exports = {
   title: 'Form Factory Component Library',
   description: 'Vue.js Components using bootstrap 4 styling for use in form factory projects.',
   themeConfig: {
-    nav: [
-      { text: 'Home', link: 'introduction/guide' },
-      { text: 'Github', link: 'http://www.github.com' },
-    ],
+    repo: 'showjoe/ffui',
+    docsDir: 'docs',
     sidebar: [
       {
         title: 'Introduction',
@@ -19,11 +17,15 @@ module.exports = {
         title: 'Components',
         collapsable: false,
         children: [
+          'components/alert',
           'components/btn',
           'components/btn-group',
           'components/card',
+          'components/collapse',
+          'components/dropdown',
           'components/form-group',
           'components/input-group',
+          'components/list-group',
           'components/number',
           'components/row_and_column',
           'components/progress-bar',

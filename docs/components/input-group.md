@@ -1,4 +1,4 @@
-# Input Group
+# Input Groups
 Input groups work like this:
 ## prepend slot
 @[code lang=vue transclude={6-9}](@/docs/components/input-group.md)

@@ -34,10 +34,13 @@ export default {
       	}
   	},
   	methods:{
+      getRandomInt(max){
+        return Math.floor(Math.random() * Math.floor(max));
+      },
   		randomizeScore(){
   			var total = 10
-  			var valid = _.random(0, total)
-  			var invalid = _.random(0, total - valid)
+  			var valid = this.getRandomInt(total)
+  			var invalid = this.getRandomInt(total - valid)
   			this.records.valid = valid
   			this.records.invalid = invalid
   		}

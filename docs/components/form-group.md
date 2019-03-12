@@ -1,17 +1,20 @@
-# Form Group
+# Form Groups
+
 Form groups are used to wrap labels and form inputs (textboxes / buttons etc) 
 ## Basic Example
 Wrap a form input inside a form-group to display the label and input together
 
 Here is a sample records object containing two records
 
-@[code lang=js transclude={39-42}](@/docs/components/form-group.md)
+@[code lang=js transclude={48-51}](@/docs/components/form-group.md)
 
 Here are two sample dataitems objects 
 
-@[code lang=js transclude={43-58}](@/docs/components/form-group.md)
+@[code lang=js transclude={52-67}](@/docs/components/form-group.md)
 
-@[code lang=vue transclude={16-21}](@/docs/components/form-group.md)
+Use the following markup in your `.vue` file
+
+@[code lang=vue transclude={19-24}](@/docs/components/form-group.md)
 <template>
 <form-group :di="dataitems.MyDataitem1" cols="4|8">
 	<textbox slot-scope="{ di }" :di="di" v-model="records.MyDataitem1"/>
@@ -21,7 +24,9 @@ Here are two sample dataitems objects
 </form-group>
 </template>
 
-`records: {{records}}`
+<pre class="text-white">{{records}}</pre>
+
+
 ## Slots
 Name        | Description 
 :--------   | ----------- 

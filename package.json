@@ -2,6 +2,8 @@
   "name": "ffui",
   "version": "0.1.0",
   "private": true,
+  "main":"./dist/ffui.common.js",
+  "module":"./dist/ffui.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
