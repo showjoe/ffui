@@ -17,7 +17,7 @@ export default {
     disabled: Boolean,
     readonly: Boolean,
     isLink: Boolean,
-    href:{},
+    href: {},
     isRouterLink: Boolean,
     routerLinkActive: Boolean,
     routerLinkExact: Boolean,
@@ -29,7 +29,7 @@ export default {
     var propsObject = {
       class: [
         "list-group-item",
-        {"disabled":this.disabled},
+        { "disabled": this.disabled },
         { "list-group-item-action": !this.disabled && !this.readonly && this.isLink },
         { "active": this.active || this.isRouterLink && this.routerLinkActive || this.isRouterLink && this.routerLinkExact && this.routerLinkActive },
       ],
@@ -38,7 +38,12 @@ export default {
     if (!this.disabled) {
 
       if (this.isLink) {
-        tag = this.href ? 'a':'button'
+        if (this.href) {
+          tag = 'a'
+          propsObject.domProps = { href: this.href }
+        } else {
+          tag = 'button'
+        }
         propsObject.on = { click: (e) => { self.$emit('click', e) } }
       }
       if (this.isRouterLink && this.to) {
@@ -58,7 +63,7 @@ export default {
       var value = this.falseValue
       if (this.value == this.trueValue) value = this.falseValue
       else value = this.trueValue
-      
+
       if (this._inGroup) this.$parent.val = value
       this.$emit('input', value)
     }
@@ -67,5 +72,4 @@ export default {
     active() { return this.value == this.trueValue }
   },
 }
-
 </script>
