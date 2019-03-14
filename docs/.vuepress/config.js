@@ -2,6 +2,14 @@ module.exports = {
   base: '/ffui/',
   title: 'Form Factory Component Library',
   description: 'Vue.js Components using bootstrap 4 styling for use in form factory projects.',
+  plugins:[
+    require('moment')
+  ],
+  head: [
+    ['script', { src: `http://code.jquery.com/jquery-3.3.1.min.js` }],
+    // ['script', { src: `tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.js` }],
+    ['link', { rel: 'icon', href: 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' }]
+  ],
   themeConfig: {
     repo: 'showjoe/ffui',
     docsDir: 'docs',
@@ -22,6 +30,7 @@ module.exports = {
           'components/btn-group',
           'components/card',
           'components/collapse',
+          'components/datepicker',
           'components/dropdown',
           'components/form-group',
           'components/input-group',

@@ -1,5 +1,4 @@
 import * as components from './components'
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const install = (Vue, options = {}) => {
   for (let key in components) {

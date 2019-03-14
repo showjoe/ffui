@@ -4,6 +4,7 @@ import btnGroup from './btn-group.vue'
 import card from './card.vue'
 import collapse from './collapse.vue'
 import column from './column.vue'
+import datepicker from './datepicker.vue'
 import dropdown from './dropdown.vue'
 import formGroup from './form-group.vue'
 import inputGroup from './input-group.vue'
@@ -21,6 +22,7 @@ export {
     card,
     collapse,
     column,
+    datepicker,
     dropdown,
     formGroup,
     inputGroup,

@@ -97,6 +97,18 @@ Use the readonly prop to stop triggering of click events.
 </list-group>
 </template>
 
+## href
+Use a href prop along with is-link to use as a traditional link
+
+@[code lang=vue transclude={106-109}](@/docs/components/list-group.md)
+
+<template>
+<list-group>
+	<list-group-item is-link href="http://www.google.com" >Google</list-group-item>
+	<list-group-item is-link href="http://www.facebook.com" >Facebook</list-group-item>
+</list-group>
+</template>
+
 
 ## list-group-item props
 Name        | Type       | Description 																														| Default
