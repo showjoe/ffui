@@ -2,6 +2,7 @@ import alert from './alert.vue'
 import btn from './btn.vue'
 import btnGroup from './btn-group.vue'
 import card from './card.vue'
+import checkbox from './checkbox.vue'
 import collapse from './collapse.vue'
 import column from './column.vue'
 import datepicker from './datepicker.vue'
@@ -20,6 +21,7 @@ export {
     btn,
     btnGroup,
     card,
+    checkbox,
     collapse,
     column,
     datepicker,

@@ -29,6 +29,7 @@ module.exports = {
           'components/btn',
           'components/btn-group',
           'components/card',
+          'components/checkbox',
           'components/collapse',
           'components/datepicker',
           'components/dropdown',

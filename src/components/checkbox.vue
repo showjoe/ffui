@@ -1,21 +1,23 @@
 <template>
-<div :class="['checkbox',{'disabled':disabled}]">
-  <fa :icon="isChecked ? 'check-square':'square'" @click="toggleCheck" />
-  <input type="checkbox" class="d-none" :id="id" :value="checked" :checked="isChecked" @change="update" :disabled="disabled">
-  <label :for="id">{{label}}</label>
-</div>
+  <div :class="['checkbox',{'checked':isChecked},{'disabled':disabled}]">
+    <fa size="lg" :icon="isChecked ? 'check-square':'square'" @click="toggleCheck" class="align-middle" />
+    <input type="checkbox" class="d-none" :id="id" :value="checked" :checked="isChecked" @change="update" :disabled="disabled">
+    <label :for="id">
+      <slot>{{label}}</slot>
+    </label>
+  </div>
 </template>
 <script>
 export default {
-  name:'checkbox',
+  name: 'checkbox',
   props: {
-    label:{},
-    value:{},
-    trueValue:{
-      default:true
+    label: {},
+    value: {},
+    trueValue: {
+      default: true
     },
-    falseValue:{
-      default:false
+    falseValue: {
+      default: false
     },
     disabled: {
       type: Boolean,
@@ -26,25 +28,25 @@ export default {
       default: false
     }
   },
-  computed:{
-    id () {
+  computed: {
+    id() {
       return this._uid
     },
-    isChecked () {
+    isChecked() {
       // if(this.value != this.trueValue){ this.$set('record', this.falseValue); }
       return this.value == this.trueValue
     },
   },
-  data () {
+  data() {
     return {
       checked: (this.value == this.trueValue)
     }
   },
-  methods:{
-    update () {
-      this.$emit('input',(this.value == this.trueValue) ? this.falseValue : this.trueValue)
+  methods: {
+    update() {
+      this.$emit('input', (this.value == this.trueValue) ? this.falseValue : this.trueValue)
     },
-    toggleCheck () {
+    toggleCheck() {
       if (this.disabled || this.readonly) return false
       var value = this.checked ? this.falseValue : this.trueValue
       this.checked = value
@@ -53,3 +55,26 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.checkbox {
+  .checkbox-icon {
+    display: inline-block;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    background-image: url("../assets/icons/square.svg") !important;
+  }
+  &.disabled {
+    color:grey;
+  }
+
+}
+.checkbox.checked {
+  .checkbox-icon {
+    background-image: url("../assets/icons/check-square.svg") !important;
+  }
+}
+
+</style>
