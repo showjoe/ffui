@@ -3,12 +3,11 @@ module.exports = {
   title: 'Form Factory Component Library',
   description: 'Vue.js Components using bootstrap 4 styling for use in form factory projects.',
   plugins:[
-    require('moment')
+    require('jquery'),require('moment'),
   ],
   head: [
     ['script', { src: `http://code.jquery.com/jquery-3.3.1.min.js` }],
-    // ['script', { src: `tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.js` }],
-    ['link', { rel: 'icon', href: 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' }]
+    ['link', { rel: 'icon', href: '/node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' }]
   ],
   themeConfig: {
     repo: 'showjoe/ffui',

@@ -15,8 +15,9 @@
 </template>
 <script>
 import date_mixin from '../mixins/date'
-const $ = require('jquery')
-const moment = require('moment')
+import $ from 'jquery'
+import moment from 'moment'
+
 export default {
   name: 'datepicker',
   mixins: [date_mixin],
@@ -33,9 +34,9 @@ export default {
       type: String,
       default: function() {
         var props = this.$options.propsData
-        if(props.mask) return props.mask
-        if(props.type && props.type=='time') return '99:99'
-        if(props.type && props.type=='datetime') return '(99|--)/(99|--)/9999 99:99'
+        if (props.mask) return props.mask
+        if (props.type && props.type == 'time') return '99:99'
+        if (props.type && props.type == 'datetime') return '(99|--)/(99|--)/9999 99:99'
         return '(99|--)/(99|--)/9999'
       }
     },
@@ -43,8 +44,8 @@ export default {
       type: String,
       default: function() {
         var props = this.$options.propsData
-        if(props.type && props.type=='time') return 'HH:MM'
-        if(props.type && props.type=='datetime') return 'DD/MM/YYYY HH:MM'
+        if (props.type && props.type == 'time') return 'HH:MM'
+        if (props.type && props.type == 'datetime') return 'DD/MM/YYYY HH:MM'
         return 'DD/MM/YYYY'
       }
     },
@@ -92,11 +93,11 @@ export default {
   },
 
   mounted() {
-    this.$nextTick(()=>{
-      this.datepicker = $(this.$refs.datepicker)
-      this.createDatePicker()
+    window.moment = require('moment');
+    window.$ = window.jQuery = $;
+    require('tempusdominus-bootstrap-4');
 
-    })
+    this.createDatePicker()
   },
   destroyed() {
     this.destroyDatePicker()
@@ -118,11 +119,12 @@ export default {
   computed: {
     id() {
       if (this.di) return this.di.name
-        return false
+      return false
     },
   },
   methods: {
     createDatePicker() {
+      this.datepicker = $(this.$refs.datepicker);
       var config = $.extend({}, this.$options.datetimePickerConfig)
       // var config = _.clone(this.$options.datetimePickerConfig)
       this.format = this.$options.formats[this.type];
