@@ -1,0 +1,682 @@
+{
+  "name": "DeathCause",
+  "section": null,
+  "label": "Cause of death:",
+  "type": "integer",
+  "default": null,
+  "lookup_type": "\\FormFactory\\Questionnaire\\TableLookup",
+  "json": null,
+  "lookup":
+  {
+    "id": 3,
+    "name": "DeathCauses",
+    "model": "App\\DeathCause",
+    "label": "label",
+    "value": "id",
+    "group": "category",
+    "created_at": "2019-03-20 14:53:16",
+    "updated_at": "2019-03-20 14:53:16",
+    "items":
+    {
+      "": [
+      {
+        "id": 1,
+        "ctcae": null,
+        "rr_code": null,
+        "category": null,
+        "label": "Unknown / Data unavailable",
+        "rivas": null,
+        "value": 1
+      },
+      {
+        "id": 2,
+        "ctcae": null,
+        "rr_code": 0,
+        "category": null,
+        "label": "Cause of death uncertain / not determined",
+        "rivas": null,
+        "value": 2
+      },
+      {
+        "id": 3,
+        "ctcae": null,
+        "rr_code": 79,
+        "category": null,
+        "label": "Multi-system failure",
+        "rivas": null,
+        "value": 3
+      }],
+      "Cardiovascular": [
+      {
+        "id": 4,
+        "ctcae": null,
+        "rr_code": 11,
+        "category": "Cardiovascular",
+        "label": "Myocardial ischaemia and infarction",
+        "rivas": 1,
+        "value": 4
+      },
+      {
+        "id": 5,
+        "ctcae": null,
+        "rr_code": 13,
+        "category": "Cardiovascular",
+        "label": "Haemorrhagic pericarditis",
+        "rivas": null,
+        "value": 5
+      },
+      {
+        "id": 6,
+        "ctcae": null,
+        "rr_code": 14,
+        "category": "Cardiovascular",
+        "label": "Other causes of cardiac failure",
+        "rivas": 1,
+        "value": 6
+      },
+      {
+        "id": 7,
+        "ctcae": null,
+        "rr_code": 15,
+        "category": "Cardiovascular",
+        "label": "Cardiac arrest/sudden death; other cause or unknown",
+        "rivas": 1,
+        "value": 7
+      },
+      {
+        "id": 8,
+        "ctcae": null,
+        "rr_code": 16,
+        "category": "Cardiovascular",
+        "label": "Hypertensive cardiac failure",
+        "rivas": null,
+        "value": 8
+      },
+      {
+        "id": 9,
+        "ctcae": null,
+        "rr_code": 103,
+        "category": "Cardiovascular",
+        "label": "Peripheral vascular disease",
+        "rivas": null,
+        "value": 9
+      },
+      {
+        "id": 10,
+        "ctcae": null,
+        "rr_code": 106,
+        "category": "Cardiovascular",
+        "label": "Ruptured AAA",
+        "rivas": null,
+        "value": 10
+      },
+      {
+        "id": 11,
+        "ctcae": 10003658,
+        "rr_code": null,
+        "category": "Cardiovascular",
+        "label": "Arrhythmia ",
+        "rivas": null,
+        "value": 11
+      }],
+      "Gastrointestinal disorders": [
+      {
+        "id": 12,
+        "ctcae": null,
+        "rr_code": 62,
+        "category": "Gastrointestinal disorders",
+        "label": "Pancreatitis",
+        "rivas": null,
+        "value": 12
+      },
+      {
+        "id": 13,
+        "ctcae": null,
+        "rr_code": 105,
+        "category": "Gastrointestinal disorders",
+        "label": "Ischaemic bowel",
+        "rivas": null,
+        "value": 13
+      },
+      {
+        "id": 14,
+        "ctcae": null,
+        "rr_code": 70,
+        "category": "Gastrointestinal disorders",
+        "label": "Peritonitis (sclerosing, with peritoneal dialysis)",
+        "rivas": null,
+        "value": 14
+      },
+      {
+        "id": 15,
+        "ctcae": null,
+        "rr_code": 71,
+        "category": "Gastrointestinal disorders",
+        "label": "Perforation of peptic ulcer",
+        "rivas": null,
+        "value": 15
+      },
+      {
+        "id": 16,
+        "ctcae": null,
+        "rr_code": 72,
+        "category": "Gastrointestinal disorders",
+        "label": "Perforation of colon",
+        "rivas": null,
+        "value": 16
+      },
+      {
+        "id": 17,
+        "ctcae": null,
+        "rr_code": 100,
+        "category": "Gastrointestinal disorders",
+        "label": "Peritonitis (bacterial, with peritoneal dialysis)",
+        "rivas": null,
+        "value": 17
+      },
+      {
+        "id": 18,
+        "ctcae": null,
+        "rr_code": 101,
+        "category": "Gastrointestinal disorders",
+        "label": "Peritonitis (fungal, with peritoneal dialysis)",
+        "rivas": null,
+        "value": 18
+      },
+      {
+        "id": 19,
+        "ctcae": null,
+        "rr_code": 102,
+        "category": "Gastrointestinal disorders",
+        "label": "Peritonitis (due to other cause, with peritoneal dialysis)",
+        "rivas": null,
+        "value": 19
+      },
+      {
+        "id": 20,
+        "ctcae": null,
+        "rr_code": 39,
+        "category": "Gastrointestinal disorders",
+        "label": "Peritonitis (all causes except for Peritoneal Dialysis)",
+        "rivas": null,
+        "value": 20
+      },
+      {
+        "id": 21,
+        "ctcae": null,
+        "rr_code": 29,
+        "category": "Gastrointestinal disorders",
+        "label": "Mesenteric infarction",
+        "rivas": null,
+        "value": 21
+      },
+      {
+        "id": 22,
+        "ctcae": null,
+        "rr_code": 23,
+        "category": "Gastrointestinal disorders",
+        "label": "Gastro-intestinal haemorrhage (digestive)",
+        "rivas": null,
+        "value": 22
+      }],
+      "Haematological": [
+      {
+        "id": 23,
+        "ctcae": null,
+        "rr_code": 63,
+        "category": "Haematological",
+        "label": "Bone marrow depression (Aplasia)",
+        "rivas": null,
+        "value": 23
+      }],
+      "Hepatobiliary disorders": [
+      {
+        "id": 24,
+        "ctcae": null,
+        "rr_code": 41,
+        "category": "Hepatobiliary disorders",
+        "label": "Liver disease due to hepatitis B virus",
+        "rivas": null,
+        "value": 24
+      },
+      {
+        "id": 25,
+        "ctcae": null,
+        "rr_code": 42,
+        "category": "Hepatobiliary disorders",
+        "label": "Liver disease due to other viral hepatitis",
+        "rivas": null,
+        "value": 25
+      },
+      {
+        "id": 26,
+        "ctcae": null,
+        "rr_code": 43,
+        "category": "Hepatobiliary disorders",
+        "label": "Liver disease due to drug toxicity",
+        "rivas": null,
+        "value": 26
+      },
+      {
+        "id": 27,
+        "ctcae": null,
+        "rr_code": 44,
+        "category": "Hepatobiliary disorders",
+        "label": "Cirrhosis - not viral (alcoholic or other cause)",
+        "rivas": null,
+        "value": 27
+      },
+      {
+        "id": 28,
+        "ctcae": null,
+        "rr_code": 45,
+        "category": "Hepatobiliary disorders",
+        "label": "Cystic liver disease",
+        "rivas": null,
+        "value": 28
+      },
+      {
+        "id": 29,
+        "ctcae": null,
+        "rr_code": 46,
+        "category": "Hepatobiliary disorders",
+        "label": "Liver failure - cause unknown",
+        "rivas": null,
+        "value": 29
+      }],
+      "Infection": [
+      {
+        "id": 30,
+        "ctcae": null,
+        "rr_code": 31,
+        "category": "Infection",
+        "label": "Pulmonary infection (bacterial)",
+        "rivas": null,
+        "value": 30
+      },
+      {
+        "id": 31,
+        "ctcae": null,
+        "rr_code": 32,
+        "category": "Infection",
+        "label": "Pulmonary infection (viral)",
+        "rivas": null,
+        "value": 31
+      },
+      {
+        "id": 32,
+        "ctcae": null,
+        "rr_code": 33,
+        "category": "Infection",
+        "label": "Pulmonary infection (fungal or protozoal; parasitic)",
+        "rivas": null,
+        "value": 32
+      },
+      {
+        "id": 33,
+        "ctcae": null,
+        "rr_code": 34,
+        "category": "Infection",
+        "label": "Infections elsewhere except viral hepatitis",
+        "rivas": null,
+        "value": 33
+      },
+      {
+        "id": 34,
+        "ctcae": null,
+        "rr_code": 35,
+        "category": "Infection",
+        "label": "Septicaemia",
+        "rivas": null,
+        "value": 34
+      },
+      {
+        "id": 35,
+        "ctcae": null,
+        "rr_code": 36,
+        "category": "Infection",
+        "label": "Tuberculosis (lung)",
+        "rivas": null,
+        "value": 35
+      },
+      {
+        "id": 36,
+        "ctcae": null,
+        "rr_code": 37,
+        "category": "Infection",
+        "label": "Tuberculosis (elsewhere)",
+        "rivas": null,
+        "value": 36
+      },
+      {
+        "id": 37,
+        "ctcae": null,
+        "rr_code": 38,
+        "category": "Infection",
+        "label": "Generalized viral infection",
+        "rivas": null,
+        "value": 37
+      },
+      {
+        "id": 38,
+        "ctcae": null,
+        "rr_code": 109,
+        "category": "Infection",
+        "label": "C Diff colitis",
+        "rivas": null,
+        "value": 38
+      },
+      {
+        "id": 39,
+        "ctcae": null,
+        "rr_code": 110,
+        "category": "Infection",
+        "label": "Line related sepsis",
+        "rivas": null,
+        "value": 39
+      },
+      {
+        "id": 40,
+        "ctcae": 10014678,
+        "rr_code": null,
+        "category": "Infection",
+        "label": "Endocarditis",
+        "rivas": null,
+        "value": 40
+      },
+      {
+        "id": 41,
+        "ctcae": 10023216,
+        "rr_code": null,
+        "category": "Infection",
+        "label": "Joint infection",
+        "rivas": null,
+        "value": 41
+      }],
+      "Malignancy": [
+      {
+        "id": 42,
+        "ctcae": null,
+        "rr_code": 66,
+        "category": "Malignancy",
+        "label": "Malignant disease in patient treated by immunosuppressive therapy",
+        "rivas": 1,
+        "value": 42
+      },
+      {
+        "id": 43,
+        "ctcae": null,
+        "rr_code": 67,
+        "category": "Malignancy",
+        "label": "Malignant disease: solid tumors (except those treated by immunosuppressive therapy)",
+        "rivas": 1,
+        "value": 43
+      },
+      {
+        "id": 44,
+        "ctcae": null,
+        "rr_code": 68,
+        "category": "Malignancy",
+        "label": "Malignant disease: lymphoproliferative disorders (except those treated by immunosuppressive therapy)",
+        "rivas": 1,
+        "value": 44
+      },
+      {
+        "id": 45,
+        "ctcae": null,
+        "rr_code": null,
+        "category": "Malignancy",
+        "label": "Myeloma",
+        "rivas": null,
+        "value": 45
+      },
+      {
+        "id": 46,
+        "ctcae": null,
+        "rr_code": null,
+        "category": "Malignancy",
+        "label": "Leukaemia",
+        "rivas": null,
+        "value": 46
+      }],
+      "Neurology": [
+      {
+        "id": 47,
+        "ctcae": null,
+        "rr_code": 22,
+        "category": "Neurology",
+        "label": "Cerebro-vascular accident, other cause or unspecified",
+        "rivas": null,
+        "value": 47
+      },
+      {
+        "id": 48,
+        "ctcae": null,
+        "rr_code": 26,
+        "category": "Neurology",
+        "label": "Cerebral haemorrhage from ruptured vascular aneurysm (not CVA other cause or GI haemorrhage)",
+        "rivas": null,
+        "value": 48
+      },
+      {
+        "id": 49,
+        "ctcae": null,
+        "rr_code": null,
+        "category": "Neurology",
+        "label": "Epilepsy (status eiplepticus)",
+        "rivas": null,
+        "value": 49
+      }],
+      "Renal": [
+      {
+        "id": 50,
+        "ctcae": null,
+        "rr_code": 51,
+        "category": "Renal",
+        "label": "End stage renal failure - patient refused further treatment ",
+        "rivas": null,
+        "value": 50
+      },
+      {
+        "id": 51,
+        "ctcae": null,
+        "rr_code": 53,
+        "category": "Renal",
+        "label": "End stage renal failure- treatment ceased for any other reason",
+        "rivas": null,
+        "value": 51
+      },
+      {
+        "id": 52,
+        "ctcae": null,
+        "rr_code": 54,
+        "category": "Renal",
+        "label": "End stage renal falure - treatment withdrawn for medical reasons",
+        "rivas": null,
+        "value": 52
+      },
+      {
+        "id": 53,
+        "ctcae": null,
+        "rr_code": 61,
+        "category": "Renal",
+        "label": "Ureamia caused by graft failure",
+        "rivas": null,
+        "value": 53
+      },
+      {
+        "id": 54,
+        "ctcae": null,
+        "rr_code": 81,
+        "category": "Renal",
+        "label": "Accident related to end stage renal failure treatment (not haemorrhage  from vascular access or dialysis circuit)",
+        "rivas": null,
+        "value": 54
+      },
+      {
+        "id": 55,
+        "ctcae": null,
+        "rr_code": 107,
+        "category": "Renal",
+        "label": "Advanced CKD not on dialysis(conservative management)",
+        "rivas": null,
+        "value": 55
+      },
+      {
+        "id": 56,
+        "ctcae": null,
+        "rr_code": 108,
+        "category": "Renal",
+        "label": "Acute kidney injury",
+        "rivas": null,
+        "value": 56
+      },
+      {
+        "id": 57,
+        "ctcae": null,
+        "rr_code": 104,
+        "category": "Renal",
+        "label": "Calciphylaxis",
+        "rivas": null,
+        "value": 57
+      },
+      {
+        "id": 58,
+        "ctcae": null,
+        "rr_code": 24,
+        "category": "Renal",
+        "label": "Haemorrhage from graft site",
+        "rivas": null,
+        "value": 58
+      },
+      {
+        "id": 59,
+        "ctcae": null,
+        "rr_code": 25,
+        "category": "Renal",
+        "label": "Haemorrhage from vascular access or dialysis circuit",
+        "rivas": null,
+        "value": 59
+      }],
+      "Respiratory": [
+      {
+        "id": 60,
+        "ctcae": null,
+        "rr_code": 73,
+        "category": "Respiratory",
+        "label": "Chronic Obstructive Pulmonary Disorder",
+        "rivas": 1,
+        "value": 60
+      },
+      {
+        "id": 61,
+        "ctcae": null,
+        "rr_code": 18,
+        "category": "Respiratory",
+        "label": "Fluid overload/pulmonary oedema",
+        "rivas": null,
+        "value": 61
+      },
+      {
+        "id": 62,
+        "ctcae": null,
+        "rr_code": 19,
+        "category": "Respiratory",
+        "label": "Elevated PVR/Pulmonary hypertension",
+        "rivas": null,
+        "value": 62
+      },
+      {
+        "id": 63,
+        "ctcae": null,
+        "rr_code": 21,
+        "category": "Respiratory",
+        "label": "Pulmonary embolus",
+        "rivas": null,
+        "value": 63
+      },
+      {
+        "id": 64,
+        "ctcae": null,
+        "rr_code": null,
+        "category": "Respiratory",
+        "label": "Pulmonary haemorrhage",
+        "rivas": null,
+        "value": 64
+      }],
+      "Other cause": [
+      {
+        "id": 65,
+        "ctcae": null,
+        "rr_code": 82,
+        "category": "Other cause",
+        "label": "Accident unrelated to ERF treatment",
+        "rivas": null,
+        "value": 65
+      },
+      {
+        "id": 66,
+        "ctcae": null,
+        "rr_code": 52,
+        "category": "Other cause",
+        "label": "Suicide",
+        "rivas": null,
+        "value": 66
+      },
+      {
+        "id": 67,
+        "ctcae": null,
+        "rr_code": 64,
+        "category": "Other cause",
+        "label": "Cachexia",
+        "rivas": null,
+        "value": 67
+      },
+      {
+        "id": 68,
+        "ctcae": null,
+        "rr_code": 69,
+        "category": "Other cause",
+        "label": "Dementia",
+        "rivas": null,
+        "value": 68
+      },
+      {
+        "id": 69,
+        "ctcae": null,
+        "rr_code": 28,
+        "category": "Other cause",
+        "label": "Other haemorrhage, other site and/or other cause ",
+        "rivas": null,
+        "value": 69
+      },
+      {
+        "id": 70,
+        "ctcae": null,
+        "rr_code": 17,
+        "category": "Other cause",
+        "label": "Hypokalaemia",
+        "rivas": null,
+        "value": 70
+      },
+      {
+        "id": 71,
+        "ctcae": null,
+        "rr_code": 12,
+        "category": "Other cause",
+        "label": "Hyperkalaemia",
+        "rivas": null,
+        "value": 71
+      },
+      {
+        "id": 72,
+        "ctcae": null,
+        "rr_code": 27,
+        "category": "Other cause",
+        "label": "Haemorrhage from surgery (except digestive haemorrhage)",
+        "rivas": null,
+        "value": 72
+      }]
+    }
+  }
+}

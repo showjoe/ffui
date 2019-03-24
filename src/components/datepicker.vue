@@ -15,9 +15,10 @@
 </template>
 <script>
 import date_mixin from '../mixins/date'
-import $ from 'jquery'
-import moment from 'moment'
-
+if (typeof window !== 'undefined') {
+  const $ = require('jquery')
+  window.$ = window.jQuery = $;
+}
 export default {
   name: 'datepicker',
   mixins: [date_mixin],
@@ -93,11 +94,12 @@ export default {
   },
 
   mounted() {
-    window.moment = require('moment');
-    window.$ = window.jQuery = $;
-    require('tempusdominus-bootstrap-4');
-
-    this.createDatePicker()
+    import('jquery').then(module => {
+      window.$ = window.jQuery = module.default;
+      window.moment = require('moment');
+      require('tempusdominus-bootstrap-4');
+      this.createDatePicker()
+    })
   },
   destroyed() {
     this.destroyDatePicker()
@@ -124,24 +126,26 @@ export default {
   },
   methods: {
     createDatePicker() {
-      this.datepicker = $(this.$refs.datepicker);
-      var config = $.extend({}, this.$options.datetimePickerConfig)
-      // var config = _.clone(this.$options.datetimePickerConfig)
-      this.format = this.$options.formats[this.type];
-      config.placeholder = this.placeholder
-      config.format = this.format
-      config.viewMode = this.viewMode
-      config = this.setupMinMaxDates(config)
-      this.datepicker.datetimepicker(config)
-      if (this.type == 'time') {
-        this.val = this.value
-        this.datepicker.datetimepicker()
-      } else {
-        this.val = this.formatDateForDisplay(this.value)
+      if (typeof $ !== 'undefined') {
+        this.datepicker = $(this.$refs.datepicker);
+        var config = $.extend({}, this.$options.datetimePickerConfig)
+        // var config = _.clone(this.$options.datetimePickerConfig)
+        this.format = this.$options.formats[this.type];
+        config.placeholder = this.placeholder
+        config.format = this.format
+        config.viewMode = this.viewMode
+        config = this.setupMinMaxDates(config)
         this.datepicker.datetimepicker(config)
+        if (this.type == 'time') {
+          this.val = this.value
+          this.datepicker.datetimepicker()
+        } else {
+          this.val = this.formatDateForDisplay(this.value)
+          this.datepicker.datetimepicker(config)
+        }
+        this.setDate(this.val)
+        this.datepicker.on('change.datetimepicker', this.datePickerChange);
       }
-      this.setDate(this.val)
-      this.datepicker.on('change.datetimepicker', this.datePickerChange);
     },
     destroyDatePicker() {
       $(this.$refs.datepicker).datetimepicker('destroy');

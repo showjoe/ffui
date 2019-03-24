@@ -50,7 +50,11 @@ export default {
     var children = [];
     var propObj = {
       class: this.classObj,
-      domProps: { type: 'button' },
+      domProps: {
+        type: 'button',
+        disabled: this.disabled,
+        readonly: this.readonly
+      },
       on: { click: this.btnClick }
     }
     if (this.type == 'checkbox' || this.type == 'radio') {
@@ -111,3 +115,10 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .btn.disabled,.btn[disabled]{
+    &.active{
+      background-color:rgba(112, 127, 143, 0.4);
+    }
+  }
+</style>

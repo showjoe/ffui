@@ -8,30 +8,26 @@ import "tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.css";
 
 @[code lang=vue transclude={10-10}](@/docs/components/datepicker.md)
 <datepicker v-model="records.date1" />
-
-`{{$data}}`
+<pre class="text-white">date1:{{records.date1?records.date1:'null'}}</pre>
 
 ## Other Sizes
-@[code lang=vue transclude={20-20}](@/docs/components/datepicker.md)
-
-or
-
-@[code lang=vue transclude={22-22}](@/docs/components/datepicker.md)
+@[code lang=vue transclude={15-17}](@/docs/components/datepicker.md)
 <datepicker size="sm" v-model="records.date1"/>
 or
 <datepicker size="lg" v-model="records.date1"/>
 
-`{{$data}}`
+<pre class="text-white">date1:{{records.date1?records.date1:'null'}}</pre>
+
 
 ## Types
 date (default) or time or datetime can be used to customize the datepicker
 
 ### time
-@[code lang=vue transclude={31-31}](@/docs/components/datepicker.md)
+@[code lang=vue transclude={27-27}](@/docs/components/datepicker.md)
 <datepicker type="time" v-model="records.time1"/>
 
 ### datetime
-@[code lang=vue transclude={35-35}](@/docs/components/datepicker.md)
+@[code lang=vue transclude={31-31}](@/docs/components/datepicker.md)
 <datepicker type="datetime" v-model="records.datetime1"/>
 
 

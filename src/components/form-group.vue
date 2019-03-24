@@ -1,17 +1,3 @@
-<!-- <template>
-<div :class="['form-group row',hasError ? 'is-invalid':'is-valid']">
-    <slot v-if="!di"></slot>
-    <div :class="colWidths(0)">
-        <label class="col-form-label" :for="di.name" v-html="di.label"></label>
-        <slot name="under_label"></slot>
-    </div>
-    <div :class="colWidths(1)">
-        <slot :di="di"></slot>
-        <div class="invalid-feedback" v-if="hasError">{{error[0]}}</div>
-    </div>
-    <slot name="under_row"></slot>
-</div>
-</template> -->
 <script>
 // import { mapActions, mapState, mapGetters } from 'vuex'
 export default {
@@ -23,46 +9,44 @@ export default {
     hideLabel: Boolean,
     hideError: Boolean,
     cols: String,
-    size: String,
+    bp: String,
+    sizes: Object,
     flip: Boolean
   },
   render(h) {
     var children = []
     var col0Children = []
-    var labelProps = {
-      class: 'col-form-label',
-      attrs: {},
-      domProps: { innerHTML: this.getLabel() }
-    }
-    if (this.di) { labelProps.attrs.for = this.di.name }
-    var label = h('label', labelProps)
+    var labelProps = { class: 'col-form-label', attrs: {}, domProps: { innerHTML: this.getLabel() } }
 
-    if (this.$scopedSlots.pre_label)
-      col0Children.push(this.$scopedSlots.pre_label({ di: this.di }))
-    if (this.$slots.pre_label)
-      col0Children.push(this.$slots.pre_label)
-    if (!this.hideLabel)
-      col0Children.push(label)
+    this.injectSlot('pre_label',{ di: this.di }, col0Children)
+    this.injectSlot('label',{ di: this.di }, col0Children)
+
+    if (this.di) labelProps.attrs.for = this.di.name
+    var label = h('label', labelProps)
+    if (!this.hideLabel) col0Children.push(label)
+
     if (this.cols) {
+
       var col1 = h('div', { class: [this.colWidths(0)] }, col0Children)
       children.push(col1)
-      var slotChildren = [this.$slots.default]
-      if (this.$scopedSlots.default)
-        slotChildren.push(this.$scopedSlots.default({ di: this.di }))
-      slotChildren.push(this.$slots.belowInput)
+
+      var slotChildren = []
+
+      this.injectSlot('default',{ di: this.di }, slotChildren)
+      this.injectSlot('belowInput',{ di: this.di }, slotChildren)
+
       var col2 = h('div', { class: [this.colWidths(1)] }, slotChildren)
       children.push(col2)
-      if(this.flip) children.reverse()
+      if (this.flip) children.reverse()
     } else {
       children.push(col0Children)
-      children.push(this.$slots.default)
-      if (this.$scopedSlots.default)
-        children.push(this.$scopedSlots.default({ di: this.di }))
+      this.injectSlot('default',{ di: this.di }, children)
+      this.injectSlot('belowInput',{ di: this.di }, children)
     }
     if (!this.hideError)
       children.push(this.getErrorMessage(h))
     //   children.push(col2)
-    return h('div', { class: ['form-group', { 'row': this.cols }, this.hasError ? 'is-invalid' : 'is-valid'] },
+    return h('div', { class: ['form-group', this.sizeClass, { 'row': this.cols }, this.hasError ? 'is-invalid' : 'is-valid'] },
       children)
   },
   computed: {
@@ -80,9 +64,38 @@ export default {
     hasError() {
       return this.error ? this.error.length : false
       // return false
-    }
+    },
+    sizeClass() {
+      var classes = []
+      var bp = false
+      if (!this.sizes) return classes
+      if (typeof this.sizes == "number") {
+        classes = ['col-' + this.sizes]
+      } else if (Array.isArray(this.sizes)) {
+        /* Sizes prop is array of objects */
+        for (var key in this.sizes) {
+          if (this.sizes.hasOwnProperty(key)) {
+            var sizeArr = this.sizes[key]
+            if (typeof sizeArr == "number") { classes.push('col-' + sizeArr) }
+            for (bp in sizeArr) {
+              if (sizeArr.hasOwnProperty(bp)) {
+                classes.push('col-' + bp + '-' + sizeArr[bp])
+              }
+            }
+
+          }
+        }
+      } else if (Object.prototype.toString.call(this.sizes)) {
+        for (bp in this.sizes) { if (this.sizes.hasOwnProperty(bp)) classes.push('col-' + bp + '-' + this.sizes[bp]) }
+      }
+      return [classes]
+    },
   },
   methods: {
+    injectSlot(slot,data, parent){
+      if (this.$scopedSlots[slot]) parent.push(this.$scopedSlots[slot](data))
+      else if (this.$slots[slot]) parent.push(this.$slots[slot])
+    },
     getLabel() {
       var label = this.label
       if (this.di) label = this.di.label
@@ -94,10 +107,9 @@ export default {
     colWidths(i) {
       var cols = this.cols.split('|')
       var str = 'col-'
-      str += this.size ? this.size + '-' : ''
+      str += this.bp ? this.bp + '-' : ''
       return str + cols[i]
     },
   }
 }
-
 </script>

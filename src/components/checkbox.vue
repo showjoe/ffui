@@ -8,6 +8,12 @@
   </div>
 </template>
 <script>
+  import Vue from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {faSquare,faCheckSquare} from '@fortawesome/free-solid-svg-icons'
+library.add(faSquare,faCheckSquare)
+Vue.component('fa', FontAwesomeIcon)
 export default {
   name: 'checkbox',
   props: {

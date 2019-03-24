@@ -41,11 +41,35 @@ Adding justified makes the button group fill the available width.
 Using a FormFactory Dataitem (with a lookup) as a btn-group
 A dataitem might look something like this:
 
-@[code lang=js transclude={88-98}](@/docs/components/btn-group.md)
+<pre class="text-white">{{dataitems}}</pre>
 
 @[code lang=vue transclude={47-47}](@/docs/components/btn-group.md)
 <btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem"/>
-`records.MyDataitem: {{records.MyDataitem ? records.MyDataitem:'null'}}`
+<pre class="text-white">{{records}}</pre>
+
+## disabled and readonly
+Add these props to disable changes and style the buttons
+
+@[code lang=vue transclude={55-58}](@/docs/components/btn-group.md)
+<template>
+	<span class="mx-2">disabled </span>
+	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem" disabled/>
+	<span class="mx-2">readonly </span>
+	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem" readonly/>
+</template>
+
+## Slots
+Use these slots to customize the btn-group
+
+@[code lang=vue transclude={66-70}](@/docs/components/btn-group.md)
+<template>
+	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem">
+		<template #btn-prepend="{btn}">
+			<fa :icon="btn.value == 1 ? 'check':'times'" :class="[btn.value == 1 ? 'text-success':'text-danger']" />
+		</template>
+	</btn-group>
+</template>
+
 
 ## Props
 Name        | Type    | Description | Default
@@ -79,6 +103,7 @@ Name             | Params | Description
 input            |        | Emits input event on value change 
 
 <script>
+
 export default {
 	data () {
     return {

@@ -1,6 +1,6 @@
 {
   "name": "@formfactory/ffui",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "license": "MIT",
   "main": "./dist/ffui.common.js",
   "module": "./dist/ffui.umd.js",
@@ -60,6 +60,13 @@
     "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
+    },
+    "globals": {
+      "$": false,
+      "jQuery": false,
+      "moment": false,
+      "module": false,
+      "logger": false
     }
   },
   "postcss": {
