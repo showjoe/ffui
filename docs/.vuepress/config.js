@@ -36,7 +36,8 @@ module.exports = {
           'components/number',
           'components/row_and_column',
           'components/progress-bar',
-          'components/textbox'
+          'components/textbox',
+          'components/typeahead'
         ]
       }
     ]

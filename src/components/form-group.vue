@@ -1,5 +1,4 @@
 <script>
-// import { mapActions, mapState, mapGetters } from 'vuex'
 export default {
   name: 'form-group',
   props: {

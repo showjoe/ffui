@@ -15,6 +15,7 @@ import number from './number.vue'
 import progressBar from './progress-bar.vue'
 import row from './row.vue'
 import textbox from './textbox.vue'
+import typeahead from './typeahead.vue'
 
 export {
     alert,
@@ -34,4 +35,5 @@ export {
     progressBar,
     row,
     textbox,
+    typeahead,
 }
