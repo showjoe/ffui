@@ -1,27 +1,38 @@
 # Typeahead
 
-@[code lang=vue transclude={5-5}](@/docs/components/typeahead.md)
+@[code lang=vue transclude={5-20}](@/docs/components/typeahead.md)
 <template>
-	<typeahead query-url="http://ukivas.local/meddra/" label-key="hl" @selected="selected"/>
-	<list-group class="mt-4">
-		<list-group-item v-for="item in selectedItems">
-			<span v-html="item.hl"></span>
-			<span>{{item.label}}</span>
-		</list-group-item>
-	</list-group>
+<typeahead
+		query-url="http://version1.api.memegenerator.net//Generators_Search"
+		label-key="displayName"
+		@selected="selectedMeme"
+		api-key="7e9be3d6-7135-4946-a292-5656c7b10400"
+		query-key="q"
+		array-key="result"
+/>
+<!-- result -->
+<row class="mt-4">
+		<column v-for="item in selectedMemes" :sizes="{md:4}">
+			<div>{{item.displayName}}</div>
+			<img :src="item.imageUrl" class="img-fluid">
+		</column>
+	</row>
 </template>
 
 <script>
 export default {
 	data () {
   	return {
-    	selectedItems:[]
+    	selectedItems:[],
+    	selectedMemes:[],
   	}
   },
   methods:{
 		selected(item){
 			this.selectedItems.push(item)
-			console.log('HERE',item) 
+		},
+		selectedMeme(item){
+			this.selectedMemes.push(item)
 		}
   }
 }
