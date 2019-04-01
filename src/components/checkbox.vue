@@ -1,8 +1,11 @@
 <template>
   <div :class="['checkbox',{'checked':isChecked},{'disabled':disabled}]">
+    <label v-if="labelLeft" :for="id" class="mr-2">
+      <slot>{{label}}</slot>
+    </label>
     <fa size="lg" :icon="isChecked ? 'check-square':'square'" @click="toggleCheck" class="align-middle" />
     <input type="checkbox" class="d-none" :id="id" :value="checked" :checked="isChecked" @change="update" :disabled="disabled">
-    <label :for="id">
+    <label v-if="!labelLeft" :for="id">
       <slot>{{label}}</slot>
     </label>
   </div>
@@ -18,6 +21,7 @@ export default {
   name: 'checkbox',
   props: {
     label: {},
+    labelLeft: Boolean,
     value: {},
     trueValue: {
       default: true
@@ -25,14 +29,8 @@ export default {
     falseValue: {
       default: false
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    readonly: {
-      type: Boolean,
-      default: false
-    }
+    disabled: Boolean,
+    readonly: Boolean
   },
   computed: {
     id() {

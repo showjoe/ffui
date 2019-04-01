@@ -12,12 +12,19 @@ A basic checkbox form element.
 <checkbox v-model="records.checkbox3" disabled> A third way is disabled </checkbox>
 </template>
 
+@[code lang=vue transclude={10-12}](@/docs/components/checkbox.md)
+
+<template>
+<checkbox label-left v-model="records.checkbox1"> A checkbox with a clickable label </checkbox>
+</template>
+
 
 ## Props
 Name        | Type    | Description | Default
 :--------   | :----:  | ----------- | :-----:
 true-value  |         | value that should be used in the case of a true (or active) button | `true`
 false-value |         | value that should be used in the case of a false (or deactive) button | `false`
+label-left |   Boolean      | Show the label on the left hand side | `false`
 
 <script>
 export default {
