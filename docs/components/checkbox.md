@@ -12,8 +12,8 @@ A basic checkbox form element.
 <checkbox v-model="records.checkbox3" disabled> A third way is disabled </checkbox>
 </template>
 
-@[code lang=vue transclude={10-12}](@/docs/components/checkbox.md)
-
+## Left aligned label
+@[code lang=vue transclude={18-18}](@/docs/components/checkbox.md)
 <template>
 <checkbox label-left v-model="records.checkbox1"> A checkbox with a clickable label </checkbox>
 </template>

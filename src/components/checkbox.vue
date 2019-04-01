@@ -5,7 +5,7 @@
     </label>
     <fa size="lg" :icon="isChecked ? 'check-square':'square'" @click="toggleCheck" class="align-middle" />
     <input type="checkbox" class="d-none" :id="id" :value="checked" :checked="isChecked" @change="update" :disabled="disabled">
-    <label v-if="!labelLeft" :for="id">
+    <label v-if="labelRight&&!labelLeft" :for="id" class="ml-2">
       <slot>{{label}}</slot>
     </label>
   </div>
@@ -22,6 +22,10 @@ export default {
   props: {
     label: {},
     labelLeft: Boolean,
+    labelRight: {
+      type:Boolean,
+      default: true
+    },
     value: {},
     trueValue: {
       default: true

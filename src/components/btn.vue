@@ -2,7 +2,6 @@
 // import {colours} from '../helpers/btn-classes.js'
 export default {
   name: 'btn',
-
   props: {
     id: {
       type: String,

@@ -1,6 +1,6 @@
 <template>
   <input-group class="typeahead">
-    <div slot="prepend" class="input-group-text">
+    <div slot="prepend" class="input-group-text" @click="$refs.typeaheadInput.focus()">
       <fa icon="search" />
     </div>
     <input ref="typeaheadInput" type="text" class="form-control" v-model="searchQuery" @keydown.down="tabToNextItem" @keyup.up="moveCursorToEnd" />

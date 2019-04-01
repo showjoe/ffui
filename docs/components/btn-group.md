@@ -58,10 +58,19 @@ Add these props to disable changes and style the buttons
 	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem" readonly/>
 </template>
 
+## Size
+Use `sm` or `lg` to use different size buttons
+
+@[code lang=vue transclude={66-67}](@/docs/components/btn-group.md)
+<template>
+	<btn-group size="sm" :di="dataitems.MyDataitem" v-model="records.MyDataitem"/>
+	<btn-group size="lg" :di="dataitems.MyDataitem" v-model="records.MyDataitem"/>
+</template>
+
 ## Slots
 Use these slots to customize the btn-group
 
-@[code lang=vue transclude={66-70}](@/docs/components/btn-group.md)
+@[code lang=vue transclude={75-79}](@/docs/components/btn-group.md)
 <template>
 	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem">
 		<template #btn-prepend="{btn}">
