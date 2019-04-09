@@ -1,12 +1,5 @@
 <template>
-  <transition
-  name="collapse"
-  @beforeEnter="beforeEnter"
-  @enter="enter"
-  @beforeLeave="beforeLeave"
-  @leave="leave"
-  :duration="duration"
-  >
+  <transition name="collapse" @beforeEnter="beforeEnter" @enter="enter" @afterEnter="afterEnter" @afterLeave="afterLeave" @beforeLeave="beforeLeave" @leave="leave" :duration="duration">
     <div ref="collapsible" v-if="show" :class="['collapse',{'show':show}]">
       <slot></slot>
     </div>
@@ -16,48 +9,43 @@
 export default {
   name: 'collapse',
   props: {
-    show:Boolean,
-    duration:{
+    show: Boolean,
+    duration: {
       default: 150
     },
-    ease:{
+    ease: {
       default: 'ease-out'
-    }
-  },
-  computed: {},
-  mounted () {
-    var collapsible = this.$refs.collapsible
-    this.durationEnter = typeof this.duration == 'object' ? this.duration.enter : this.duration
-    this.durationLeave = typeof this.duration == 'object' ? this.duration.leave : this.duration
-    if(this.show){
-      var trans = this.show ? this.durationEnter:this.durationLeave
-      collapsible.style.height = collapsible.scrollHeight + 'px'
-      collapsible.style.transition = trans +'ms ' + this.ease
     }
   },
   methods: {
     beforeEnter(el) {
-      el.style.transition = this.durationEnter+'ms ' + this.ease
+      el.style.transition = this.durationEnter + 'ms ' + this.ease
       el.style.height = 0
     },
     enter(el) {
       el.style.height = el.scrollHeight + 'px'
     },
+    afterEnter(el) {
+      el.style = null
+    },
     beforeLeave(el) {
-      el.style.transition = this.durationLeave+'ms ' + this.ease
+      el.style.transition = this.durationLeave + 'ms ' + this.ease
       el.style.height = el.scrollHeight + 'px'
     },
     leave(el) {
+      this.$nextTick(() => {
+        el.style.height = 0
+      })
+    },
+    afterLeave(el) {
       el.style.height = 0
-      // el.style.opacity = 0
+      el.style = null
     },
   }
 }
 </script>
 <style>
-  .collapse{
-    overflow: hidden;
-    /*transition: 1000ms ease-out;*/
-  }
-
+.collapse {
+  overflow: hidden;
+}
 </style>
