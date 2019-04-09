@@ -1,5 +1,5 @@
-import * as mylib from '../../src'
-
+import * as ffui from '../../src'
+import Vue from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -11,6 +11,8 @@ export default ({
   router, // the router instance for the app
   siteData // site metadata
 }) => {
+  console.log(ffui) 
+  Vue.use(ffui)
 
   // window.$ = window.jQuery = require('jquery')
   // require('bootstrap')
@@ -21,7 +23,6 @@ export default ({
     const VueInputMask = require('vue-inputmask').default
     Vue.use(VueInputMask)
   }
-  Vue.use(mylib)
   library.add(faCog, faTimes, faCheck, faSearch)
   Vue.component('fa', FontAwesomeIcon)
 

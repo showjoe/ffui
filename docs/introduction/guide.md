@@ -36,3 +36,4 @@ import Vue from 'vue'
 import ffui '@formfactory/ffui/'
 Vue.use(ffui)
 ```
+<textbox/>
