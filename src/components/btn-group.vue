@@ -4,7 +4,7 @@
       <template v-if="btns">
         <template v-for="btn in btns">
           <slot name="btn" :btn="btn">
-            <btn :key="btn.value" @input="updateValue(btn.value)" v-bind="btnProps(btn)">
+            <btn type="radio" :key="btn.value" @input="updateValue" v-bind="btnProps(btn)">
               <slot name="btn-prepend" :btn="btn"></slot>
               <slot name="btn-label" :btn="btn">
                 <span v-html="getLabel(btn)"></span>
@@ -40,22 +40,13 @@ export default {
       type: String,
       default: 'checkbox'
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    readonly: {
-      type: Boolean,
-      default: false
-    },
+    disabled: Boolean,
+    readonly: Boolean,
     size: {
       type: String,
       default: ''
     },
-    vertical: {
-      type: Boolean,
-      default: false
-    }
+    vertical: Boolean
   },
   computed: {
     btns() {

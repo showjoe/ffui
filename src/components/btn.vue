@@ -56,23 +56,10 @@ export default {
       },
       on: { click: this.btnClick }
     }
-    if (this.type == 'checkbox' || this.type == 'radio') {
-      // tag = 'label';
-      // var inputProps = {
-      //   domProps:{type:this.type}
-      // }
-      // var input = h('input',inputProps)
-      // children.push(input)
-    }
     children.push(this.$slots.default)
     return h(tag, propObj, children)
   },
-  created() {
-    const parent = this.$parent
-    if (parent && parent._btnGroup) {
-      this._inGroup = true
-    }
-  },
+  created() {},
   computed: {
     classObj() {
       var outline = this.outline ? 'outline-' : ''
@@ -90,7 +77,7 @@ export default {
       ];
       return classObj
     },
-    active() { return this.value === this.trueValue }
+    active() { return this.value == this.trueValue }
   },
   methods: {
     btnClick() {
@@ -98,7 +85,7 @@ export default {
       if (this.type === 'checkbox') value = this.active ? this.falseValue : this.trueValue
       if (this.type === 'radio') {
         if (this.value) {
-          if (this.value === this.trueValue) {
+          if (this.value == this.trueValue) {
             value = this.falseValue
           } else {
             value = this.trueValue
@@ -107,17 +94,16 @@ export default {
           value = this.trueValue
         }
       }
-      if (this._inGroup) this.$parent.val = value
-
       this.$emit('input', value)
     }
   }
 }
 </script>
 <style lang="scss">
-  .btn.disabled,.btn[disabled]{
-    &.active{
-      background-color:rgba(112, 127, 143, 0.4);
-    }
+.btn.disabled,
+.btn[disabled] {
+  &.active {
+    background-color: rgba(112, 127, 143, 0.4);
   }
+}
 </style>
