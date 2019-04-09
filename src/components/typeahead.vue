@@ -44,6 +44,10 @@ export default {
   },
   mounted() {
     this.setDropdownPosition()
+    var self = this
+    window.addEventListener('resize', function() {
+      self.setDropdownPosition()
+    });
   },
   watch: {
     searchQuery: function() {
