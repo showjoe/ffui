@@ -11,7 +11,6 @@ export default ({
   router, // the router instance for the app
   siteData // site metadata
 }) => {
-  console.log(ffui) 
   Vue.use(ffui)
 
   // window.$ = window.jQuery = require('jquery')

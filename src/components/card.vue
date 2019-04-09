@@ -39,11 +39,9 @@ export default {
   name: 'card',
   props: {
     title: {
-      type: String,
       default: '',
     },
     subtitle: {
-      type: String,
       default: '',
     },
     head: Boolean,

@@ -1,5 +1,5 @@
 <template>
-  <transition name="collapse" @beforeEnter="beforeEnter" @enter="enter" @afterEnter="afterEnter" @afterLeave="afterLeave" @beforeLeave="beforeLeave" @leave="leave" :duration="duration">
+  <transition name="collapse" @beforeEnter="beforeEnter" @enter="enter" @afterEnter="afterEnter" @beforeLeave="beforeLeave" @leave="leave" @afterLeave="afterLeave" :duration="duration">
     <div ref="collapsible" v-if="show" :class="['collapse',{'show':show}]">
       <slot></slot>
     </div>
@@ -17,9 +17,15 @@ export default {
       default: 'ease-out'
     }
   },
+  computed: {
+    durationEnter() { return typeof this.duration == 'object' ? this.duration.enter : this.duration },
+    durationLeave() { return typeof this.duration == 'object' ? this.duration.leave : this.duration },
+    transitionEnter() { return this.durationEnter + 'ms ' + this.ease },
+    transitionLeave() { return this.durationLeave + 'ms ' + this.ease },
+  },
   methods: {
     beforeEnter(el) {
-      el.style.transition = this.durationEnter + 'ms ' + this.ease
+      el.style.transition = this.transitionEnter
       el.style.height = 0
     },
     enter(el) {
@@ -29,17 +35,14 @@ export default {
       el.style = null
     },
     beforeLeave(el) {
-      el.style.transition = this.durationLeave + 'ms ' + this.ease
+      el.style.transition = this.transitionLeave
       el.style.height = el.scrollHeight + 'px'
     },
     leave(el) {
-      this.$nextTick(() => {
-        el.style.height = 0
-      })
+      this.$nextTick(() => { el.style.height = 0 })
     },
     afterLeave(el) {
-      el.style.height = 0
-      el.style = null
+      this.$nextTick(() => { el.style = null })
     },
   }
 }
