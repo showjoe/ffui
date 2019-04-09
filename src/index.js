@@ -1,2 +1,68 @@
-export * from './components'
-export * from './install'
+import alert from './alert.vue'
+import btn from './btn.vue'
+import btnGroup from './btn-group.vue'
+import card from './card.vue'
+import checkbox from './checkbox.vue'
+import collapse from './collapse.vue'
+import column from './column.vue'
+import datepicker from './datepicker.vue'
+import dropdown from './dropdown.vue'
+import formGroup from './form-group.vue'
+import inputGroup from './input-group.vue'
+import listGroup from './list-group.vue'
+import listGroupItem from './list-group-item.vue'
+import number from './number.vue'
+import progressBar from './progress-bar.vue'
+import row from './row.vue'
+import slider from './slider.vue'
+import textbox from './textbox.vue'
+import typeahead from './typeahead.vue'
+
+export {
+  alert,
+  btn,
+  btnGroup,
+  card,
+  checkbox,
+  collapse,
+  column,
+  datepicker,
+  dropdown,
+  formGroup,
+  inputGroup,
+  listGroup,
+  listGroupItem,
+  number,
+  progressBar,
+  row,
+  slider,
+  textbox,
+  typeahead,
+}
+
+// What should happen if the user installs the library as a plugin
+function install(Vue) {
+  Vue.component('alert', alert)
+  Vue.component('btn', btn)
+  Vue.component('btn-group', btnGroup)
+  Vue.component('card', card)
+  Vue.component('checkbox', checkbox)
+  Vue.component('collapse', collapse)
+  Vue.component('column', column)
+  Vue.component('datepicker', datepicker)
+  Vue.component('dropdown', dropdown)
+  Vue.component('form-group', formGroup)
+  Vue.component('input-group', inputGroup)
+  Vue.component('list-group', listGroup)
+  Vue.component('list-groupItem', listGroupItem)
+  Vue.component('number', number)
+  Vue.component('progress-bar', progressBar)
+  Vue.component('row', row)
+  Vue.component('slider', slider)
+  Vue.component('textbox', textbox)
+  Vue.component('typeahead', typeahead)
+
+}
+
+// Export the library as a plugin
+export default { install: install }

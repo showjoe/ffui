@@ -11,25 +11,28 @@ If you are using module bundlers such as Webpack, you can directly include packa
 NPM:
 
 ``` bash
-$ npm install my-lib --save
+$ npm install @formfactory/ffui --save
 ```
 
 or Yarn:
 
 ``` bash
-$ yarn add my-lib
+$ yarn add @formfactory/ffui
 ```
 
-Then register `my-lib` components and directives all at once in your app's entry:
+You can individually import components
 
 ``` js
-// main.js
 import Vue from 'vue'
-import * as mylib from 'my-lib'
+import {checkbox} from '@formfactory/ffui'
 
-Vue.use(mylib)
+Vue.component('checkbox',checkbox)
 ```
 
-## i18n
+Or import the whole library
 
-How to configure the library to use different language.
+``` js
+import Vue from 'vue'
+import ffui '@formfactory/ffui/'
+Vue.use(ffui)
+```
