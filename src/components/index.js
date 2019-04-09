@@ -14,6 +14,7 @@ import listGroupItem from './list-group-item.vue'
 import number from './number.vue'
 import progressBar from './progress-bar.vue'
 import row from './row.vue'
+import slider from './slider.vue'
 import textbox from './textbox.vue'
 import typeahead from './typeahead.vue'
 
@@ -34,6 +35,7 @@ export {
     number,
     progressBar,
     row,
+    slider,
     textbox,
     typeahead,
 }
