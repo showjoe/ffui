@@ -48,7 +48,7 @@ export default {
 }
 </script>
 <style>
-.collapse {
+.collapse.show {
   overflow: hidden;
 }
 </style>

@@ -2,39 +2,52 @@
 
 ## Basic Example
 Add `<card>My First Card</card>` to the template in the `*.vue` file you are working on to add a card with the correct bootstrap classes.
-It should look like this: <card>My First Card</card>
+It should look like this:
+<card>My First Card</card>
 
 ## Title
-@[code lang=vue transclude={9-9}](@/docs/components/card.md)
-<card title="Card Title">Text inside the body</card>
+::: demo
+<card title="Card Title">
+	Text inside the body
+</card>
+:::
 
 ## Subtitle
-@[code lang=vue transclude={13-13}](@/docs/components/card.md)
-<card title="Card Title" subtitle="Card Subtitle">Text inside the body</card>
+::: demo
+<card title="Card Title" subtitle="Card Subtitle">
+	Text inside the body
+</card>
+:::
 
 ## Head, Body & Foot
 ### Head
-@[code lang=vue transclude={19-19}](@/docs/components/card.md)
-becomes
-<card head title="Card Title">Text inside the body</card>
+::: demo
+<card head title="Card Title">
+	Text inside the body
+</card>
+:::
 
 ### Body
 Body is true by default use `:body="false"` to disable the card-body class (Useful for list-groups etc)
 
-@[code lang=vue transclude={26-26}](@/docs/components/card.md)
-becomes
-<card head :body="false" title="Card Title">Body container has no class</card>
+::: demo
+<card head :body="false" title="Card Title">
+	Body container has no class
+</card>
+:::
 
 ### Foot
-@[code lang=vue transclude={31-31}](@/docs/components/card.md)
-becomes
-<card foot title="Card Title">Text inside the body</card>
+::: demo
+<card foot title="Card Title">
+	Text inside the body
+</card>
+:::
+
 ## Slots
 #### header
 the entire header slot will be replaced with these contents (You may need to reimplement other features like title etc or adding .card-header class)
 
-@[code lang=vue transclude={38-45}](@/docs/components/card.md)
-<template>
+::: demo
 <card head title="Card Title">
 	<template #header>
 		<div class="card-header text-center">
@@ -43,35 +56,32 @@ the entire header slot will be replaced with these contents (You may need to rei
 		</div>
 	</template>
 </card>
-</template>
+:::
 
 #### header-left
 header-left slot container is within a div that is floated left and independant of other header contents
 
-@[code lang=vue transclude={53-57}](@/docs/components/card.md)
-<template>
+::: demo
 <card head title="Card Title">
 	<template #header-left>
 		<btn class="mr-4">Button</btn>
 	</template>
 </card>
-</template>
+:::
 
 #### header-right
 header-right slot container is within a div that is floated right and independant of other header contents
 
-@[code lang=vue transclude={65-69}](@/docs/components/card.md)
-<template>
+::: demo
 <card head title="Card Title">
 	<template #header-right>
 		<btn class="ml-4">Button</btn>
 	</template>
 </card>
-</template>
+:::
 
 #### footer
-@[code lang=vue transclude={75-82}](@/docs/components/card.md)
-<template>
+::: demo
 <card foot title="Card Title">
 	<template #footer-left>
 		<btn>Left Button</btn>
@@ -80,17 +90,15 @@ header-right slot container is within a div that is floated right and independan
 		<btn>Right Button</btn>
 	</template>
 </card>
-</template>
-Or
-
-@[code lang=vue transclude={88-92}](@/docs/components/card.md)
-<template>
+:::
+or
+::: demo
 <card foot title="Card Title">
 	<template #footer>
 		<div class="card-footer bg-success"></div>
 	</template>
 </card>
-</template>
+:::
 
 Name         | Description 
 :--------    | ----------- 
@@ -104,7 +112,7 @@ footer       | Inside the footer (`foot` prop must be true)
 ## Images
 add an image with a class of `.card-img-top` or `.card-img-bottom` and use the card slots `header` and `footer`
 
-@[code lang=vue transclude={109-126}](@/docs/components/card.md)
+::: demo
 <template>
 <row>
 	<column>
@@ -125,11 +133,11 @@ add an image with a class of `.card-img-top` or `.card-img-bottom` and use the c
 	</column>
 </row>
 </template>
+:::
 
 use `img-overlay` prop on card to overlay your text 
 
-@[code lang=vue transclude={131-140}](@/docs/components/card.md)
-<template>
+::: demo
 <card title="Card title" img-overlay class="bg-dark text-white text-outline">
 	<template #header>
   	<img src="https://picsum.photos/400/100?random" class="card-img" alt="...">
@@ -138,13 +146,12 @@ use `img-overlay` prop on card to overlay your text
   This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
 	</h5>
 </card>
-</template>
+:::
 
 ## Horizontal
 With a combination of rows and columns you can make a horizontal layout:
 
-@[code lang=vue transclude={148-163}](@/docs/components/card.md)
-<template>
+::: demo
 <card :body="false" class="mb-3">
   <row class="no-gutters">
     <column :sizes="{md:4}">
@@ -161,13 +168,13 @@ With a combination of rows and columns you can make a horizontal layout:
     </column>
   </row>
 </card>
-</template>
+:::
 
 ## Styles
 Use text and background utilities to change the appearance of a card.
 
-@[code lang=vue transclude={171-194}](@/docs/components/card.md)
-<template>
+::: demo
+<div>
 	<card head title="Card Title" class="text-white bg-primary mb-2">
 		Example body content
 	</card>
@@ -192,14 +199,14 @@ Use text and background utilities to change the appearance of a card.
 	<card head title="Card Title" class="text-white bg-dark mb-2">
 		Example body content
 	</card>
-</template>
-
+</div>
+:::
 
 ## Border
 Use text and border utilities to change the appearance of a card.
 
-@[code lang=vue transclude={203-226}](@/docs/components/card.md)
-<template>
+::: demo
+<div>
 	<card head title="Card Title" class="border-primary text-primary mb-2">
 		Example body content
 	</card>
@@ -224,7 +231,8 @@ Use text and border utilities to change the appearance of a card.
 	<card head title="Card Title" class="border-dark text-dark mb-2">
 		Example body content
 	</card>
-</template>
+</div>
+::: 
 
 ---
 ## Props

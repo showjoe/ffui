@@ -1,19 +1,14 @@
 
 # Progress Bar
 ## Basic Example
-@[code lang=vue transclude={6-9}](@/docs/components/progress-bar.md)
-<template>
-<progress-bar
-  :valid="records.valid"
-  :total="records.total"
-  :invalid="records.invalid"/>
-</template>
+
+::: demo
+<progress-bar :valid="records.valid" :total="records.total" :invalid="records.invalid"/>
+:::
 
 `records: {{records}}`
 
-<template>
 <btn v-on:click.native="randomizeScore">Randomize</btn>
-</template>
 
 ### Props
 Name    | Type   | Description | Default

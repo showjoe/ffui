@@ -10,22 +10,20 @@ will generate this:
 <textbox/>
 
 ## Other Sizes
-@[code lang=vue transclude={18-18}](@/docs/components/textbox.md)
-
-or
-
-@[code lang=vue transclude={20-20}](@/docs/components/textbox.md)
+::: demo
 <textbox size="sm" value="A small input"/>
 or
 <textbox size="lg" value="A large input"/>
+:::
 
 ## v-model
 Use v-model to link to a string in your data object
 
 `{{$data}}`
 
-@[code lang=vue transclude={28-28}](@/docs/components/textbox.md)
+::: demo
 <textbox v-model="records.text1" />
+:::
 
 <hr>
 

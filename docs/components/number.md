@@ -9,21 +9,18 @@ and will look like this:
 <number/>
 
 ## Other Sizes
-@[code lang=vue transclude={13-13}](@/docs/components/number.md)
-<number size="sm" value="123"/>
-or
-
-@[code lang=vue transclude={17-17}](@/docs/components/number.md)
-<number size="lg" value="456"/>
-
+::: demo
+<number size="sm" value="123"/> or <number size="lg" value="456"/>
+:::
 ## v-model
 Use v-model to link to the number in your data object
 eg.
 
 `{{$data}}`
 
-@[code lang=vue transclude={26-26}](@/docs/components/number.md)
+::: demo
 <number v-model="records.number" />
+:::
 
 ### Props
 Name    | Type   | Description | Default

@@ -1,145 +1,125 @@
 # Slider
 ## Basic Example
-@[code lang=vue transclude={6-6}](@/docs/components/slider.md)
-
-<template>
+::: demo
   <slider v-model="records.sliderVal"/>
-</template>
+:::
 
 ::: tip
 By default the handle isn't shown so it doesn't influence the user
 :::
 
 ## Colours
-@[code lang=vue transclude={17-17}](@/docs/components/slider.md)
-
-<template>
+::: demo
   <slider :colours="['#fff','#000']" v-model="records.sliderVal"/>
-</template>
+:::
 
 ## colour-popover
 Use the current colour value as the background colour to the popover
 
-@[code lang=vue transclude={25-25}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider :colours="['red','blue']" colour-popover v-model="records.sliderVal"/>
-</template>
+:::
 
 ## colour-handle
 Use the current colour value as the background colour to the handle
 
-@[code lang=vue transclude={33-33}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider :colours="['blue','green']" colour-popover colour-handle v-model="records.sliderVal"/>
-</template>
+:::
 
 ## disabled
 Disable the slider
 
-@[code lang=vue transclude={41-41}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider disabled v-model="records.sliderVal"/>
-</template>
+:::
 
 ## hide-grid
 Hide the grid
 
-@[code lang=vue transclude={49-49}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider hide-grid v-model="records.sliderVal"/>
-</template>
+:::
 
 ## grid-divisions
 How many divisions to show on the grid
 
-@[code lang=vue transclude={57-57}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider :grid-divisions="20" v-model="records.sliderVal"/>
-</template>
+:::
 
 ## labels
 Set min and max labels
 
-@[code lang=vue transclude={65-65}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider :labels="{min:'Minimum', max:'Maximum'}" v-model="records.sliderVal"/>
-</template>
+:::
 
 ## min
 Set minimum value
 
-@[code lang=vue transclude={73-73}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider :min="-5" v-model="records.sliderVal2"/>
-</template>
+:::
 
 ## max
 Set maximum value
 
-@[code lang=vue transclude={81-81}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider :max="15" v-model="records.sliderVal3"/>
-</template>
+:::
 
 ## hide-popover
 Hide popover
 
-@[code lang=vue transclude={89-89}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider hide-popover v-model="records.sliderVal"/>
-</template>
+:::
 
 ## prefix
 Set a prefix to the value
 
-@[code lang=vue transclude={97-97}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider prefix="£" v-model="records.sliderVal"/>
-</template>
+:::
 
 ## postfix
 Set a 'postfix' to the end of the value
 
-@[code lang=vue transclude={105-105}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider postfix="K" v-model="records.sliderVal"/>
-</template>
+:::
 
 ## range
 Accept a range of two values
 
-@[code lang=vue transclude={113-113}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider range v-model="records.sliderVal5"/>
-</template>
+:::
 {{records.sliderVal5}}
 
 ## reverse
 Flip the direction of the slider
 
-@[code lang=vue transclude={122-122}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider reverse v-model="records.sliderVal"/>
-</template>
+:::
 
 ## step
 Set the incremental step of the slider. Must be a positive number.
-
-@[code lang=vue transclude={130-130}](@/docs/components/slider.md)
-<template>
+::: demo
   <slider :step="0.1" v-model="records.sliderVal4"/>
-</template>
+:::
 
 ## vertical
 Display the slider in vertical mode. 
 
-@[code lang=vue transclude={139-140}](@/docs/components/slider.md)
-<template>
+::: demo
   <div class="clearfix">
   	<slider vertical v-model="records.sliderVal"/>
   	<slider vertical reverse v-model="records.sliderVal"/>
   </div>
-</template>
+:::
 
 <hr>
 

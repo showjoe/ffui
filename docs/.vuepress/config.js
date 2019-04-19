@@ -2,7 +2,15 @@ module.exports = {
   base: '/ffui/',
   title: 'Form Factory Component Library',
   description: 'Vue.js Components using bootstrap 4 styling for use in form factory projects.',
-  plugins:[
+  plugins: [
+    ['demo-code', {
+      minHeight: 200,
+      onlineBtns: {
+        codepen: false,
+        jsfiddle: false,
+        codesandbox: false,
+      },
+    }]
   ],
   head: [
     ['link', { rel: 'icon', href: '/node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' }]
@@ -10,8 +18,7 @@ module.exports = {
   themeConfig: {
     repo: 'showjoe/ffui',
     docsDir: 'docs',
-    sidebar: [
-      {
+    sidebar: [{
         title: 'Introduction',
         collapsable: false,
         children: [
@@ -33,6 +40,7 @@ module.exports = {
           'components/form-group',
           'components/input-group',
           'components/list-group',
+          'components/modal',
           'components/number',
           'components/row_and_column',
           'components/progress-bar',

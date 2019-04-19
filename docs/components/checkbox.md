@@ -2,22 +2,22 @@
 ## Basic Example
 A basic checkbox form element.
 
-@[code lang=vue transclude={10-12}](@/docs/components/checkbox.md)
 
 <pre class="text-white">{{$data}}</pre>
-
-<template>
-<checkbox v-model="records.checkbox1"> A checkbox with a clickable label </checkbox>
-<checkbox v-model="records.checkbox2" true-value="ABC" :false-value="3" label="A second option" />
-<checkbox v-model="records.checkbox3" disabled> A third way is disabled </checkbox>
-</template>
+::: demo
+<div>
+	<checkbox v-model="records.checkbox1"> A checkbox with a clickable label </checkbox>
+	<checkbox v-model="records.checkbox2" true-value="ABC" :false-value="3" label="A second option" />
+	<checkbox v-model="records.checkbox3" disabled> A third way is disabled </checkbox>
+</div>
+:::
 
 ## Left aligned label
-@[code lang=vue transclude={18-18}](@/docs/components/checkbox.md)
-<template>
-<checkbox label-left v-model="records.checkbox1"> A checkbox with a clickable label </checkbox>
-</template>
-
+::: demo
+<checkbox label-left v-model="records.checkbox1">
+	A checkbox with a clickable label
+</checkbox>
+:::
 
 ## Props
 Name        | Type    | Description | Default

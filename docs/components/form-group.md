@@ -12,10 +12,7 @@ Here are two sample dataitem objects
 
 <pre class="text-white">{{dataitems}}</pre>
 
-Use the following markup in your `.vue` file to configure the 
-
-@[code lang=vue transclude={20-25}](@/docs/components/form-group.md)
-<template>
+::: demo
 <card>
   <form-group :di="dataitems.MyDataitem1" cols="4|8" v-slot="{di}">
 	 <textbox :di="di" v-model="records.MyDataitem1"/>
@@ -24,11 +21,10 @@ Use the following markup in your `.vue` file to configure the
     <btn-group  :di="di" v-model="records.MyDataitem2" justified/>
   </form-group>
 </card>
-</template>
+:::
 
-@[code lang=vue transclude={32-39}](@/docs/components/form-group.md)
-<template>
-  <card>
+::: demo
+<card>
   <row form>
     <form-group :di="dataitems.MyDataitem1" :sizes="{md:6}" v-slot="{di}">
       <textbox :di="di" v-model="records.MyDataitem1"/>
@@ -38,29 +34,27 @@ Use the following markup in your `.vue` file to configure the
     </form-group>
   </row>
 </card>
-</template>
+:::
 
-@[code lang=vue transclude={46-48}](@/docs/components/form-group.md)
-<template>
-  <card>
-    <form-group label="Alternative label" :sizes="{md:6}">
-      <textbox :di="dataitems.MyDataitem1" v-model="records.MyDataitem1"/>
-    </form-group>
+::: demo
+<card>
+  <form-group label="Alternative label" :sizes="{md:6}">
+    <textbox :di="dataitems.MyDataitem1" v-model="records.MyDataitem1"/>
+  </form-group>
 </card>
-</template>
+:::
 
 ## Using slots
 Slots can be helpful for placing additional content in praticular places within the form-group.  You can use `pre_label`,`label`,`below_input`
 
-@[code lang=vue transclude={58-61}](@/docs/components/form-group.md)
-<template>
-  <card>
-    <form-group label="A different way to customise the label" :sizes="{md:6}">
-      <span slot="below_input" class="text-danger">below_input slot</span>
-      <textbox :di="dataitems.MyDataitem1" v-model="records.MyDataitem1"/>
-    </form-group>
+::: demo
+<card>
+  <form-group label="A different way to customise the label" :sizes="{md:6}">
+    <span slot="below_input" class="text-danger">below_input slot</span>
+    <textbox :di="dataitems.MyDataitem1" v-model="records.MyDataitem1"/>
+  </form-group>
 </card>
-</template>
+:::
 
 
 ## Slots

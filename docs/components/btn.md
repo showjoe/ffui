@@ -8,54 +8,69 @@ Add `<btn>My First Button</btn>` to the template in the `*.vue` file you are wor
 ## block
 add the `block` prop to make the button fill the available width:
 
-@[code lang=vue transclude={12-12}](@/docs/components/btn.md)
-<btn block> Block Button </btn>
+::: demo
+<btn block>
+  Block Button
+</btn>
+:::
 
 ## btn-class
 Add a btn-class prop to set the styling.  Outline mode is on by default.
 
-@[code lang=vue transclude={18-26}](@/docs/components/btn.md)
-<btn btn-class="primary">Primary</btn>
-<btn btn-class="secondary">Secondary</btn>
-<btn btn-class="success">Success</btn>
-<btn btn-class="danger">Danger</btn>
-<btn btn-class="warning">Warning</btn>
-<btn btn-class="info">Info</btn>
-<btn btn-class="light">Light</btn>
-<btn btn-class="dark">Dark</btn>
-<btn btn-class="link">Link</btn>
+::: demo
+<div>
+  <btn btn-class="primary">Primary</btn>
+  <btn btn-class="secondary">Secondary</btn>
+  <btn btn-class="success">Success</btn>
+  <btn btn-class="danger">Danger</btn>
+  <btn btn-class="warning">Warning</btn>
+  <btn btn-class="info">Info</btn>
+  <btn btn-class="light">Light</btn>
+  <btn btn-class="dark">Dark</btn>
+  <btn btn-class="link">Link</btn>
+</div>
+:::
 
 Or to not use the outline mode
 
-@[code lang=vue transclude={31-39}](@/docs/components/btn.md)
-<btn :outline="false" btn-class="primary">Primary</btn>
-<btn :outline="false" btn-class="secondary">Secondary</btn>
-<btn :outline="false" btn-class="success">Success</btn>
-<btn :outline="false" btn-class="danger">Danger</btn>
-<btn :outline="false" btn-class="warning">Warning</btn>
-<btn :outline="false" btn-class="info">Info</btn>
-<btn :outline="false" btn-class="light">Light</btn>
-<btn :outline="false" btn-class="dark">Dark</btn>
-<btn :outline="false" btn-class="link">Link</btn>
+::: demo
+<div>
+  <btn :outline="false" btn-class="primary">Primary</btn>
+  <btn :outline="false" btn-class="secondary">Secondary</btn>
+  <btn :outline="false" btn-class="success">Success</btn>
+  <btn :outline="false" btn-class="danger">Danger</btn>
+  <btn :outline="false" btn-class="warning">Warning</btn>
+  <btn :outline="false" btn-class="info">Info</btn>
+  <btn :outline="false" btn-class="light">Light</btn>
+  <btn :outline="false" btn-class="dark">Dark</btn>
+  <btn :outline="false" btn-class="link">Link</btn>
+</div>
+:::
 
 ## btn-size
 Add a btn-class prop to set the styling
 
-@[code lang=vue transclude={45-46}](@/docs/components/btn.md)
-<btn size="sm"> Small Button </btn>
-<btn size="lg"> Large Button </btn>
+::: demo
+<div>
+  <btn size="sm"> Small Button </btn>
+  <btn size="lg"> Large Button </btn>
+</div>
+:::
 
 ## v-model
 Using v-model with individual buttons.  By default they will act as boolean 'checkbox' style buttons 
 
-<small>`{{records}}`</small>
+<pre class="text-white">{{records}}</pre>
 
-@[code lang=vue transclude={54-58}](@/docs/components/btn.md)
-<btn v-model="records.input_1">Input 1</btn>
-<btn btn-class="secondary" v-model="records.input_2">Input 2</btn>
-<btn btn-class="info" v-model="records.input_3">Input 3</btn>
-<btn btn-class="warning" v-model="records.input_4">Input 4</btn>
-<btn btn-class="danger" v-model="records.input_5">Input 5</btn>
+::: demo
+<div>
+  <btn v-model="records.input_1">Input 1</btn>
+  <btn btn-class="secondary" v-model="records.input_2">Input 2</btn>
+  <btn btn-class="info" v-model="records.input_3">Input 3</btn>
+  <btn btn-class="warning" v-model="records.input_4">Input 4</btn>
+  <btn btn-class="danger" v-model="records.input_5">Input 5</btn>
+</div>
+:::
 
 ## Props
 Name        | Type    | Description | Default

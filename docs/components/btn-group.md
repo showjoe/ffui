@@ -1,41 +1,48 @@
 # Button Group
 ## Basic Example
-@[code lang=vue transclude={5-11}](@/docs/components/btn-group.md)
-<template>
-<btn-group>
-	<btn btn-class="primary">Primary</btn>
-	<btn btn-class="secondary">Secondary</btn>
-	<btn btn-class="success">Success</btn>
-	<btn btn-class="danger">Danger</btn>
-	<btn btn-class="warning" disabled>Warning</btn>
-</btn-group>
-</template>
+
+::: demo
+<div>
+	<btn-group>
+		<btn btn-class="primary">Primary</btn>
+		<btn btn-class="secondary">Secondary</btn>
+		<btn btn-class="success">Success</btn>
+		<btn btn-class="danger">Danger</btn>
+		<btn btn-class="warning" disabled>Warning</btn>
+	</btn-group>
+</div>
+:::
 
 ## btn-class
 Set a standard class for all buttons in group
 
-@[code lang=vue transclude={18-18}](@/docs/components/btn-group.md)
+::: demo
 <btn-group btn-class="warning" :di="dataitems.MyDataitem"/>
+:::
 
 ## Justified
-@[code lang=vue transclude={23-26}](@/docs/components/btn-group.md)
-<template>
-<btn-group justified>
-	<btn btn-class="primary">Primary</btn>
-	<btn btn-class="secondary">Secondary</btn>
-</btn-group>
-</template>
-
-## Vertical
 Adding justified makes the button group fill the available width.
 
-@[code lang=vue transclude={34-37}](@/docs/components/btn-group.md)
-<template>
-<btn-group vertical>
-	<btn btn-class="primary">Primary</btn>
-	<btn btn-class="secondary">Secondary</btn>
-</btn-group>
-</template>
+::: demo
+<div>
+	<btn-group justified>
+		<btn btn-class="primary">Primary</btn>
+		<btn btn-class="secondary">Secondary</btn>
+	</btn-group>
+</div>
+:::
+
+## Vertical
+Adding vertical makes the button group stack vertically.
+
+::: demo
+<div>
+	<btn-group vertical>
+		<btn btn-class="primary">Primary</btn>
+		<btn btn-class="secondary">Secondary</btn>
+	</btn-group>
+</div>
+:::
 
 ## Dataitem Example
 Using a FormFactory Dataitem (with a lookup) as a btn-group
@@ -43,42 +50,48 @@ A dataitem might look something like this:
 
 <pre class="text-white">{{dataitems}}</pre>
 
-@[code lang=vue transclude={47-47}](@/docs/components/btn-group.md)
+::: demo
 <btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem"/>
+:::
 <pre class="text-white">{{records}}</pre>
 
 ## disabled and readonly
 Add these props to disable changes and style the buttons
 
-@[code lang=vue transclude={55-58}](@/docs/components/btn-group.md)
-<template>
+::: demo
+<div>
 	<span class="mx-2">disabled </span>
 	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem" disabled/>
 	<span class="mx-2">readonly </span>
 	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem" readonly/>
-</template>
+</div>
+:::
 
 ## Size
 Use `sm` or `lg` to use different size buttons
 
-@[code lang=vue transclude={66-67}](@/docs/components/btn-group.md)
-<template>
+::: demo
+<div>
 	<btn-group size="sm" :di="dataitems.MyDataitem" v-model="records.MyDataitem"/>
 	<btn-group size="lg" :di="dataitems.MyDataitem" v-model="records.MyDataitem"/>
-</template>
+</div>
+:::
 
 ## Slots
 Use these slots to customize the btn-group
 
-@[code lang=vue transclude={75-79}](@/docs/components/btn-group.md)
+::: demo
 <template>
-	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem">
+	<btn-group btn-class="dark" :di="dataitems.MyDataitem" v-model="records.MyDataitem">
 		<template #btn-prepend="{btn}">
-			<fa :icon="btn.value == 1 ? 'check':'times'" :class="[btn.value == 1 ? 'text-success':'text-danger']" />
+			<fa
+			:icon="btn.value == 1 ? 'check':'times'"
+			:class="[btn.value == 1 ? 'text-success':'text-danger']"
+			/>
 		</template>
 	</btn-group>
 </template>
-
+:::
 
 ## Props
 Name        | Type    | Description | Default
