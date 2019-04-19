@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCog, faTimes, faCheck, faSearch } from '@fortawesome/free-solid-svg-icons'
+import Meta from 'vue-meta'
 
 export default ({
   Vue, // the version of Vue being used in the VuePress app
@@ -11,6 +12,7 @@ export default ({
   router, // the router instance for the app
   siteData // site metadata
 }) => {
+  Vue.use(Meta)
   Vue.use(ffui)
 
   // window.$ = window.jQuery = require('jquery')

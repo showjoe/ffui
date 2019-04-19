@@ -11,6 +11,7 @@ import formGroup from './form-group.vue'
 import inputGroup from './input-group.vue'
 import listGroup from './list-group.vue'
 import listGroupItem from './list-group-item.vue'
+import modal from './modal.vue'
 import number from './number.vue'
 import progressBar from './progress-bar.vue'
 import row from './row.vue'
@@ -32,6 +33,7 @@ export {
     inputGroup,
     listGroup,
     listGroupItem,
+    modal,
     number,
     progressBar,
     row,
