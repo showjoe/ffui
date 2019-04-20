@@ -60,6 +60,25 @@
 :::
 <pre class="text-white">{{modal3}}</pre>
 
+## Custom transition duration
+::: demo
+<div>
+	<btn @click.native="modal3.show = true">Show</btn>
+	<modal
+	:show="modal3.show"
+	fade
+	centered
+	:transition-duration="500"
+	title="Modal Title"
+	@close="modal3.show = false"
+	@save="modal3.saved = true; modal3.show = false"
+	>
+		Some body to my modal
+	</modal>
+</div>
+:::
+<pre class="text-white">{{modal3}}</pre>
+
 
 ## Sizes
 ::: demo

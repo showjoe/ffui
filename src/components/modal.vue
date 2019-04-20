@@ -1,7 +1,7 @@
 <template>
-  <div class="modal-container">
-    <transition @enter="enterTransition" @after-enter="afterEnterTransition" @before-leave="beforeLeaveTransition" @leave="leaveTransition">
-      <div v-if="show" ref="modal" :class="['modal',{'static show':inline,fade}]" @click.stop="close" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="!show">
+  <transition name="modal" :duration="transitionDuration" @enter="enterTransition" @after-enter="afterEnterTransition" @before-leave="beforeLeaveTransition" @leave="leaveTransition">
+    <div class="modal-container" v-if="show" :style="customCssProps">
+      <div ref="modal" :class="['modal show',{'static':inline,fade}]" @click.stop="close" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="!show">
         <div :class="['modal-dialog',size ? 'modal-'+size:'', {'modal-dialog-centered':centered}]" role="document" @click.stop="">
           <div class="modal-content">
             <slot name="header">
@@ -30,9 +30,9 @@
           </div>
         </div>
       </div>
-    </transition>
-    <div ref="backdrop" v-if="!inline" :class="['modal-backdrop d-none',{'static':inline,fade}]"></div>
-  </div>
+      <div ref="backdrop" v-if="!inline" :class="['modal-backdrop show',{'static':inline,fade}]"></div>
+    </div>
+  </transition>
 </template>
 <script>
 export default {
@@ -52,17 +52,15 @@ export default {
     fade: Boolean,
     centered: Boolean,
     size: String,
-  },
-  metaInfo() {
-    return {
-      bodyAttrs: {
-        class: this.bodyClass
-      }
+    transitionDuration: {
+      default: 150
     }
   },
   computed: {
-    bodyClass() {
-      return this.show && !this.static ? 'modal-open' : ''
+    customCssProps(){
+      return {
+        '--transition-duration':this.transitionDuration / 1000 + 's'
+      }
     }
   },
   data() {
@@ -80,27 +78,31 @@ export default {
     },
     enterTransition() {
       this.dBlock = true
-      if (!this.$refs.backdrop.classList.contains('d-block')) this.$refs.backdrop.classList.toggle("d-block");
-      if (!this.$refs.modal.classList.contains('d-block')) this.$refs.modal.classList.toggle("d-block");
     },
     afterEnterTransition() {
+      document.body.classList.add("modal-open")
       this.$emit("showing");
       this.showing = true
-      if (!this.$refs.backdrop.classList.contains('show')) this.$refs.backdrop.classList.toggle("show");
-      if (!this.$refs.modal.classList.contains('show')) this.$refs.modal.classList.toggle("show");
     },
     beforeLeaveTransition() {
-      if (this.$refs.backdrop.classList.contains('show')) this.$refs.backdrop.classList.toggle("show");
-      if (this.$refs.modal.classList.contains('show')) this.$refs.modal.classList.toggle("show");
+      document.body.classList.remove("modal-open")
     },
     leaveTransition() {
       this.dBlock = false
-      if (this.$refs.backdrop.classList.contains('d-block')) this.$refs.backdrop.classList.toggle("d-block");
     },
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+$duration: var(--transition-duration);
+.modal.show {
+  display: block;
+
+  .modal-dialog {
+    transform: inherit;
+  }
+}
+
 .modal.static {
   display: block;
   position: static;
@@ -110,57 +112,32 @@ button.close {
   cursor: pointer;
 }
 
-// .modal-enter-active,
-// .modal-leave-active {
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity $duration linear;
 
-//   .modal,
-//   .modal-backdrop {
+  .modal.fade,
+  .modal-backdrop {
+    transition: opacity $duration linear;
+  }
 
-//     transition: opacity .5s linear;
-//   }
-// }
+  .modal-dialog {
+    transition: transform $duration ease-in;
+  }
+}
 
-// .modal-enter,
-// .modal-leave-to {
+.modal-enter,
+.modal-leave-to,
+.modal-leave-active {
 
-//   .modal,
-//   .modal-backdrop {
-//     opacity: 0;
-//   }
+  .modal,
+  .modal-backdrop {
+    opacity: 0;
+  }
 
-// }
+  .modal.show .modal-dialog {
+    transform: translateY(-25%);
+  }
 
-/* Transitions */
-// .modal-enter-active,
-// .modal-leave-active {
-//   transition: opacity 1s linear;
-// }
-
-// .modal-enter-active .modal,
-// .modal-leave-active .modal,
-// .modal-enter-active .modal-backdrop,
-// .modal-leave-active .modal-backdrop {
-//   transition: opacity 1s linear;
-// }
-
-// .modal-enter .modal,
-// .modal-leave-to .modal,
-// .modal-leave-active .modal,
-// .modal-enter .modal-backdrop,
-// .modal-leave-to .modal-backdrop,
-// .modal-leave-active .modal-backdrop {
-//   opacity: 0;
-
-// }
-
-// .modal-enter-active .modal-dialog,
-// .modal-leave-active .modal-dialog {
-//   transition: transform .3s ease-out;
-// }
-
-// .modal-enter .modal-dialog,
-// .modal-leave-to .modal-dialog,
-// .modal-leave-active .modal-dialog {
-//   transform: translate(0,-200px);
-// }
+}
 </style>
