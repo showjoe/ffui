@@ -12,8 +12,8 @@
 <div>
 	<btn @click.native="modal1.show = true">Show</btn>
 	<modal
-		:show="modal1.show"
 		title="Modal Title"
+		:show="modal1.show"
 		@close="modal1.show = false"
 		@save="modal1.saved = true; modal1.show = false"
 	>
@@ -29,9 +29,9 @@
 <div>
 	<btn @click.native="modal2.show = true">Show</btn>
 	<modal
+		title="Modal Title"
 		:show="modal2.show"
 		fade
-		title="Modal Title"
 		@close="modal2.show = false"
 		@save="modal2.saved = true; modal2.show = false"
 	>
@@ -47,10 +47,10 @@
 <div>
 	<btn @click.native="modal3.show = true">Show</btn>
 	<modal
+	title="Modal Title"
 	:show="modal3.show"
 	fade
 	centered
-	title="Modal Title"
 	@close="modal3.show = false"
 	@save="modal3.saved = true; modal3.show = false"
 	>
@@ -65,11 +65,11 @@
 <div>
 	<btn @click.native="modal3.show = true">Show</btn>
 	<modal
+	title="Modal Title"
 	:show="modal3.show"
 	fade
 	centered
 	:transition-duration="500"
-	title="Modal Title"
 	@close="modal3.show = false"
 	@save="modal3.saved = true; modal3.show = false"
 	>
@@ -87,11 +87,11 @@
 	<btn @click.native="modal4.size = 'lg'; modal4.show = true">Show Large</btn>
 	<btn @click.native="modal4.size = 'xl'; modal4.show = true">Show XL</btn>
 	<modal
+	title="Modal Title"
 	:show="modal4.show"
 	:size="modal4.size"
 	fade
 	centered
-	title="Modal Title"
 	@close="modal4.show = false"
 	@save="modal4.saved = true; modal4.show = false"
 	>
@@ -101,16 +101,32 @@
 :::
 <pre class="text-white">{{modal4}}</pre>
 
+## backdrop-inactive
+::: demo
+<div>
+	<btn @click.native="modal5.show = true">Show with inactive background</btn>
+	<modal
+	title="Modal Title"
+	:show="modal5.show"
+	backdrop-inactive
+	@close="modal5.show = false"
+	>
+		Some body to my modal
+	</modal>
+</div>
+:::
+<pre class="text-white">{{modal5}}</pre>
+
 ## Slots
 ### header
 ::: demo
 <div>
-	<btn @click.native="modal5.show = true">Show</btn>
-	<modal :show="modal5.show" fade title="Modal Title" @close="modal5.show = false">
+	<btn @click.native="modal6.show = true">Show</btn>
+	<modal :show="modal6.show" fade title="Modal Title" @close="modal6.show = false">
 		<template #header>
 			<div class="modal-header bg-success text-white">
 				Custom Header
-				<button type="button" class="close" aria-label="Close" @click="modal5.show = false">
+				<button type="button" class="close" aria-label="Close" @click="modal6.show = false">
           <span aria-hidden="true">&times;</span>
         </button>
 			</div>
@@ -119,16 +135,16 @@
 	</modal>
 </div>
 :::
-<pre class="text-white">{{modal5}}</pre>
+<pre class="text-white">{{modal6}}</pre>
 
 ### header-inner
 ::: demo
 <div>
-	<btn @click.native="modal6.show = true">Show</btn>
-	<modal :show="modal6.show" fade title="Modal Title" @close="modal6.show = false">
+	<btn @click.native="modal7.show = true">Show</btn>
+	<modal :show="modal7.show" fade title="Modal Title" @close="modal7.show = false">
 		<template #header-inner>
 			Custom Header
-			<button type="button" class="close" aria-label="Close" @click="modal6.show = false">
+			<button type="button" class="close" aria-label="Close" @click="modal7.show = false">
         <span aria-hidden="true">&times;</span>
       </button>
 		</template>
@@ -136,13 +152,13 @@
 	</modal>
 </div>
 :::
-<pre class="text-white">{{modal6}}</pre>
+<pre class="text-white">{{modal7}}</pre>
 
 ### body
 ::: demo
 <div>
-	<btn @click.native="modal7.show = true">Show</btn>
-	<modal :show="modal7.show" fade title="Modal Title" @close="modal7.show = false">
+	<btn @click.native="modal8.show = true">Show</btn>
+	<modal :show="modal8.show" fade title="Modal Title" @close="modal8.show = false">
 		<template #body>
 			<div class="modal-body bg-success text-white">
 				Custom Body
@@ -151,37 +167,47 @@
 	</modal>
 </div>
 :::
-<pre class="text-white">{{modal7}}</pre>
+<pre class="text-white">{{modal8}}</pre>
 
 ### default
 ::: demo
 <div>
-	<btn @click.native="modal7.show = true">Show</btn>
-	<modal :show="modal7.show" fade title="Modal Title" @close="modal7.show = false">
+	<btn @click.native="modal9.show = true">Show</btn>
+	<modal :show="modal9.show" fade title="Modal Title" @close="modal9.show = false">
 		Default slot is inside modal body
 	</modal>
 </div>
 :::
-<pre class="text-white">{{modal7}}</pre>
+<pre class="text-white">{{modal9}}</pre>
 
 ### footer
 ::: demo
 <div>
-	<btn @click.native="modal8.show = true">Show</btn>
-	<modal :show="modal8.show" fade title="Modal Title" @close="modal8.show = false" class="bg-success">
+	<btn @click.native="modal10.show = true">Show</btn>
+	<modal :show="modal10.show" fade title="Modal Title" @close="modal10.show = false" class="bg-success">
 		Some body to my modal
 		<template #footer>
 			<div class="modal-footer">
 				<span class="mr-auto">Custom Footer</span>
-				<btn :outline="false" btn-class="secondary" @click.native="modal8.show = false">Close</btn>
-				<btn :outline="false" btn-class="success" @click.native="modal8.saved = true; modal8.show = false">Save</btn>
+				<btn :outline="false" btn-class="secondary" @click.native="modal10.show = false">Close</btn>
+				<btn :outline="false" btn-class="success" @click.native="modal10.saved = true; modal10.show = false">Save</btn>
 			</div>
 		</template>
 	</modal>
 </div>
 :::
-<pre class="text-white">{{modal8}}</pre>
+<pre class="text-white">{{modal10}}</pre>
 
+### source-coords
+::: demo
+<div>
+	<btn ref="sourceCoordsBtn" @click.native="modal11.show = true">Show</btn>
+	<modal :show="modal11.show" fade :source-coords="sourceCoords()" title="Modal Title" @close="modal11.show = false" class="bg-success">
+		Some body to my modal
+	</modal>
+</div>
+:::
+<pre class="text-white">{{modal11}}</pre>
 
 <script>
 export default {
@@ -224,8 +250,24 @@ export default {
 				saved:false,
 				show:false
     	},
+    	modal10:{
+				saved:false,
+				show:false
+    	},
+    	modal11:{
+				saved:false,
+				show:false
+    	},
     }
   },
+  methods:{
+  	sourceCoords(){
+  		if(this.$refs.sourceCoordsBtn){
+	  		console.log(this.$refs.sourceCoordsBtn.$el.getBoundingClientRect()) 
+	  		return this.$refs.sourceCoordsBtn.$el.getBoundingClientRect()
+	  	}
+  	}
+  }
 }
 </script>
 
