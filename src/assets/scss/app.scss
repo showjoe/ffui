@@ -1,0 +1,58 @@
+@import '~bootstrap/scss/bootstrap';
+
+$form-feedback-invalid-color: #dc3545;
+.was-validated {
+  .is-invalid {
+
+    .form-control,
+    .custom-select,
+    .custom-select {
+      border-color: $form-feedback-invalid-color;
+    }
+
+    .list-group {
+      border: 1px solid $form-feedback-invalid-color;
+
+    }
+
+    .btn-primary {
+      @extend .btn-danger;
+    }
+
+    .btn-outline-primary,
+    .btn-outline-secondary {
+      @extend .btn-outline-danger;
+    }
+
+    .slider-track,
+    .handle {
+      border: red solid 2px;
+    }
+
+    .invalid-feedback {
+      display: block;
+    }
+
+    .irs,
+    .irs-with-grid {
+      span {
+        @extend .text-danger;
+      }
+    }
+  }
+
+  .is-valid {
+    .btn-primary {
+      @extend .btn-success;
+    }
+
+    .btn-outline-primary,
+    .btn-outline-secondary {
+      @extend .btn-outline-success;
+    }
+
+    .invalid-feedback {
+      display: block;
+    }
+  }
+}

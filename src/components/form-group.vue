@@ -10,19 +10,20 @@ export default {
     cols: String,
     bp: String,
     sizes: Object,
-    flip: Boolean
+    flip: Boolean,
+    error: {}
   },
   render(h) {
     var children = []
     var col0Children = []
     var labelProps = { class: 'col-form-label', attrs: {}, domProps: { innerHTML: this.getLabel() } }
 
-    this.injectSlot('pre_label',{ di: this.di }, col0Children)
-    this.injectSlot('label',{ di: this.di }, col0Children)
+    this.injectSlot('pre_label', { di: this.di }, col0Children)
 
     if (this.di) labelProps.attrs.for = this.di.name
     var label = h('label', labelProps)
     if (!this.hideLabel) col0Children.push(label)
+    this.injectSlot('label', { di: this.di }, col0Children)
 
     if (this.cols) {
 
@@ -31,16 +32,16 @@ export default {
 
       var slotChildren = []
 
-      this.injectSlot('default',{ di: this.di }, slotChildren)
-      this.injectSlot('belowInput',{ di: this.di }, slotChildren)
+      this.injectSlot('default', { di: this.di }, slotChildren)
+      this.injectSlot('below_input', { di: this.di }, slotChildren)
 
       var col2 = h('div', { class: [this.colWidths(1)] }, slotChildren)
       children.push(col2)
       if (this.flip) children.reverse()
     } else {
       children.push(col0Children)
-      this.injectSlot('default',{ di: this.di }, children)
-      this.injectSlot('belowInput',{ di: this.di }, children)
+      this.injectSlot('default', { di: this.di }, children)
+      this.injectSlot('below_input', { di: this.di }, children)
     }
     if (!this.hideError)
       children.push(this.getErrorMessage(h))
@@ -57,13 +58,8 @@ export default {
     //     return state.errors[this.di.name]
     //   }
     // }),
-    questionnaireRef() {
-      return this.$root.questionnaireRef
-    },
-    hasError() {
-      return this.error ? this.error.length : false
-      // return false
-    },
+    questionnaireRef() { return this.$root.questionnaireRef },
+    hasError() { return this.error ? this.error.length > 0 : false },
     sizeClass() {
       var classes = []
       var bp = false
@@ -91,7 +87,7 @@ export default {
     },
   },
   methods: {
-    injectSlot(slot,data, parent){
+    injectSlot(slot, data, parent) {
       if (this.$scopedSlots[slot]) parent.push(this.$scopedSlots[slot](data))
       else if (this.$slots[slot]) parent.push(this.$slots[slot])
     },
@@ -112,3 +108,6 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+
+</style>

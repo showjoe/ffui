@@ -47,15 +47,49 @@ Here are two sample dataitem objects
 ## Using slots
 Slots can be helpful for placing additional content in praticular places within the form-group.  You can use `pre_label`,`label`,`below_input`
 
+### pre_label
 ::: demo
 <card>
-  <form-group label="A different way to customise the label" :sizes="{md:6}">
-    <span slot="below_input" class="text-danger">below_input slot</span>
-    <textbox :di="dataitems.MyDataitem1" v-model="records.MyDataitem1"/>
+  <form-group :di="dataitems.MyDataitem1" :sizes="{md:6}">
+    <template #pre_label>
+      <span class="text-info">pre_label slot</span>
+    </template>
+    <textbox v-model="records.MyDataitem1"/>
+  </form-group>
+</card>
+:::
+### label
+::: demo
+<card>
+  <form-group :di="dataitems.MyDataitem1" :sizes="{md:6}">
+    <template #label>
+      <span class="text-primary">label slot</span>
+    </template>
+    <textbox v-model="records.MyDataitem1"/>
+  </form-group>
+</card>
+:::
+### below_input
+::: demo
+<card>
+  <form-group :di="dataitems.MyDataitem1" :sizes="{md:6}">
+    <template #below_input>
+      <span class="text-danger">below_input slot</span>
+    </template>
+    <textbox v-model="records.MyDataitem1"/>
   </form-group>
 </card>
 :::
 
+## Errors
+
+::: demo
+<card class="was-validated">
+  <form-group :di="dataitems.MyDataitem1" :sizes="{md:6}" :error="['required']">
+    <textbox v-model="records.MyDataitem1"/>
+  </form-group>
+</card>
+:::
 
 ## Slots
 Name        | Description 

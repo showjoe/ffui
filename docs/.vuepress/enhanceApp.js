@@ -1,6 +1,6 @@
 import * as ffui from '../../src'
 import Vue from 'vue'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../src/assets/scss/app.scss';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCog, faTimes, faCheck, faSearch } from '@fortawesome/free-solid-svg-icons'
