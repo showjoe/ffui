@@ -105,11 +105,9 @@ export default {
 }
 </script>
 <style lang="scss">
-$duration: var(--transition-duration);
-
 .modal.show {
   display: block;
-
+  
   .modal-dialog {
     transform: inherit;
   }
@@ -126,15 +124,15 @@ button.close {
 
 .modal-enter-active,
 .modal-leave-active {
-  transition: opacity calc($duration * 2) linear;
+  transition: opacity calc(var(--transition-duration) * 2) linear;
 
   .modal.fade,
   .modal-backdrop {
-    transition: opacity $duration linear;
+    transition: opacity var(--transition-duration) linear;
   }
 
   .modal-dialog {
-    transition: transform $duration ease-in;
+    transition: transform var(--transition-duration) ease-in;
   }
 }
 
@@ -148,7 +146,7 @@ button.close {
   }
 
   .modal.show .modal-dialog {
-    transform: translate(-25%,-25%) scale(0.2);
+    transform: translateY(-25%);
   }
 
 }
