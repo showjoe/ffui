@@ -46,7 +46,8 @@ module.exports = {
           'components/progress-bar',
           'components/slider',
           'components/textbox',
-          'components/typeahead'
+          'components/typeahead',
+          'components/font-awesome'
         ]
       }
     ]
