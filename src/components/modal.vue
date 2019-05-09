@@ -53,7 +53,7 @@ export default {
     centered: Boolean,
     size: String,
     backdropInactive: Boolean,
-    sourceCoords: DOMRect,
+    sourceCoords: {},
     transitionDuration: {
       default: 150
     }

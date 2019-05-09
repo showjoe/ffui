@@ -1,10 +1,5 @@
 # Datepicker
 ## Basic Example
-You need to add the following to your site for the datepicker to work
-``` js
-require('tempusdominus-bootstrap-4');
-import "tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.css";
-```
 
 ::: demo
 <datepicker v-model="records.date1" />
@@ -14,15 +9,34 @@ import "tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.css";
 ## Other Sizes
 
 ::: demo
-<datepicker size="sm" v-model="records.date1"/>
+<datepicker size="sm" v-model="records.date2"/>
 or
-<datepicker size="lg" v-model="records.date1"/>
+<datepicker size="lg" v-model="records.date3"/>
 :::
-<pre class="text-white">date1:{{records.date1?records.date1:'null'}}</pre>
+<pre class="text-white">date2:{{records.date2?records.date2:'null'}}</pre>
+<pre class="text-white">date3:{{records.date3?records.date3:'null'}}</pre>
 
+### future
+allow future dates
+::: demo
+<datepicker future v-model="records.date4"/>
+:::
+
+### min-date
+Specify a minimum start date
+::: demo
+<datepicker min-date="2019-05-01" v-model="records.date5"/>
+:::
+
+### max-date
+Specify a maximum start date
+::: demo
+<datepicker max-date="2019-05-01" v-model="records.date5"/>
+:::
 
 ## Types
 date (default) or time or datetime can be used to customize the datepicker
+TODO
 
 ### time
 
@@ -62,7 +76,15 @@ input            |        | Emits input event on value change
 export default {
 	data () {
       	return {
-      		records:{ date1:null,time1:null,datetime1:null},
+      		records:{
+      			date1:null,
+      			date2:null,
+      			date3:null,
+      			date4:null,
+      			date5:null,
+      			time1:null,
+      			datetime1:null
+      		},
       	}
   	},
 }

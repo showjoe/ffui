@@ -12,9 +12,6 @@ module.exports = {
       },
     }]
   ],
-  head: [
-    ['link', { rel: 'icon', href: '/node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' }]
-  ],
   themeConfig: {
     repo: 'showjoe/ffui',
     docsDir: 'docs',

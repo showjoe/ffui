@@ -14,12 +14,7 @@ export default ({
 }) => {
   Vue.use(ffui)
 
-  // window.$ = window.jQuery = require('jquery')
-  // require('bootstrap')
-  // require('moment')
   if (typeof window !== "undefined") {
-    const $ = require('jquery')
-    window.$ = window.jQuery = $;
     const VueInputMask = require('vue-inputmask').default
     Vue.use(VueInputMask)
   }
