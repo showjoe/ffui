@@ -160,7 +160,7 @@ export default {
       return false
     },
     currentMonth() {
-      return this.visible_date.month()
+      return this.visible_date.clone().month()
     },
     firstDayOfMonth() {
       return this.visible_date.clone().subtract(this.visible_date.date() - 1, 'days')
@@ -200,7 +200,9 @@ export default {
     },
     getSafeMoment(date) {
       var d = date.substr(0, 10).split('-');
-      return moment(this.getCleanDates(d).reverse().join('-'), "YYYY-MM-DD")
+      var c = this.getCleanDates(d).join('-')
+      var m = moment(c, "YYYY-MM-DD")
+      return m
     },
     next() {
       var n = 1;
@@ -317,8 +319,8 @@ export default {
       }
     },
     getCleanDates(dateArray) {
-      dateArray[0] = dateArray[0].replace('00', '01')
       dateArray[1] = dateArray[1].replace('00', '01')
+      dateArray[2] = dateArray[2].replace('00', '01')
       return dateArray
     },
     storeIncompleteDates(dateArray) {
