@@ -15,14 +15,11 @@
             </div>
           </div>
           <div class="m-auto">
-            <span v-if="mode=='days'" @click="showMonths" class="month-button py-2">{{visible_date.format('MMMM YYYY')}}</span>
-            <span v-if="mode=='months'" @click="showYears" class="year-button py-2">{{visible_date.format('YYYY')}}</span>
-            <span v-if="mode=='years'" @click="showDecades" class="year-button py-2">
-              {{visible_date.format('YYYY').substring(0,3) + '0s'}}
-            </span>
-            <span v-if="mode=='decades'" class="year-button py-2">
-              {{visible_date.format('YYYY').substring(0,2) + '00'}}
-            </span>
+            <span v-if="mode=='time'" class="month-button py-2" v-text="visible_date.format('HH:mm')" />
+            <span v-if="mode=='days'" @click="mode='months'" class="month-button py-2" v-text="visible_date.format('MMMM YYYY')" />
+            <span v-if="mode=='months'" @click="mode='years'" class="year-button py-2" v-text="visible_date.format('YYYY')" />
+            <span v-if="mode=='years'" @click="mode='decades'" class="year-button py-2" v-text="visible_date.format('YYYY').substring(0,3) + '0s'" />
+            <span v-if="mode=='decades'" class="year-button py-2" v-text="visible_date.format('YYYY').substring(0,2) + '00'" />
           </div>
           <div class="ml-auto">
             <div @click="next" class="next-button">
@@ -31,13 +28,23 @@
             </div>
           </div>
         </header>
+        <div v-if="mode=='time'" class="time-body">
+          <div class="picker">
+            <transition-group name="scroll-list" tag="div" class="hours">
+              <span class="hour" v-for="h in hourArr" :key="h" @click="visible_date = visible_date.clone().hour(h)"> {{h}} </span>
+            </transition-group>
+            <div class="minutes">
+              <span class="minute" v-for="m in minuteArr" :key="m" @click="visible_date = visible_date.clone().minute(m)"> {{m}} </span>
+            </div>
+          </div>
+        </div>
         <div v-if="mode=='days'" class="calendar-body">
           <div class="days-of-week">
-            <span v-for="i in 7" :key="'weekdays_'+i" class="day-block" :title="$options.moment.weekdays(i)">{{$options.moment.weekdaysShort(i)}}</span>
+            <span v-for="i in 7" :key="'weekdays_'+i" class="day-block" :title="$options.moment.weekdays(i)" v-text="$options.moment.weekdaysShort(i)" />
           </div>
           <div class="days-of-month">
             <span v-for="n in 42" :key="'days_'+n" @click="clickDate(getCalendarDate('day',n))" :class="getBlockClass('day',n)">
-              <span class="date">{{getCalendarDate('day',n).format('D')}}</span>
+              <span class="date" v-text="getCalendarDate('day',n).format('D')" />
               <i class="hover-circle"></i>
             </span>
           </div>
@@ -46,21 +53,34 @@
           <div class="months">
             <span v-for="(m,n) in $options.moment.months()" :key="'month_'+n" @click="setMonth(n)" :class="getBlockClass('month',n)">
               <i class="hover-circle"></i>
-              <span class="date">{{m}}</span>
+              <span class="date" v-text="m" />
             </span>
           </div>
         </div>
         <div v-if="mode=='years'" class="years-body">
           <div class="years">
-            <span v-for="y in getDecade()" :key="'year_'+y" @click="setYear(y)" class="year-block"><i class="hover-circle"></i><span class="date">{{y}}</span></span>
+            <span v-for="y in getDecade()" :key="'year_'+y" @click="setYear(y)" :class="getBlockClass('year',y)">
+              <i class="hover-circle"></i>
+              <span class="date" v-text="y" />
+            </span>
           </div>
         </div>
         <div v-if="mode=='decades'" class="years-body">
           <div class="years">
-            <span v-for="d in getCentury()" :key="'decade_'+d" @click="setDecade(d)" class="year-block"><i class="hover-circle"></i><span class="date">{{d}}</span></span>
+            <span v-for="d in getCentury()" :key="'decade_'+d" @click="setDecade(d)" :class="getBlockClass('decade',d)" class="year-block">
+              <i class="hover-circle"></i>
+              <span class="date" v-text="d" />
+            </span>
           </div>
         </div>
-        <div class="calendar-footer">Footer</div>
+        <div class="calendar-footer">
+          <form-group v-if="mode=='days'" class="m-auto" hide-label>
+            <checkbox label="Unknown Day" v-model="unknownDay" />
+          </form-group>
+          <form-group v-if="mode=='months'" class="m-auto" hide-label>
+            <checkbox label="Unknown Month" v-model="unknownMonth" />
+          </form-group>
+        </div>
       </div>
     </transition>
     <div :class="['input-group-append',{show}]" :data-target="'#'+_uid" @click="togglePicker">
@@ -104,8 +124,8 @@ export default {
       type: String,
       default: function() {
         var props = this.$options.propsData
-        if (props.type && props.type == 'time') return 'HH:MM'
-        if (props.type && props.type == 'datetime') return 'DD/MM/YYYY HH:MM'
+        if (props.type && props.type == 'time') return 'HH:mm'
+        if (props.type && props.type == 'datetime') return 'DD/MM/YYYY HH:mm'
         return 'DD/MM/YYYY'
       }
     },
@@ -117,7 +137,11 @@ export default {
     value: {},
     viewMode: {
       type: String,
-      default: 'days'
+      default: function() {
+        var props = this.$options.propsData
+        if (props.type && (props.type == 'time' || props.type == 'datetime')) return props.type
+        return 'days'
+      }
     },
     disabled: {
       default: false
@@ -135,22 +159,36 @@ export default {
       val: null,
       date: moment(),
       visible_date: moment(),
+      unknownDay: false,
+      unknownMonth: false
     }
   },
-  destroyed() {
-    this.destroyDatePicker()
+  mounted() {
+    this.setupDatePicker()
   },
   watch: {
     date() {
       if (this.date.isValid()) this.updateDate(this.date.format('YYYY-MM-DD'))
     },
+    visible_date() {
+      // console.log('visible date change')
+    },
     value() {
-      if (this.value) {
-        this.date = moment(this.value, "YYYY-MM-DD");
-        this.visible_date = this.getSafeMoment(this.value);
-        this.val = this.formatDateForDisplay(this.value);
-      } else {
-        this.visible_date = false
+      this.setupDatePicker()
+    },
+    unknownDay() {
+      if (this.unknownDay) {
+        var d = this.value.substr(0, 10).split('-');
+        d[2] = '00'
+        this.updateDate(d.join('-'))
+      }
+    },
+    unknownMonth() {
+      if (this.unknownMonth) {
+        var d = this.value.substr(0, 10).split('-');
+        d[1] = '00'
+        d[2] = '00'
+        this.updateDate(d.join('-'))
       }
     }
   },
@@ -161,6 +199,12 @@ export default {
     },
     currentMonth() {
       return this.visible_date.clone().month()
+    },
+    currentHour() {
+      return this.visible_date.clone().hour()
+    },
+    currentMinute() {
+      return this.visible_date.clone().minute()
     },
     firstDayOfMonth() {
       return this.visible_date.clone().subtract(this.visible_date.date() - 1, 'days')
@@ -175,9 +219,24 @@ export default {
         return this.firstDayOfMonth.clone().subtract(7, 'days')
       }
     },
+    hourArr() {
+      var h = this.currentHour
+      var hArr = []
+      for (var i = 3; i > 0; i--) hArr.push(this.visible_date.clone().hour(h - i).format('HH'))
+      for (var j = 0; j <= 3; j++) hArr.push(this.visible_date.clone().hour(h + j).format('HH'))
+      return hArr
+    },
+    minuteArr() {
+      var h = this.currentMinute
+      var hArr = []
+      for (var i = 3; i > 0; i--) hArr.push(this.visible_date.clone().minute(h - i).format('mm'))
+      for (var j = 0; j <= 3; j++) hArr.push(this.visible_date.clone().minute(h + j).format('mm'))
+      return hArr
+    },
     parentType() {
-      var p = 'months'
       var m = this.mode
+      var p = 'months'
+      if (m == 'time') p = 'hours'
       if (m == 'months' || m == 'years' || m == 'decades') p = 'years'
       return p
     },
@@ -188,15 +247,33 @@ export default {
   methods: {
     togglePicker() {
       if (this.value) {
-        this.date = moment(this.value, "YYYY-MM-DD")
+        this.setupDatePicker()
       }
       this.show = !this.show
       this.mode = this.viewMode
+      if (this.mode == 'days' && this.unknownMonth) this.mode = 'months'
+    },
+    setupDatePicker() {
+      // console.log('setupDatePicker')
+      if (this.value) {
+        this.date = moment(this.value, "YYYY-MM-DD");
+        this.visible_date = this.getSafeMoment(this.value);
+        this.val = this.formatDateForDisplay(this.value);
+        this.unknownDay = this.value.substring(8, 10) == '00'
+        this.unknownMonth = this.value.substring(5, 10) == '00-00'
+      } else {
+        // this.visible_date = false
+      }
     },
     clickDate(date) {
+      // console.log(date)
       if (this.disabled || this.dayIsDisabled(date)) return false
       this.date = date
       this.visible_date = date
+      this.unknownDay = false
+    },
+    hourDrag() {
+      // console.log(e, n)
     },
     getSafeMoment(date) {
       var d = date.substr(0, 10).split('-');
@@ -205,15 +282,11 @@ export default {
       return m
     },
     next() {
-      var n = 1;
-      if (this.mode == 'years') n = 10
-      if (this.mode == 'decades') n = 100
+      var n = this.mode == 'years' ? 10 : this.mode == 'years' ? 100 : 1;
       this.visible_date = this.visible_date.clone().add(n, this.parentType)
     },
     prev() {
-      var n = 1;
-      if (this.mode == 'years') n = 10
-      if (this.mode == 'decades') n = 100
+      var n = this.mode == 'years' ? 10 : this.mode == 'years' ? 100 : 1;
       this.visible_date = this.visible_date.clone().subtract(n, this.parentType)
     },
     getCalendarDate(type, n) {
@@ -222,24 +295,35 @@ export default {
       return date
     },
     getBlockClass(type, n) {
-      var givenCalendarDate = type == 'day' ? this.getCalendarDate(type, n) : this.visible_date.clone()[type](n)
-      if (type == 'day')
-        return [type + '-block',
-          {
-            'active': this.date.isSame(givenCalendarDate, type),
+      var classes = {}
+      var givenCalendarDate = false
+      var active = false
+      var disabled = false
+      var format = this.mode == 'months' ? 'YYYY-MM' : this.mode == 'years' ? 'YYYY' : false
+      if (this.visible_date) {
+        if (type == 'day') {
+          givenCalendarDate = this.getCalendarDate(type, n)
+          classes = {
+            active: this.date.isSame(givenCalendarDate, type),
+            disabled: this.dayIsDisabled(givenCalendarDate),
             'prev-month': givenCalendarDate.month() < this.currentMonth,
             'next-month': givenCalendarDate.month() > this.currentMonth,
-            'today': this.today.isSame(givenCalendarDate, type),
-            'disabled': this.dayIsDisabled(givenCalendarDate)
+            today: this.today.isSame(givenCalendarDate, type)
           }
-        ]
-      var test = [type + '-block',
-        {
-          'active': this.visible_date.format('YYYY-MM') == givenCalendarDate.format('YYYY-MM'),
-          'disabled': this.dayIsDisabled(givenCalendarDate)
+        } else {
+          if (type == 'decade') {
+            givenCalendarDate = this.visible_date.clone().year(n)
+            active = this.getSafeMoment(this.value).format('YYYY').substring(0, 3) + '0' == n
+          } else {
+            givenCalendarDate = this.visible_date.clone()[type](n)
+            if (this.value) active = this.getSafeMoment(this.value).format(format) == givenCalendarDate.format(format)
+            if (type == 'month' && this.unknownMonth) active = false
+            disabled = this.dayIsDisabled(givenCalendarDate)
+          }
+          classes = { active, disabled }
         }
-      ]
-      return test
+      }
+      return [type + '-block', classes]
     },
     dayIsDisabled(day) {
       if (this.minDate && day.isBefore(this.getSafeMoment(this.minDate))) return true
@@ -247,17 +331,9 @@ export default {
       if (!this.future && day.isAfter(this.today)) return true
       return false
     },
-    showMonths() {
-      this.mode = 'months'
-    },
-    showYears() {
-      this.mode = 'years'
-    },
-    showDecades() {
-      this.mode = 'decades'
-    },
     setMonth(n) {
       this.visible_date = this.visible_date.clone().month(n)
+      this.unknownMonth = false
       this.mode = 'days'
     },
     setYear(n) {
@@ -265,24 +341,21 @@ export default {
       this.mode = 'months'
     },
     setDecade(n) {
-      this.visible_date = this.visible_date.clone().year(n)
+      var vd = this.visible_date.year().toString()
+      if (n.substring(0, 2) == vd.substring(0, 2) && vd.substring(0, 3) + '0' != n) this.visible_date = this.visible_date.clone().year(n)
       this.mode = 'years'
     },
     getDecade() {
       var decade = parseInt(this.visible_date.year().toString().substring(0, 3))
       var arr = [parseInt(decade - 1) + '9']
-      for (var i = 0; i <= 9; i++) {
-        arr.push(decade + '' + i)
-      }
+      for (var i = 0; i <= 9; i++) { arr.push(decade + '' + i) }
       arr.push(parseInt(decade + 1) + '0')
       return arr
     },
     getCentury() {
       var century = parseInt(this.visible_date.year().toString().substring(0, 2))
       var arr = [parseInt(century - 1) + '90']
-      for (var i = 0; i <= 9; i++) {
-        arr.push(century + '' + i + '0')
-      }
+      for (var i = 0; i <= 9; i++) { arr.push(century + '' + i + '0') }
       arr.push(parseInt(century + 1) + '00')
       return arr
     },
@@ -299,7 +372,6 @@ export default {
         var d = date.substr(0, 10).split('/');
         d = this.storeIncompleteDates(d).reverse().join('-')
         if (date.length == 16) {
-          /* datetime */
           var t = date.substr(10, 6);
           d = d + t + ':00'
         }
@@ -311,7 +383,6 @@ export default {
         var d = date.substr(0, 10).split('-').reverse();
         d = this.displayIncompleteDates(d).join('/')
         if (date.length == 19) {
-          /* datetime */
           var t = date.substr(10, 6);
           d = d + t
         }
@@ -415,6 +486,55 @@ $day-block-width: $width/7;
   }
 }
 
+.picker {
+  display: flex;
+  width: 40%;
+  margin: auto;
+
+  .hours,
+  .minutes {
+    width: 50%;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border: thin solid;
+
+    .hour,
+    .minute {
+      width: 100%;
+      position: relative;
+      display: flex;
+      height: 14.28%;
+      border: 1px solid #ccc;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+    }
+  }
+}
+
+.scroll-list-move {
+  transition: transform 1s;
+}
+
+.scroll-list-enter-active,
+.scroll-list-leave-active {
+  transition: all 1s;
+
+  &.hour:not(.scroll-list-move) {
+    background: red;
+  }
+}
+
+.scroll-list-enter{
+  transform: translateY(100%);
+}
+.scroll-list-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.time-body,
 .calendar-body,
 .months-body,
 .years-body {
@@ -551,6 +671,7 @@ $day-block-width: $width/7;
 
 
 .calendar-footer {
+  display: flex;
   box-sizing: border-box;
   // border: 1px solid rgba(0, 0, 0, 0.15);
 }

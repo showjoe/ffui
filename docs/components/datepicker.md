@@ -42,6 +42,7 @@ TODO
 
 ::: demo
 <datepicker type="time" v-model="records.time1"/>
+<pre class="text-white">time1:{{records.time1?records.time1:'null'}}</pre>
 :::
 
 ### datetime
@@ -77,7 +78,7 @@ export default {
 	data () {
       	return {
       		records:{
-      			date1:null,
+      			date1:'1978-10-02',
       			date2:null,
       			date3:null,
       			date4:null,
