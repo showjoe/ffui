@@ -42,13 +42,28 @@ TODO
 
 ::: demo
 <datepicker type="time" v-model="records.time1"/>
-<pre class="text-white">time1:{{records.time1?records.time1:'null'}}</pre>
 :::
+<pre class="text-white">time1:{{records.time1?records.time1:'null'}}</pre>
 
 ### datetime
 
 ::: demo
 <datepicker type="datetime" v-model="records.datetime1"/>
+:::
+## Unknown Day & Unknown Month
+::: demo
+<datepicker v-model="records.date6"/>
+<datepicker v-model="records.date7"/>
+:::
+<pre class="text-white">
+date6:{{records.date6?records.date6:'null'}}
+date7:{{records.date7?records.date7:'null'}}
+</pre>
+
+## View-mode
+Define which view datepicker should start with.
+::: demo
+<datepicker view-mode="decades" v-model="records.date8"/>
 :::
 
 ### Props
@@ -82,8 +97,11 @@ export default {
       			date2:null,
       			date3:null,
       			date4:null,
-      			date5:null,
-      			time1:null,
+                        date5:null,
+                        date6:'2010-02-00',
+                        date7:'2010-00-00',
+      			date8:null,
+      			time1:'01:02',
       			datetime1:null
       		},
       	}

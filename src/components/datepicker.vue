@@ -3,10 +3,10 @@
     <div class="input-group-append" v-if="$scopedSlots.prepend">
       <slot name="prepend"></slot>
     </div>
-    <input :id="id" :disabled="disabled" ref="datepickerinput" type="text" :class="['form-control datetimepicker-input',size?'form-control-'+size:'',{show}]" :value="val" @change="inputChange" v-mask="{mask, greedy: true, placeholder }" />
+    <input :id="id" :disabled="disabled" ref="datepickerinput" pattern="\d*" :type="inputType" :class="['form-control datetimepicker-input',size?'form-control-'+size:'',{show}]" :value="val" @change="inputChange" v-mask="{mask, greedy: true, placeholder }" />
     <div :class="['datepicker-backdrop',{show}]" @click="togglePicker"></div>
     <transition name="fade">
-      <div v-if="show" :class="['calendar',{show}]">
+      <div v-if="show" :class="['calendar','calendar-'+size,{show}]">
         <header class="calendar-header">
           <div class="mr-auto">
             <div @click="prev" class="prev-button">
@@ -29,13 +29,17 @@
           </div>
         </header>
         <div v-if="mode=='time'" class="time-body">
-          <div class="picker">
+          <div ref="timePicker" class="picker">
             <transition-group name="scroll-list" tag="div" class="hours">
-              <span class="hour" v-for="h in hourArr" :key="h" @click="visible_date = visible_date.clone().hour(h)"> {{h}} </span>
+              <span class="hour" v-for="h in hourArr" :key="h" @click="visible_date = visible_date.clone().hour(h)">
+                <span>{{h}}</span>
+              </span>
             </transition-group>
-            <div class="minutes">
-              <span class="minute" v-for="m in minuteArr" :key="m" @click="visible_date = visible_date.clone().minute(m)"> {{m}} </span>
-            </div>
+            <transition-group name="scroll-list" tag="div" class="minutes">
+              <span class="minute" v-for="m in minuteArr" :key="m" @click="visible_date = visible_date.clone().minute(m)">
+                <span>{{m}}</span>
+              </span>
+            </transition-group>
           </div>
         </div>
         <div v-if="mode=='days'" class="calendar-body">
@@ -59,7 +63,7 @@
         </div>
         <div v-if="mode=='years'" class="years-body">
           <div class="years">
-            <span v-for="y in getDecade()" :key="'year_'+y" @click="setYear(y)" :class="getBlockClass('year',y)">
+            <span v-for="(y,n) in getDecade()" :key="'year_'+y" @click="setYear(y)" :class="getBlockClass('year',y,n)">
               <i class="hover-circle"></i>
               <span class="date" v-text="y" />
             </span>
@@ -67,7 +71,7 @@
         </div>
         <div v-if="mode=='decades'" class="years-body">
           <div class="years">
-            <span v-for="d in getCentury()" :key="'decade_'+d" @click="setDecade(d)" :class="getBlockClass('decade',d)" class="year-block">
+            <span v-for="(d,n)  in getCentury()" :key="'decade_'+n" @click="setDecade(d)" :class="getBlockClass('decade',d,n)" class="year-block">
               <i class="hover-circle"></i>
               <span class="date" v-text="d" />
             </span>
@@ -83,7 +87,7 @@
         </div>
       </div>
     </transition>
-    <div :class="['input-group-append',{show}]" :data-target="'#'+_uid" @click="togglePicker">
+    <div :class="['input-group-append']" @click="togglePicker">
       <div class="input-group-text"><i :class="['fasvg', {'fa-calendar':type=='date'||type=='datetime', 'fa-clock':type=='time'}]" /></div>
     </div>
     <div class="input-group-append" v-if="$slots.append||$scopedSlots.append">
@@ -93,7 +97,6 @@
 </template>
 <script>
 import moment from 'moment'
-
 export default {
   name: 'datepicker',
   moment,
@@ -148,7 +151,7 @@ export default {
     }
   },
   formats: {
-    datetime: 'DD/MM/YYYY H:mm',
+    datetime: 'DD/MM/YYYY HH:mm',
     date: 'DD/MM/YYYY',
     time: 'HH:mm'
   },
@@ -160,34 +163,32 @@ export default {
       date: moment(),
       visible_date: moment(),
       unknownDay: false,
-      unknownMonth: false
+      unknownMonth: false,
+      currentTime: { h: false, m: false }
     }
   },
   mounted() {
     this.setupDatePicker()
+    window.moment = moment
   },
   watch: {
     date() {
-      if (this.date.isValid()) this.updateDate(this.date.format('YYYY-MM-DD'))
-    },
-    visible_date() {
-      // console.log('visible date change')
+      var format = 'YYYY-MM-DD'
+      if (this.mode == 'time') { format = 'HH:mm' }
+      if (this.date.isValid()) this.updateDate(this.date.format(format))
     },
     value() {
       this.setupDatePicker()
     },
     unknownDay() {
       if (this.unknownDay) {
-        var d = this.value.substr(0, 10).split('-');
-        d[2] = '00'
+        var d = this.visible_date.format('YYYY-MM-00').split('-')
         this.updateDate(d.join('-'))
       }
     },
     unknownMonth() {
       if (this.unknownMonth) {
-        var d = this.value.substr(0, 10).split('-');
-        d[1] = '00'
-        d[2] = '00'
+        var d = this.visible_date.format('YYYY-00-00').split('-')
         this.updateDate(d.join('-'))
       }
     }
@@ -196,6 +197,12 @@ export default {
     id() {
       if (this.di) return this.di.name
       return false
+    },
+    format() {
+      return this.$options.formats[this.mode]
+    },
+    inputType(){
+      return this.mode == 'time' ? this.mode : false
     },
     currentMonth() {
       return this.visible_date.clone().month()
@@ -222,16 +229,16 @@ export default {
     hourArr() {
       var h = this.currentHour
       var hArr = []
-      for (var i = 3; i > 0; i--) hArr.push(this.visible_date.clone().hour(h - i).format('HH'))
-      for (var j = 0; j <= 3; j++) hArr.push(this.visible_date.clone().hour(h + j).format('HH'))
+      for (var i = 4; i > 0; i--) hArr.push(this.visible_date.clone().hour(h - i).format('HH'))
+      for (var j = 0; j <= 4; j++) hArr.push(this.visible_date.clone().hour(h + j).format('HH'))
       return hArr
     },
     minuteArr() {
-      var h = this.currentMinute
-      var hArr = []
-      for (var i = 3; i > 0; i--) hArr.push(this.visible_date.clone().minute(h - i).format('mm'))
-      for (var j = 0; j <= 3; j++) hArr.push(this.visible_date.clone().minute(h + j).format('mm'))
-      return hArr
+      var m = this.currentMinute
+      var mArr = []
+      for (var i = 4; i > 0; i--) mArr.push(this.visible_date.clone().minute(m - i).format('mm'))
+      for (var j = 0; j <= 4; j++) mArr.push(this.visible_date.clone().minute(m + j).format('mm'))
+      return mArr
     },
     parentType() {
       var m = this.mode
@@ -245,35 +252,56 @@ export default {
     }
   },
   methods: {
-    togglePicker() {
-      if (this.value) {
-        this.setupDatePicker()
-      }
-      this.show = !this.show
-      this.mode = this.viewMode
-      if (this.mode == 'days' && this.unknownMonth) this.mode = 'months'
-    },
     setupDatePicker() {
-      // console.log('setupDatePicker')
       if (this.value) {
-        this.date = moment(this.value, "YYYY-MM-DD");
-        this.visible_date = this.getSafeMoment(this.value);
-        this.val = this.formatDateForDisplay(this.value);
-        this.unknownDay = this.value.substring(8, 10) == '00'
-        this.unknownMonth = this.value.substring(5, 10) == '00-00'
+        this.date = moment(this.value, this.$options.formats[this.mode]);
+        if (this.mode == 'time') {
+          this.visible_date = this.date.clone()
+          this.val = this.value;
+        } else {
+          this.visible_date = this.getSafeMoment(this.value);
+          this.val = this.formatDateForDisplay(this.value);
+          this.unknownDay = this.value.substring(8, 10) == '00'
+          this.unknownMonth = this.value.substring(5, 10) == '00-00'
+        }
       } else {
         // this.visible_date = false
       }
     },
+    // beforeEnter: function(el) {
+    //   // el.style.height = 0
+    //   el.style.transform = 'rotateX(90deg)'
+    // },
+    // enter: function(el, done) {
+    //   el.style.transform = 'rotateX(40deg)'
+    //   // el.style = null
+    //   done()
+    // },
+    // leave: function(el, done) {
+    //   el.style.transform = 'rotateX(30deg)'
+    //   // el.style = null
+    //   done()
+    // },
+    // afterLeave: function(el) {
+    //   el.style.transform = 'rotateX(90deg)'
+    // },
+    togglePicker() {
+      if (this.value) {
+        this.setupDatePicker()
+      } else {
+        this.val = null
+        this.visible_date = moment()
+      }
+      this.show = !this.show
+      this.mode = this.viewMode
+      if (this.mode == 'days' && this.unknownMonth) this.mode = 'months'
+      if (this.mode == 'decades' && this.value) this.mode = 'days'
+    },
     clickDate(date) {
-      // console.log(date)
       if (this.disabled || this.dayIsDisabled(date)) return false
       this.date = date
       this.visible_date = date
       this.unknownDay = false
-    },
-    hourDrag() {
-      // console.log(e, n)
     },
     getSafeMoment(date) {
       var d = date.substr(0, 10).split('-');
@@ -282,11 +310,11 @@ export default {
       return m
     },
     next() {
-      var n = this.mode == 'years' ? 10 : this.mode == 'years' ? 100 : 1;
+      var n = this.mode == 'years' ? 10 : this.mode == 'decades' ? 100 : 1;
       this.visible_date = this.visible_date.clone().add(n, this.parentType)
     },
     prev() {
-      var n = this.mode == 'years' ? 10 : this.mode == 'years' ? 100 : 1;
+      var n = this.mode == 'years' ? 10 : this.mode == 'decades' ? 100 : 1;
       this.visible_date = this.visible_date.clone().subtract(n, this.parentType)
     },
     getCalendarDate(type, n) {
@@ -294,7 +322,7 @@ export default {
       var date = this.calendarStart.clone().add(n, type + 's')
       return date
     },
-    getBlockClass(type, n) {
+    getBlockClass(type, n, i) {
       var classes = {}
       var givenCalendarDate = false
       var active = false
@@ -313,14 +341,20 @@ export default {
         } else {
           if (type == 'decade') {
             givenCalendarDate = this.visible_date.clone().year(n)
-            active = this.getSafeMoment(this.value).format('YYYY').substring(0, 3) + '0' == n
+            if (this.value) active = this.getSafeMoment(this.value).format('YYYY').substring(0, 3) + '0' == n
+            disabled = this.dayIsDisabled(givenCalendarDate)
           } else {
             givenCalendarDate = this.visible_date.clone()[type](n)
             if (this.value) active = this.getSafeMoment(this.value).format(format) == givenCalendarDate.format(format)
             if (type == 'month' && this.unknownMonth) active = false
+
             disabled = this.dayIsDisabled(givenCalendarDate)
           }
           classes = { active, disabled }
+          if (type == 'year' || type == 'decade') {
+            classes['prev-' + type] = i == 0;
+            classes['next-' + type] = i == 11;
+          }
         }
       }
       return [type + '-block', classes]
@@ -341,8 +375,7 @@ export default {
       this.mode = 'months'
     },
     setDecade(n) {
-      var vd = this.visible_date.year().toString()
-      if (n.substring(0, 2) == vd.substring(0, 2) && vd.substring(0, 3) + '0' != n) this.visible_date = this.visible_date.clone().year(n)
+      this.visible_date = this.visible_date.clone().year(n)
       this.mode = 'years'
     },
     getDecade() {
@@ -368,7 +401,7 @@ export default {
       this.$emit('input', value)
     },
     formatDateForStorage(date) {
-      if (date) {
+      if (date && this.mode != 'time') {
         var d = date.substr(0, 10).split('/');
         d = this.storeIncompleteDates(d).reverse().join('-')
         if (date.length == 16) {
@@ -377,6 +410,7 @@ export default {
         }
         return d
       }
+      return date
     },
     formatDateForDisplay(date) {
       if (date) {
@@ -410,6 +444,7 @@ export default {
 <style lang="scss">
 $width: 300px;
 $day-block-width: $width/7;
+$font-size: $day-block-width/3;
 
 .input-group,
 .input-group-append,
@@ -434,6 +469,50 @@ $day-block-width: $width/7;
   &.show {
     display: flex;
     flex-direction: column;
+  }
+}
+
+.calendar.calendar-lg {
+  $width: $width*1.4;
+  width: $width;
+  $day-block-width: $width/7;
+  $font-size: $day-block-width/3;
+  font-size: $font-size;
+
+  .day-block {
+    flex-basis: $day-block-width;
+    min-height: $day-block-width;
+    font-size: $font-size;
+  }
+
+  .prev-button,
+  .next-button {
+    position: relative;
+    display: flex;
+    width: $day-block-width;
+    height: $day-block-width;
+  }
+}
+
+.calendar.calendar-sm {
+  $width: $width*0.8;
+  width: $width;
+  $day-block-width: $width/7;
+  $font-size: $day-block-width/2.6;
+  font-size: $font-size;
+
+  .day-block {
+    flex-basis: $day-block-width;
+    min-height: $day-block-width;
+    font-size: $font-size;
+  }
+
+  .prev-button,
+  .next-button {
+    position: relative;
+    display: flex;
+    width: $day-block-width;
+    height: $day-block-width;
   }
 }
 
@@ -487,52 +566,149 @@ $day-block-width: $width/7;
 }
 
 .picker {
-  display: flex;
+  position: relative;
   width: 40%;
   margin: auto;
+  user-select: none;
+
+  // .hours-slider {
+  //   position: absolute;
+  //   border: 1px solid green;
+  //   background: rgba(255, 0, 0, 0.1);
+  //   opacity: 0.1;
+  //   width: 50%;
+  //   height: 184px;
+  //   // pointer-events: none;
+  // }
 
   .hours,
   .minutes {
     width: 50%;
-    flex-wrap: wrap;
-    flex-direction: column;
+    height: $width;
     border: thin solid;
+    float: left;
+    pointer-events: auto;
 
     .hour,
     .minute {
       width: 100%;
       position: relative;
-      display: flex;
-      height: 14.28%;
+      display: block;
       border: 1px solid #ccc;
       justify-content: center;
       align-items: center;
       text-align: center;
 
+      &:nth-child(-n+2),&:nth-child(n+8){
+        transition: all .5s;
+        // height: 0;
+        // border:none;
+        // overflow: hidden;
+      }
+      &.scroll-list-move {
+        transition: all .5s;
+      }
+      &.scroll-list-enter{
+        transition: all .5s;
+      }
+      &.scroll-list-enter-active {
+        transition: all .5s;
+        background: green;
+      }
+      &.scroll-list-enter-to {
+        transition: all .5s;
+        background: red;
+      }
     }
   }
 }
 
-.scroll-list-move {
-  transition: transform 1s;
-}
+// .hour:nth-of-type(1),
+// .minute:nth-of-type(1) {
+//   // height: 4.28%;
+//   transform: rotateX(30deg);
+//   opacity: 0.2;
+// }
 
-.scroll-list-enter-active,
-.scroll-list-leave-active {
-  transition: all 1s;
+// .hour:nth-of-type(2),
+// .minute:nth-of-type(2) {
+//   transform: rotateX(20deg);
+//   opacity: 0.4;
+// }
 
-  &.hour:not(.scroll-list-move) {
-    background: red;
-  }
-}
+// .hour:nth-of-type(3),
+// .minute:nth-of-type(3) {
+//   transform: rotateX(10deg);
+//   opacity: 0.6;
+// }
 
-.scroll-list-enter{
-  transform: translateY(100%);
-}
-.scroll-list-leave-to {
-  opacity: 0;
-  transform: translateY(-100%);
-}
+// .hour:nth-of-type(5),
+// .minute:nth-of-type(5) {
+//   transform: rotateX(-10deg);
+//   opacity: 0.6;
+// }
+
+// .hour:nth-of-type(6),
+// .minute:nth-of-type(6) {
+//   transform: rotateX(-20deg);
+//   opacity: 0.4;
+// }
+
+// .hour:nth-of-type(7),
+// .minute:nth-of-type(7) {
+//   transform: rotateX(-30deg);
+//   opacity: 0.2;
+// }
+// .hour {
+//   // transition: all .5s;
+// }
+
+// .scroll-list-move {
+//   transition: all 5s;
+// }
+
+// .scroll-list-enter-to {
+//   transition: all 5s;
+// }
+
+// .scroll-list-enter-active {
+//   transition: all 5s;
+//   background: green;
+// }
+
+// .scroll-list-leave-active {
+//   transition: all 5s;
+//   background: red;
+// }
+
+// .scroll-list-enter {
+//   height:0px;
+//   overflow: hidden;
+//   // transform: translateY(-60px);
+
+// }
+// .picker .hour:nth-child(-n+2){
+//   // opacity: 0;
+//   // height:0px;
+//   border:none;
+// }
+// .picker .hour:nth-child(n+8){
+//   // opacity: 0;
+//   // height:0px;
+//   overflow: hidden;
+//   border:none;
+// }
+// .scroll-list-enter:nth-of-type(1) {
+//   // transform: translateY(-30px);
+//   // opacity: 0;
+
+// }
+
+// .scroll-list-leave-to:nth-of-type(1) {
+//   // opacity: 0;
+//   // transform: translateY(30px);
+// }
+
 
 .time-body,
 .calendar-body,
@@ -588,6 +764,8 @@ $day-block-width: $width/7;
   justify-content: center;
   align-items: center;
   text-align: center;
+  font-size: $font-size;
+
 
   &.disabled {
     cursor: not-allowed;
@@ -654,20 +832,19 @@ $day-block-width: $width/7;
     border-color: var(--primary);
   }
 
-
-
-
-
-  &.prev-month {
-    background: repeating-linear-gradient(45deg, #f2f2f2, #f2f2f2 6px, #f2f2f200 6px, #f2f2f200 12px)
-  }
-
-  &.next-month {
-    background: repeating-linear-gradient(-45deg, #f2f2f2, #f2f2f2 6px, #f2f2f200 6px, #f2f2f200 12px)
-  }
 }
 
+.prev-month,
+.prev-year,
+.prev-decade {
+  background: repeating-linear-gradient(45deg, #f2f2f2, #f2f2f2 6px, #f2f2f200 6px, #f2f2f200 12px)
+}
 
+.next-month,
+.next-year,
+.next-decade {
+  background: repeating-linear-gradient(-45deg, #f2f2f2, #f2f2f2 6px, #f2f2f200 6px, #f2f2f200 12px)
+}
 
 
 .calendar-footer {

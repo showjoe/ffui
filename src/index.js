@@ -8,8 +8,6 @@ const install = (Vue, options = {}) => {
 
 // auto install
 if (typeof window !== 'undefined' && window.Vue) {
-	const $ = require('jquery')
-  window.$ = window.jQuery = $;
   install(window.Vue)
 }
 
