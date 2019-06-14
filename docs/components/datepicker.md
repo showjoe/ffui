@@ -2,7 +2,11 @@
 ## Basic Example
 
 ::: demo
-<datepicker v-model="records.date1" />
+<div class="was-validated">
+      <form-group>
+            <datepicker v-model="records.date1" />
+      </form-group>
+</div>
 :::
 <pre class="text-white">date1:{{records.date1?records.date1:'null'}}</pre>
 

@@ -3,7 +3,7 @@
     <div class="input-group-append" v-if="$scopedSlots.prepend">
       <slot name="prepend"></slot>
     </div>
-    <input :id="id" :disabled="disabled" ref="datepickerinput" pattern="\d*" :type="inputType" :class="['form-control datetimepicker-input',size?'form-control-'+size:'',{show}]" :value="val" @change="inputChange" v-mask="{mask, greedy: true, placeholder }" />
+    <input :id="id" :disabled="disabled" ref="datepickerinput" :pattern="inputPattern" :type="inputType" :class="['form-control datetimepicker-input',size?'form-control-'+size:'',{show}]" :value="val" @change="inputChange" v-mask="{mask, greedy: true, placeholder }" />
     <div :class="['datepicker-backdrop',{show}]" @click="togglePicker"></div>
     <transition name="fade">
       <div v-if="show" :class="['calendar','calendar-'+size,{show}]">
@@ -202,7 +202,12 @@ export default {
       return this.$options.formats[this.mode]
     },
     inputType(){
-      return this.mode == 'time' ? this.mode : false
+      return this.type == 'time' ? this.type : false
+    },
+    inputPattern(){
+      var string = this.type == 'date' ? "\\d{1,2}/\\d{1,2}/\\d{4}|--/\\d{1,2}/\\d{4}|--/--/\\d{4}":""
+      
+      return string
     },
     currentMonth() {
       return this.visible_date.clone().month()
