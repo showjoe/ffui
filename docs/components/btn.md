@@ -72,19 +72,31 @@ Using v-model with individual buttons.  By default they will act as boolean 'che
 </div>
 :::
 
+
+## as router-link
+Using vue router? Use the is-router-link prop along with a `to` prop
+
+::: demo
+<div>
+  <btn is-router-link :to="{path:'/components/btn.html#block'}">Router Link</btn>
+</div>
+:::
+
 ## Props
-Name        | Type    | Description | Default
-:--------   | :----:  | ----- | :--------:
-v-model     |         | Link to the record location ie. `records.value` | 
-block       | Boolean | add this prop to fill the available width | `false`
-btn-class   | String  | styling class. eg: `primary` | `"primary"`
-disabled    | Boolean | set the disabled state of the button | `false`
-outline     | Boolean | use outline mode | `true`
-readonly    | Boolean | set the readonly state of the button | `false`
-size        | String  | Use `sm` or `lg` | `false`
-type        | String  | btn type. eg: `checkbox` or `radio` | `"checkbox"`
-true-value  |         | value that should be used in the case of a true (or active) button | `true`
-false-value |         | value that should be used in the case of a false (or deactive) button | `false`
+Name            | Type            | Description | Default
+:--------       | :----:          | ----- | :--------:
+v-model         |                 | Link to the record location ie. `records.value` | 
+block           | Boolean         | add this prop to fill the available width | `false`
+btn-class       | String          | styling class. eg: `primary` | `"primary"`
+disabled        | Boolean         | set the disabled state of the button | `false`
+outline         | Boolean         | use outline mode | `true`
+readonly        | Boolean         | set the readonly state of the button | `false`
+size            | String          | Use `sm` or `lg` | `false`
+type            | String          | btn type. eg: `checkbox` or `radio` | `"checkbox"`
+true-value      |                 | value that should be used in the case of a true (or active) button | `true`
+false-value     |                 | value that should be used in the case of a false (or deactive) button | `false`
+is-router-link  | Boolean         | use a router link styled as button (must include a `to` prop) | `false`
+to              | String / Object | accompanying route for the router link | `false`
 
 ### Computed Properties
 Name             | Params | Description

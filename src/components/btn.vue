@@ -41,6 +41,10 @@ export default {
       type: String,
       default: ''
     },
+    isRouterLink: Boolean,
+    to:{
+      type:[Object,String]
+    }
 
   },
   render(h) {
@@ -49,12 +53,18 @@ export default {
     var children = [];
     var propObj = {
       class: this.classObj,
+      props:{},
       domProps: {
-        type: 'button',
         disabled: this.disabled,
         readonly: this.readonly
       },
       on: { click: this.btnClick }
+    }
+    if(this.isRouterLink){
+      tag = 'router-link',
+      propObj.props.to = this.to
+    }else{
+      propObj.domProps.type = 'button'
     }
     children.push(this.$slots.default)
     return h(tag, propObj, children)
