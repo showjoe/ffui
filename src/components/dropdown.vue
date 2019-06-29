@@ -1,11 +1,11 @@
 <template>
   <div :class="[typeClass,positionClass,{ 'w-100': this.justified }]">
-    <btn :btnClass="btnClass" :outline="btnOutline" :class="{'w-100': this.justified, 'dropdown-toggle':btnCaret&&!btnSplit}" aria-haspopup="true" :aria-expanded="show" :size="btnSize" data-toggle="dropdown">
+    <btn :btnClass="btnClass" :outline="btnOutline" :class="{'w-100': this.justified, 'dropdown-toggle':btnCaret&&!btnSplit}" aria-haspopup="true" :aria-expanded="show" :size="btnSize" @click.native="show=!show">
       <slot name="btn" :chosen-label="chosenLabel"></slot>
       <span v-if="!this.value" v-text="btnLabel"></span>
       <span v-else v-text="chosenLabel"></span>
     </btn>
-    <btn v-if="btnSplit" :btnClass="btnClass" :outline="btnOutline" class="dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></btn>
+    <btn v-if="btnSplit" :btnClass="btnClass" :outline="btnOutline" class="dropdown-toggle dropdown-toggle-split" @click.native="show=!show"></btn>
     <slot></slot>
     <div :class="['dropdown-menu',{'show':show}]">
       <button class="dropdown-item" v-if="nullOption" @click="selectItem({value:null})">
@@ -79,7 +79,6 @@ export default {
     }
   },
   mounted() {
-    import('bootstrap')
   },
   computed: {
     positionClass() {

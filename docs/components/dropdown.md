@@ -90,6 +90,20 @@ Group your items by giving a name to the key in the lookups object this requires
 </form-group>
 :::
 
+## dropdown in a modal
+A quick test to prove it works..
+
+::: demo
+<div>
+  <btn @click.native="modalShow=!modalShow">Show Modal</btn>
+  <modal :show="modalShow" @close="modalShow = false">
+    <form-group :di="deathCauses" v-slot="{di}">
+      <dropdown :group="di.lookup.group" :items="di.lookup.items" v-model="records.DeathCause" btn-split justified />
+    </form-group>
+  </modal>
+</div>
+:::
+
 ## Slots
 Name              | Description 
 :--------         | ----------- 
@@ -118,9 +132,10 @@ export default {
   },
   data() {
     return {
+      modalShow:false,
       records: {
         Country: null,
-        DeathCause: null
+        DeathCause: null,
       },
       dataitems: {
         Country: {
