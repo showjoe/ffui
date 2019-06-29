@@ -1,7 +1,6 @@
 <script>
 export default {
   name: 'list-group-item',
-  mounted() {},
   props: {
     value: {},
     trueValue: {
