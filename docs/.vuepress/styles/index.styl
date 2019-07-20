@@ -22,6 +22,9 @@
 .bootstrap-datetimepicker-widget td.day.active{
 	background:blue; color:white;
 }
-.dropdown-item.active, .dropdown-item:active {
+.dropdown-item.active:not(.disabled), .dropdown-item:active:not(.disabled) {
     color: #fff!important;
+}
+.dropdown-item.active.disabled, .dropdown-item:active.disabled {
+    background: #d7d8db;
 }

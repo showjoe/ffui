@@ -8,7 +8,7 @@
     <btn v-if="btnSplit" :btnClass="btnClass" :outline="btnOutline" class="dropdown-toggle dropdown-toggle-split" @click.native="show=!show"></btn>
     <slot></slot>
     <div :class="['dropdown-menu',{'show':show}]">
-      <button class="dropdown-item" v-if="nullOption" @click="selectItem({value:null})">
+      <button :class="['dropdown-item',{disabled,readonly}]" v-if="nullOption" @click="selectItem({value:null})">
         <slot name="nullOption"> --- </slot>
       </button>
       <template v-if="group">
@@ -16,7 +16,7 @@
           <h6 class="dropdown-header" :key="group_name+'-header'">{{group_name}}</h6>
           <template v-for="item in item_group">
             <slot name="list" :item="item">
-              <button :key="item.value" :class="['dropdown-item',{'active':getValue(item) == value}]" @click="selectItem(item)" :value="getValue(item)">
+              <button :key="item.value" :class="['dropdown-item',{'active':getValue(item) == value},{disabled,readonly}]" @click="selectItem(item)" :value="getValue(item)">
                 <slot name="list-item-prepend" :item="item"></slot>
                 <span>{{getLabel(item)}}</span>
                 <slot name="list-item-append" :item="item"></slot>
@@ -72,6 +72,8 @@ export default {
     btnOutline: {},
     btnSize: {},
     justified: Boolean,
+    disabled: Boolean,
+    readonly: Boolean
   },
   data() {
     return {
@@ -106,6 +108,7 @@ export default {
       return item[this.valueName]
     },
     selectItem(item) {
+      if (this.disabled || this.readonly) return false
       this.$emit('input', item[this.valueName])
       this.show = false
     },

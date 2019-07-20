@@ -104,6 +104,22 @@ A quick test to prove it works..
 </div>
 :::
 
+## disabled
+
+::: demo
+<form-group :di="deathCauses" v-slot="{di}">
+  <dropdown disabled :group="di.lookup.group" :items="di.lookup.items" v-model="records.DeathCause2" btn-split justified />
+</form-group>
+:::
+
+## readonly
+
+::: demo
+<form-group :di="deathCauses" v-slot="{di}">
+  <dropdown readonly :group="di.lookup.group" :items="di.lookup.items" v-model="records.DeathCause3" btn-split justified />
+</form-group>
+:::
+
 ## Slots
 Name              | Description 
 :--------         | ----------- 
@@ -136,6 +152,8 @@ export default {
       records: {
         Country: null,
         DeathCause: null,
+        DeathCause2: 6,
+        DeathCause3: 7,
       },
       dataitems: {
         Country: {

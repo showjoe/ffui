@@ -1,5 +1,5 @@
 <template>
-  <div :class="['checkbox',{'checked':isChecked},{'disabled':disabled}]">
+  <div :class="['checkbox',{'checked':isChecked},{disabled},{readonly}]">
     <label v-if="labelLeft" :for="id" class="mr-2">
       <slot>{{label}}</slot>
     </label>
@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     update() {
+      if (this.disabled || this.readonly) return false
       this.$emit('input', (this.value == this.trueValue) ? this.falseValue : this.trueValue)
     },
     toggleCheck() {
