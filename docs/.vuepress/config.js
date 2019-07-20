@@ -54,6 +54,5 @@ module.exports = {
   },
   extendMarkdown: md => {
     // use more markdown-it plugins!
-    md.use(require('markdown-it-vuepress-code-snippet-enhanced'))
   }
 }
