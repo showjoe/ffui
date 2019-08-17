@@ -1,5 +1,5 @@
 <template>
-  <transition name="collapse" @beforeEnter="beforeEnter" @enter="enter" @afterEnter="afterEnter" @beforeLeave="beforeLeave" @leave="leave" @afterLeave="afterLeave" :duration="duration">
+  <transition name="collapse" @enter="enter" @leave="leave" :duration="duration">
     <div ref="collapsible" v-if="show" :class="['collapse',{'show':show}]">
       <slot></slot>
     </div>
@@ -24,31 +24,23 @@ export default {
     transitionLeave() { return this.durationLeave + 'ms ' + this.ease },
   },
   methods: {
-    beforeEnter(el) {
-      el.style.transition = this.transitionEnter
-      el.style.height = 0
-    },
     enter(el) {
-      el.style.height = el.scrollHeight + 'px'
-    },
-    afterEnter(el) {
-      el.style = null
-    },
-    beforeLeave(el) {
-      el.style.transition = this.transitionLeave
-      el.style.height = el.scrollHeight + 'px'
+      var self = this
+      el.style.height = 0
+      requestAnimationFrame(function() {
+        el.style.transition = self.transitionEnter
+        el.style.height = el.scrollHeight + 'px'
+      })
     },
     leave(el) {
-      this.$nextTick(() => { el.style.height = 0 })
-    },
-    afterLeave(el) {
-      this.$nextTick(() => { el.style = null })
+      var self = this
+      requestAnimationFrame(function() {
+        el.style.transition = self.transitionLeave
+        el.style.height = 0;
+      })
     },
   }
 }
 </script>
 <style>
-.collapse.show {
-  overflow: hidden;
-}
 </style>

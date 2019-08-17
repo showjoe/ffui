@@ -33,7 +33,7 @@ Or import the whole library
 
 ``` js
 import Vue from 'vue'
-import ffui '@formfactory/ffui/'
+import ffui from '@formfactory/ffui/'
 Vue.use(ffui)
 ```
 <textbox/>

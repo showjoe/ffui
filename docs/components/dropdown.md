@@ -104,6 +104,20 @@ A quick test to prove it works..
 </div>
 :::
 
+## dropdown in a collapse
+A quick test to prove it works..
+
+::: demo
+<div>
+  <btn @click.native="collapseShow=!collapseShow">Show Dropdown</btn>
+  <collapse :show="collapseShow">
+    <form-group :di="deathCauses" v-slot="{di}">
+      <dropdown :group="di.lookup.group" :items="di.lookup.items" v-model="records.DeathCause" btn-split justified />
+    </form-group>
+  </collapse>
+</div>
+:::
+
 ## disabled
 
 ::: demo
@@ -148,6 +162,7 @@ export default {
   },
   data() {
     return {
+      collapseShow:false,
       modalShow:false,
       records: {
         Country: null,

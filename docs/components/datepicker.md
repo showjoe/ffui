@@ -70,6 +70,18 @@ Define which view datepicker should start with.
 <datepicker view-mode="decades" v-model="records.date8"/>
 :::
 
+## In a collapse
+See if this works
+::: demo
+<div>
+<btn @click.native="showCollapse=!showCollapse">Show</btn>
+<collapse :show="showCollapse">
+      <datepicker v-model="records.date8"/>
+</collapse>
+{{showCollapse}}
+</div>
+:::
+
 ### Props
 Name        | Type   | Description | Default
 ----        | :----: | ----------- | -----
@@ -96,6 +108,7 @@ input            |        | Emits input event on value change
 export default {
 	data () {
       	return {
+                  showCollapse:false,
       		records:{
       			date1:'1978-10-02',
       			date2:null,
@@ -106,7 +119,7 @@ export default {
                         date7:'2010-00-00',
       			date8:null,
       			time1:'01:02',
-      			datetime1:null
+      			datetime1:null,
       		},
       	}
   	},

@@ -63,35 +63,13 @@
 ## Custom transition duration
 ::: demo
 <div>
-	<btn @click.native="modal3.show = true">Show</btn>
-	<modal
-	title="Modal Title"
-	:show="modal3.show"
-	fade
-	centered
-	:transition-duration="500"
-	@close="modal3.show = false"
-	@save="modal3.saved = true; modal3.show = false"
-	>
-		Some body to my modal
-	</modal>
-</div>
-:::
-<pre class="text-white">{{modal3}}</pre>
-
-
-## Sizes
-::: demo
-<div>
-	<btn @click.native="modal4.size = 'sm'; modal4.show = true">Show Small</btn>
-	<btn @click.native="modal4.size = 'lg'; modal4.show = true">Show Large</btn>
-	<btn @click.native="modal4.size = 'xl'; modal4.show = true">Show XL</btn>
+	<btn @click.native="modal4.show = true">Show</btn>
 	<modal
 	title="Modal Title"
 	:show="modal4.show"
-	:size="modal4.size"
 	fade
 	centered
+	:transition-duration="500"
 	@close="modal4.show = false"
 	@save="modal4.saved = true; modal4.show = false"
 	>
@@ -101,15 +79,21 @@
 :::
 <pre class="text-white">{{modal4}}</pre>
 
-## backdrop-inactive
+
+## Sizes
 ::: demo
 <div>
-	<btn @click.native="modal5.show = true">Show with inactive background</btn>
+	<btn @click.native="modal5.size = 'sm'; modal5.show = true">Show Small</btn>
+	<btn @click.native="modal5.size = 'lg'; modal5.show = true">Show Large</btn>
+	<btn @click.native="modal5.size = 'xl'; modal5.show = true">Show XL</btn>
 	<modal
 	title="Modal Title"
 	:show="modal5.show"
-	backdrop-inactive
+	:size="modal5.size"
+	fade
+	centered
 	@close="modal5.show = false"
+	@save="modal5.saved = true; modal5.show = false"
 	>
 		Some body to my modal
 	</modal>
@@ -117,16 +101,32 @@
 :::
 <pre class="text-white">{{modal5}}</pre>
 
+## backdrop-inactive
+::: demo
+<div>
+	<btn @click.native="modal6.show = true">Show with inactive background</btn>
+	<modal
+	title="Modal Title"
+	:show="modal6.show"
+	backdrop-inactive
+	@close="modal6.show = false"
+	>
+		Some body to my modal
+	</modal>
+</div>
+:::
+<pre class="text-white">{{modal6}}</pre>
+
 ## Slots
 ### header
 ::: demo
 <div>
-	<btn @click.native="modal6.show = true">Show</btn>
-	<modal :show="modal6.show" fade title="Modal Title" @close="modal6.show = false">
+	<btn @click.native="modal7.show = true">Show</btn>
+	<modal :show="modal7.show" fade title="Modal Title" @close="modal7.show = false">
 		<template #header>
 			<div class="modal-header bg-success text-white">
 				Custom Header
-				<button type="button" class="close" aria-label="Close" @click="modal6.show = false">
+				<button type="button" class="close" aria-label="Close" @click="modal7.show = false">
           <span aria-hidden="true">&times;</span>
         </button>
 			</div>
@@ -135,16 +135,16 @@
 	</modal>
 </div>
 :::
-<pre class="text-white">{{modal6}}</pre>
+<pre class="text-white">{{modal7}}</pre>
 
 ### header-inner
 ::: demo
 <div>
-	<btn @click.native="modal7.show = true">Show</btn>
-	<modal :show="modal7.show" fade title="Modal Title" @close="modal7.show = false">
+	<btn @click.native="modal8.show = true">Show</btn>
+	<modal :show="modal8.show" fade title="Modal Title" @close="modal8.show = false">
 		<template #header-inner>
 			Custom Header
-			<button type="button" class="close" aria-label="Close" @click="modal7.show = false">
+			<button type="button" class="close" aria-label="Close" @click="modal8.show = false">
         <span aria-hidden="true">&times;</span>
       </button>
 		</template>
@@ -152,13 +152,13 @@
 	</modal>
 </div>
 :::
-<pre class="text-white">{{modal7}}</pre>
+<pre class="text-white">{{modal8}}</pre>
 
 ### body
 ::: demo
 <div>
-	<btn @click.native="modal8.show = true">Show</btn>
-	<modal :show="modal8.show" fade title="Modal Title" @close="modal8.show = false">
+	<btn @click.native="modal9.show = true">Show</btn>
+	<modal :show="modal9.show" fade title="Modal Title" @close="modal9.show = false">
 		<template #body>
 			<div class="modal-body bg-success text-white">
 				Custom Body
@@ -167,47 +167,47 @@
 	</modal>
 </div>
 :::
-<pre class="text-white">{{modal8}}</pre>
+<pre class="text-white">{{modal9}}</pre>
 
 ### default
 ::: demo
 <div>
-	<btn @click.native="modal9.show = true">Show</btn>
-	<modal :show="modal9.show" fade title="Modal Title" @close="modal9.show = false">
-		Default slot is inside modal body
-	</modal>
-</div>
-:::
-<pre class="text-white">{{modal9}}</pre>
-
-### footer
-::: demo
-<div>
 	<btn @click.native="modal10.show = true">Show</btn>
-	<modal :show="modal10.show" fade title="Modal Title" @close="modal10.show = false" class="bg-success">
-		Some body to my modal
-		<template #footer>
-			<div class="modal-footer">
-				<span class="mr-auto">Custom Footer</span>
-				<btn :outline="false" btn-class="secondary" @click.native="modal10.show = false">Close</btn>
-				<btn :outline="false" btn-class="success" @click.native="modal10.saved = true; modal10.show = false">Save</btn>
-			</div>
-		</template>
+	<modal :show="modal10.show" fade title="Modal Title" @close="modal10.show = false">
+		Default slot is inside modal body
 	</modal>
 </div>
 :::
 <pre class="text-white">{{modal10}}</pre>
 
-### source-coords
+### footer
 ::: demo
 <div>
-	<btn ref="sourceCoordsBtn" @click.native="modal11.show = true">Show</btn>
-	<modal :show="modal11.show" fade :source-coords="sourceCoords()" title="Modal Title" @close="modal11.show = false" class="bg-success">
+	<btn @click.native="modal11.show = true">Show</btn>
+	<modal :show="modal11.show" fade title="Modal Title" @close="modal11.show = false" class="bg-success">
 		Some body to my modal
+		<template #footer>
+			<div class="modal-footer">
+				<span class="mr-auto">Custom Footer</span>
+				<btn :outline="false" btn-class="secondary" @click.native="modal11.show = false">Close</btn>
+				<btn :outline="false" btn-class="success" @click.native="modal11.saved = true; modal11.show = false">Save</btn>
+			</div>
+		</template>
 	</modal>
 </div>
 :::
 <pre class="text-white">{{modal11}}</pre>
+
+### source-coords
+::: demo
+<div>
+	<btn ref="sourceCoordsBtn" @click.native="modal12.show = true">Show</btn>
+	<modal :show="modal12.show" fade :source-coords="sourceCoords()" title="Modal Title" @close="modal12.show = false" class="bg-success">
+		Some body to my modal
+	</modal>
+</div>
+:::
+<pre class="text-white">{{modal12}}</pre>
 
 <script>
 export default {
@@ -258,12 +258,23 @@ export default {
 				saved:false,
 				show:false
     	},
+    	modal12:{
+				saved:false,
+				show:false
+    	},
+    	modal13:{
+				saved:false,
+				show:false
+    	},
+    	modal14:{
+				saved:false,
+				show:false
+    	},
     }
   },
   methods:{
   	sourceCoords(){
   		if(this.$refs.sourceCoordsBtn){
-	  		console.log(this.$refs.sourceCoordsBtn.$el.getBoundingClientRect()) 
 	  		return this.$refs.sourceCoordsBtn.$el.getBoundingClientRect()
 	  	}
   	}

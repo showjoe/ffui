@@ -1,7 +1,7 @@
 <template>
-  <transition name="modal" :duration="transitionDuration" @enter="enterTransition" @after-enter="afterEnterTransition" @before-leave="beforeLeaveTransition" @leave="leaveTransition">
+  <transition name="modal" :duration="transitionDuration" @enter="enterTransition">
     <div class="modal-container" v-if="show" :style="customCssProps">
-      <div ref="modal" :class="['modal show',{'static':inline,fade}]" @click.stop="close('backdrop')" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="!show">
+      <div ref="modal" :class="['modal',{'static':inline,fade}]" @click.stop="close('backdrop')" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="!show">
         <div :class="['modal-dialog',size ? 'modal-'+size:'', {'modal-dialog-centered':centered}]" role="document" @click.stop="">
           <div ref="content" class="modal-content">
             <slot name="header">
@@ -60,23 +60,24 @@ export default {
   },
   computed: {
     customCssProps() {
-      var css = { '--transition-duration': this.transitionDuration / 1000 + 's' }
-      if(this.sourceCoords){
-        css['--source-x'] = this.sourceCoords.x
-        css['--source-y'] = this.sourceCoords.y
-        css['--source-width'] = this.sourceCoords.width
-        css['--source-height'] = this.sourceCoords.height
+      var css = {
+        '--transition-duration': this.transitionDuration / 1000 + 's'
       }
-      if(this.sourceCoords&&this.$refs.content){
-        css['--target-width'] = this.$refs.content.width
-      }
+      // if (this.sourceCoords) {
+      //   css['--source-x'] = this.sourceCoords.x
+      //   css['--source-y'] = this.sourceCoords.y
+      //   css['--source-width'] = this.sourceCoords.width
+      //   css['--source-height'] = this.sourceCoords.height
+      // }
+      // if (this.sourceCoords && this.$refs.content) {
+      //   css['--target-width'] = this.$refs.content.width
+      // }
       return css
     }
   },
   data() {
     return {
       showing: false,
-      dBlock: false
     }
   },
   methods: {
@@ -88,29 +89,22 @@ export default {
       this.$emit("save");
     },
     enterTransition() {
-      this.dBlock = true
+      var self = this
+      requestAnimationFrame(function() {
+        self.$emit("showing");
+        self.showing = true
+        self.$refs.modal.classList.add('show')
+      });
     },
-    afterEnterTransition() {
-      document.body.classList.add("modal-open")
-      this.$emit("showing");
-      this.showing = true
-    },
-    beforeLeaveTransition() {
-      document.body.classList.remove("modal-open")
-    },
-    leaveTransition() {
-      this.dBlock = false
-    },
+
   }
 }
 </script>
 <style lang="scss">
+$td: var(--transition-duration); 
 .modal.show {
-  display: block;
-  
-  .modal-dialog {
     transform: inherit;
-  }
+  display: block;
 }
 
 .modal.static {
@@ -122,32 +116,31 @@ button.close {
   cursor: pointer;
 }
 
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity calc(var(--transition-duration) * 2) linear;
-
-  .modal.fade,
-  .modal-backdrop {
-    transition: opacity var(--transition-duration) linear;
-  }
-
-  .modal-dialog {
-    transition: transform var(--transition-duration) ease-in;
+.modal-enter-active,.modal-leave-active {
+  .modal.show {
+    .modal-backdrop {
+    }
+    .modal-dialog {
+      transition: all $td ease;
+    }
   }
 }
 
 .modal-enter,
-.modal-leave-to,
-.modal-leave-active {
-
-  .modal,
-  .modal-backdrop {
+.modal-leave-to {
+  .modal-backdrop.show {
     opacity: 0;
   }
 
-  .modal.show .modal-dialog {
-    transform: translateY(-25%);
+  .modal.show {
+    .modal-dialog {
+      transform: translateY(-50px);
+    }
   }
-
+  .modal.fade {
+    .modal-dialog {
+      opacity: 0;
+    }
+  }
 }
 </style>
