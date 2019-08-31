@@ -4,5 +4,9 @@ module.exports = {
       warnings: true,
       errors: true
     }
+  },
+
+  css: {
+    sourceMap: true
   }
 }

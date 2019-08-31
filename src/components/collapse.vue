@@ -1,6 +1,6 @@
 <template>
-  <transition name="collapse" @enter="enter" @leave="leave" :duration="duration">
-    <div ref="collapsible" v-if="show" :class="['collapse',{'show':show}]">
+  <transition name="collapse" @enter="enter" @after-enter="afterEnter" @before-leave="beforeLeave" @leave="leave" :duration="duration">
+    <div ref="collapsible" v-if="show" :class="['collapse',{show}]">
       <slot></slot>
     </div>
   </transition>
@@ -15,6 +15,10 @@ export default {
     },
     ease: {
       default: 'ease-out'
+    },
+    slide: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -27,20 +31,62 @@ export default {
     enter(el) {
       var self = this
       el.style.height = 0
+      if (this.slide) {
+        el.style.transform = 'translateY(-' + el.scrollHeight + 'px)'
+        el.style.clipPath = 'inset(' + el.scrollHeight + 'px 0px 0px 0px)'
+      }
       requestAnimationFrame(function() {
-        el.style.transition = self.transitionEnter
         el.style.height = el.scrollHeight + 'px'
+        el.style.transition = self.transitionEnter
+        if (self.slide) {
+          el.style.transform = 'translateY(0px)'
+          el.style.clipPath = 'inset(0px 0px 0px 0px)'
+        }
       })
     },
-    leave(el) {
+    afterEnter(el) {
+      // console.log('afterEnter',el.style.height) 
+      el.style.height = ''
+
+    },
+    beforeLeave(el) {
+      // console.log('beforeLeave',el.style.height) 
+      el.style.transition = self.transitionLeave
+      el.style.height = el.scrollHeight + 'px'
+      if (this.slide) {
+        el.style.transform = 'translateY(0px)'
+        el.style.clipPath = 'inset(0px 0px 0px 0px)'
+      }
+
+    },
+    leave(el, done) {
       var self = this
+      el.style.transition = self.transitionLeave
+      el.style.height = el.scrollHeight + 'px'
+      if (this.slide) {
+        el.style.transform = 'translateY(0px)'
+        el.style.clipPath = 'inset(0px 0px 0px 0px)'
+      }
       requestAnimationFrame(function() {
-        el.style.transition = self.transitionLeave
         el.style.height = 0;
+        if (self.slide) {
+          el.style.transform = 'translateY(-' + el.scrollHeight + 'px)'
+          el.style.clipPath = 'inset(' + el.scrollHeight + 'px 0px 0px 0px)'
+        }
+        //   done()
       })
     },
   }
 }
 </script>
 <style>
+.collapse-enter-active,
+.collapse-leave-active {
+  transition: height .5s;
+}
+
+.collapse-enter,
+.collapse-leave-to {
+  height: 0
+}
 </style>
