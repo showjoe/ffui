@@ -59,7 +59,7 @@ export default {
       }
 
     },
-    leave(el, done) {
+    leave(el) {
       var self = this
       el.style.transition = self.transitionLeave
       el.style.height = el.scrollHeight + 'px'
@@ -73,7 +73,6 @@ export default {
           el.style.transform = 'translateY(-' + el.scrollHeight + 'px)'
           el.style.clipPath = 'inset(' + el.scrollHeight + 'px 0px 0px 0px)'
         }
-        //   done()
       })
     },
   }
