@@ -47,6 +47,10 @@ export default {
     afterEnter(el) {
       // console.log('afterEnter',el.style.height) 
       el.style.height = ''
+      if (this.slide) {
+        el.style.transform = ''
+        el.style.clipPath = ''
+      }
 
     },
     beforeLeave(el) {
