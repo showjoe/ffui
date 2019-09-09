@@ -1,6 +1,6 @@
 {
   "name": "@formfactory/ffui",
-  "version": "0.1.30",
+  "version": "0.1.31",
   "license": "MIT",
   "main": "./dist/ffui.common.js",
   "module": "./dist/ffui.umd.js",
