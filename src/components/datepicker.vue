@@ -146,6 +146,7 @@ export default {
         return 'days'
       }
     },
+    keepOpen: Boolean,
     disabled: {
       default: false
     }
@@ -168,8 +169,8 @@ export default {
     }
   },
   mounted() {
-    this.setupDatePicker()
     window.moment = moment
+    if(this.value) this.setupDatePicker()
   },
   watch: {
     date() {
@@ -181,16 +182,19 @@ export default {
       this.setupDatePicker()
     },
     unknownDay() {
-      if (this.unknownDay) {
-        var d = this.visible_date.format('YYYY-MM-00').split('-')
-        this.updateDate(d.join('-'))
-      }
+        var y = 'YYYY'
+        var m = this.unknownMonth ? '00':'MM'
+        var d = this.unknownDay ? '00':'DD'
+        var format = y + '-' + m + '-' + d
+        this.updateDate(this.visible_date.format(format))
     },
     unknownMonth() {
-      if (this.unknownMonth) {
-        var d = this.visible_date.format('YYYY-00-00').split('-')
-        this.updateDate(d.join('-'))
-      }
+        this.unknownDay = true
+        var y = 'YYYY'
+        var m = this.unknownMonth ? '00':'MM'
+        var d = this.unknownDay ? '00':'DD'
+        var format = y + '-' + m + '-' + d
+        this.updateDate(this.visible_date.format(format))
     }
   },
   computed: {
@@ -269,27 +273,8 @@ export default {
           this.unknownDay = this.value.substring(8, 10) == '00'
           this.unknownMonth = this.value.substring(5, 10) == '00-00'
         }
-      } else {
-        // this.visible_date = false
       }
     },
-    // beforeEnter: function(el) {
-    //   // el.style.height = 0
-    //   el.style.transform = 'rotateX(90deg)'
-    // },
-    // enter: function(el, done) {
-    //   el.style.transform = 'rotateX(40deg)'
-    //   // el.style = null
-    //   done()
-    // },
-    // leave: function(el, done) {
-    //   el.style.transform = 'rotateX(30deg)'
-    //   // el.style = null
-    //   done()
-    // },
-    // afterLeave: function(el) {
-    //   el.style.transform = 'rotateX(90deg)'
-    // },
     togglePicker() {
       if (this.value) {
         this.setupDatePicker()
@@ -307,6 +292,9 @@ export default {
       this.date = date
       this.visible_date = date
       this.unknownDay = false
+      var self = this
+      if (!this.keepOpen) setTimeout(()=>{self.show = false}, 250 );
+      this.updateDate(this.date.format('YYYY-MM-DD'))
     },
     getSafeMoment(date) {
       var d = date.substr(0, 10).split('-');

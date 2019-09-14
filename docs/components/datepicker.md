@@ -70,13 +70,19 @@ Define which view datepicker should start with.
 <datepicker view-mode="decades" v-model="records.date8"/>
 :::
 
+## keep-open
+The datepicker will not be dismissed on selection of a date
+::: demo
+<datepicker keep-open v-model="records.date9"/>
+:::
+
 ## In a collapse
 See if this works
 ::: demo
 <div>
 <btn @click.native="showCollapse=!showCollapse">Show</btn>
 <collapse :show="showCollapse">
-      <datepicker v-model="records.date8"/>
+      <datepicker v-model="records.date10"/>
 </collapse>
 {{showCollapse}}
 </div>
@@ -117,7 +123,9 @@ export default {
                         date5:null,
                         date6:'2010-02-00',
                         date7:'2010-00-00',
-      			date8:null,
+                        date8:null,
+                        date9:null,
+      			date10:null,
       			time1:'01:02',
       			datetime1:null,
       		},
