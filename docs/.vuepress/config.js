@@ -38,10 +38,12 @@ module.exports = {
           'components/input-group',
           'components/list-group',
           'components/modal',
+          'components/navs',
           'components/number',
           'components/row_and_column',
           'components/progress-bar',
           'components/slider',
+          'components/tabs',
           'components/textbox',
           'components/typeahead',
           'components/font-awesome'
