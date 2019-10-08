@@ -2,6 +2,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 $form-feedback-invalid-color: #dc3545;
+
 .was-validated {
   .is-invalid {
 
@@ -56,4 +57,8 @@ $form-feedback-invalid-color: #dc3545;
       display: block;
     }
   }
+}
+
+.nav-item.invalid {
+  @extend .text-danger;
 }

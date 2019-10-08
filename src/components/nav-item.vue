@@ -1,5 +1,5 @@
 <template>
-  <a :class="['nav-item nav-link',{active,disabled}]" role="tab" :href="'#'+link">
+  <a :class="['nav-item nav-link',{active,disabled,invalid}]" role="tab" :href="'#'+link">
     <slot></slot>
   </a>
 </template>
@@ -9,6 +9,7 @@ export default {
   props: {
     active: Boolean,
     link: {},
+    invalid: Boolean,
     disabled: Boolean,
   },
   computed: {},

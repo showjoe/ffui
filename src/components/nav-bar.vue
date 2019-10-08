@@ -1,6 +1,5 @@
 <template>
-<ul 
-:class="[
+  <ul :class="[
 'nav',
 {
   'nav-pills':pills,
@@ -10,22 +9,27 @@
   'justify-content-center':align=='center',
   'justify-content-end':align=='right',
   'flex-column':vertical
-}]"
-id="myTab" role="tablist">
-  <slot name="nav-bar">
-    <template v-for="(l,key) in links">
-      <nav-item :key="key" :link="key" :active="key==current" @click.native="clickLink(key)" :disabled="l.disabled">{{l.title}}</nav-item>
-    </template>
-    <slot></slot>
-  </slot>
-</ul>
+}]" id="myTab" role="tablist">
+    <slot name="nav-bar">
+      <template v-for="(l,key) in links">
+        <slot name="nav-item" :link="l" :link-key="key">
+          <nav-item :key="key" :link="key" :active="key==current" :invalid="l.invalid" @click.native="clickLink(key)" :disabled="l.disabled">
+            <slot name="nav-item-inner" :link="l" :link-name="key">
+              {{l.title}}
+            </slot>
+          </nav-item>
+        </slot>
+      </template>
+      <slot></slot>
+    </slot>
+  </ul>
 </template>
 <script>
 export default {
-  name:'nav-bar',
+  name: 'nav-bar',
   props: {
-    align:{},
-    current:{},
+    align: {},
+    current: {},
     links: {},
     tabs: Boolean,
     pills: Boolean,
@@ -33,12 +37,11 @@ export default {
     justify: Boolean,
     vertical: Boolean,
   },
-  computed: {
-  },
-  methods:{
-    clickLink(key){
-      if(this.links[key].disabled) return false
-      this.$emit('change',key)
+  computed: {},
+  methods: {
+    clickLink(key) {
+      if (this.links[key].disabled) return false
+      this.$emit('change', key)
     }
   }
 }

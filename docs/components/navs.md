@@ -100,6 +100,7 @@ export default {
           },
           contact:{
             title:'Contact',
+            invalid:true
           },
           disabled:{
             title:'Disabled',
