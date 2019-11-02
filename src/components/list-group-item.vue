@@ -2,6 +2,8 @@
 export default {
   name: 'list-group-item',
   props: {
+    id: String,
+    di: Object,
     value: {},
     trueValue: {
       default: true,
@@ -26,6 +28,7 @@ export default {
     var tag = this.tag
     var self = this
     var propsObject = {
+      domProps:{},
       class: [
         "list-group-item",
         { "disabled": this.disabled },
@@ -39,7 +42,7 @@ export default {
       if (this.isLink) {
         if (this.href) {
           tag = 'a'
-          propsObject.domProps = { href: this.href }
+          propsObject.domProps.href = this.href
         } else {
           tag = 'button'
         }
@@ -47,13 +50,12 @@ export default {
       }
       if (this.isRouterLink && this.to) {
         tag = 'button'
-        propsObject.on = {
-          click: () => { self.$router.push(self.to) },
-        }
+        propsObject.on = { click: () => { self.$router.push(self.to) } }
       } else {
         propsObject.on = { click: () => { self.toggleListGroupItem() } }
       }
     }
+    propsObject.domProps.id = this.lgiId
     return h(tag, propsObject, this.$slots.default)
   },
   methods: {
@@ -68,6 +70,11 @@ export default {
     }
   },
   computed: {
+    lgiId(){
+      if (this.id) return this.id
+      if (this.di) return this.di.name
+      return this._uid
+    },
     active() { return this.value == this.trueValue }
   },
 }

@@ -1,6 +1,5 @@
 <template>
 <input
-:id="name"
 type="text"
 ref="textbox"
 :value="value"
@@ -13,14 +12,7 @@ export default {
   name:'textbox',
   props: {
     value:{},
-    di:{},
     size:String
-  },
-  computed: {
-    name () {
-      if(this.di) return this.di.name
-        return false
-    }
   },
   methods:{
     update(e){

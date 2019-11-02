@@ -4,8 +4,7 @@ export default {
   name: 'btn',
   props: {
     id: {
-      type: String,
-      default: null
+      type: String
     },
     block: Boolean,
     btnClass: {
@@ -55,6 +54,7 @@ export default {
       class: this.classObj,
       props:{},
       domProps: {
+        id:this.id,
         disabled: this.disabled,
         readonly: this.readonly
       },
@@ -71,6 +71,10 @@ export default {
   },
   created() {},
   computed: {
+    bId(){
+      if(this.id) return this.id
+      return this._uid
+    },
     classObj() {
       var outline = this.outline ? 'outline-' : ''
       var btnTheme = 'btn-' + outline + this.btnClass

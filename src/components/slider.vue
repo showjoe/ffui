@@ -1,5 +1,5 @@
 <template>
-  <div ref="sliderContainer" :class="containerClass">
+  <div ref="sliderContainer" :class="containerClass" :id="sId">
     <slot name="popover-track" v-if="!hidePopover">
       <div class="popover-track">
         <div ref="popover1" class="slider-popover" :style="popoverStyle(1)">
@@ -47,6 +47,7 @@ import Draggable from 'gsap/Draggable';
 export default {
   name: 'slider',
   props: {
+    id: String,
     colours: Array,
     colourPopover: Boolean,
     colourHandle: Boolean,
@@ -98,6 +99,10 @@ export default {
     window.removeEventListener('resize', this.resize)
   },
   computed: {
+    sId() {
+      if (this.id) return this.id
+      return this._uid
+    },
     containerClass() { return ['slider-container', { 'slider-container-vertical': this.vertical, 'disabled': this.disabled, 'unanswered': !this.handleVisible }] },
     dimension() { return this.vertical ? 'Y' : 'X' },
     divisions() { return this.gridDivisions ? this.gridDivisions : this.max - this.min },

@@ -1,11 +1,11 @@
 <template>
   <div :class="['checkbox',{'checked':isChecked},{disabled},{readonly}]">
-    <label v-if="labelLeft" :for="id" class="mr-2">
+    <label v-if="labelLeft" :for="cbId" class="mr-2">
       <slot>{{label}}</slot>
     </label>
     <fa size="lg" :icon="isChecked ? 'check-square':'square'" @click="toggleCheck" class="align-middle" />
-    <input type="checkbox" class="d-none" :id="id" :value="checked" :checked="isChecked" @change="update" :disabled="disabled">
-    <label v-if="labelRight&&!labelLeft" :for="id" class="ml-2">
+    <input type="checkbox" class="d-none" :id="cbId" :value="checked" :checked="isChecked" @change="update" :disabled="disabled">
+    <label v-if="labelRight&&!labelLeft" :for="cbId" class="ml-2">
       <slot>{{label}}</slot>
     </label>
   </div>
@@ -20,6 +20,7 @@ Vue.component('fa', FontAwesomeIcon)
 export default {
   name: 'checkbox',
   props: {
+    id: String,
     label: {},
     labelLeft: Boolean,
     labelRight: {
@@ -37,7 +38,8 @@ export default {
     readonly: Boolean
   },
   computed: {
-    id() {
+    cbId() {
+      if(this.id) return this.id
       return this._uid
     },
     isChecked() {

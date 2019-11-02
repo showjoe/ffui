@@ -3,7 +3,7 @@
     <div class="input-group-append" v-if="$scopedSlots.prepend">
       <slot name="prepend"></slot>
     </div>
-    <input :id="id" :disabled="disabled" ref="datepickerinput" :pattern="inputPattern" :type="inputType" :class="['form-control datetimepicker-input',size?'form-control-'+size:'',{show}]" :value="val" @change="inputChange" v-mask="{mask, greedy: true, placeholder }" />
+    <input :id="dpId" :disabled="disabled" ref="datepickerinput" :pattern="inputPattern" :type="inputType" :class="['form-control datetimepicker-input',size?'form-control-'+size:'',{show}]" :value="val" @change="inputChange" v-mask="{mask, greedy: true, placeholder }" />
     <div :class="['datepicker-backdrop',{show}]" @click="togglePicker"></div>
     <transition name="fade">
       <div v-if="show" :class="['calendar','calendar-'+size,{show}]">
@@ -105,6 +105,7 @@ export default {
       prop: 'value',
       event: 'input'
     },
+    id: String,
     di: Object,
     future: Boolean,
     minDate: {
@@ -198,9 +199,10 @@ export default {
     }
   },
   computed: {
-    id() {
+    dpId() {
+      if (this.id) return this.id
       if (this.di) return this.di.name
-      return false
+      return this._uid
     },
     format() {
       return this.$options.formats[this.mode]

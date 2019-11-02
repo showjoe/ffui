@@ -1,6 +1,6 @@
 <template>
   <div :class="[typeClass,positionClass,{ 'w-100': this.justified }]">
-    <btn :btnClass="btnClass" :outline="btnOutline" :class="{'w-100': this.justified, 'dropdown-toggle':btnCaret&&!btnSplit}" aria-haspopup="true" :aria-expanded="show" :size="btnSize" @click.native="show=!show">
+    <btn :id="ddId" :btnClass="btnClass" :outline="btnOutline" :class="{'w-100': this.justified, 'dropdown-toggle':btnCaret&&!btnSplit}" aria-haspopup="true" :aria-expanded="show" :size="btnSize" @click.native="show=!show">
       <slot name="btn" :chosen-label="chosenLabel"></slot>
       <span v-if="!this.value" v-text="btnLabel"></span>
       <span v-else v-text="chosenLabel"></span>
@@ -8,7 +8,7 @@
     <btn v-if="btnSplit" :btnClass="btnClass" :outline="btnOutline" class="dropdown-toggle dropdown-toggle-split" @click.native="show=!show"></btn>
     <slot></slot>
     <div :class="['dropdown-menu',{'show':show}]">
-      <button :class="['dropdown-item',{disabled,readonly}]" v-if="nullOption" @click="selectItem({value:null})">
+      <button :id="ddId+'_null'" :class="['dropdown-item',{disabled,readonly}]" v-if="nullOption" @click="selectItem({value:null})">
         <slot name="nullOption"> --- </slot>
       </button>
       <template v-if="group">
@@ -16,7 +16,7 @@
           <h6 class="dropdown-header" :key="group_name+'-header'">{{group_name}}</h6>
           <template v-for="item in item_group">
             <slot name="list" :item="item">
-              <button :key="item.value" :class="['dropdown-item',{'active':getValue(item) == value},{disabled,readonly}]" @click="selectItem(item)" :value="getValue(item)">
+              <button :id="ddId+'_'+item.value" :key="item.value" :class="['dropdown-item',{'active':getValue(item) == value},{disabled,readonly}]" @click="selectItem(item)" :value="getValue(item)">
                 <slot name="list-item-prepend" :item="item"></slot>
                 <span>{{getLabel(item)}}</span>
                 <slot name="list-item-append" :item="item"></slot>
@@ -29,7 +29,7 @@
       <template v-if="!group">
         <template v-for="item in items">
           <slot name="list" :item="item" >
-            <button :key="item.value" :class="['dropdown-item',{'active':getValue(item) == value}]" @click="selectItem(item)" :value="getValue(item)">
+            <button :id="ddId+'_'+item.value" :key="item.value" :class="['dropdown-item',{'active':getValue(item) == value}]" @click="selectItem(item)" :value="getValue(item)">
               <slot name="list-item-prepend" :item="item"></slot>
               <span>{{getLabel(item)}}</span>
               <slot name="list-item-append" :item="item"></slot>
@@ -44,6 +44,8 @@
 export default {
   name: 'dropdown',
   props: {
+    id: String,
+    di: {},
     group: {},
     items: {},
     label: {},
@@ -83,6 +85,11 @@ export default {
   mounted() {
   },
   computed: {
+    ddId(){
+      if (this.id) return this.id
+      if (this.di) return this.di.name
+      return this._uid
+    },
     positionClass() {
       if (this.position) return 'drop' + this.position
       return false

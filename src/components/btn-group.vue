@@ -4,7 +4,7 @@
       <template v-if="btns">
         <template v-for="btn in btns">
           <slot name="btn" :btn="btn">
-            <btn type="radio" :key="btn.value" @input="updateValue" v-bind="btnProps(btn)">
+            <btn :id="di.name+'_'+btn.value" type="radio" :key="btn.value" @input="updateValue" v-bind="btnProps(btn)">
               <slot name="btn-prepend" :btn="btn"></slot>
               <slot name="btn-label" :btn="btn">
                 <span v-html="getLabel(btn)"></span>

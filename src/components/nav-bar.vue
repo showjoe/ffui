@@ -1,19 +1,17 @@
 <template>
-  <ul :class="[
-'nav',
-{
-  'nav-pills':pills,
-  'nav-tabs':tabs,
-  'nav-fill':fill,
-  'nav-justified':justify,
-  'justify-content-center':align=='center',
-  'justify-content-end':align=='right',
-  'flex-column':vertical
-}]" id="myTab" role="tablist">
+  <ul :class="['nav',{
+      'nav-pills':pills,
+      'nav-tabs':tabs,
+      'nav-fill':fill,
+      'nav-justified':justify,
+      'justify-content-center':align=='center',
+      'justify-content-end':align=='right',
+      'flex-column':vertical
+    }]" id="myTab" role="tablist">
     <slot name="nav-bar">
       <template v-for="(l,key) in links">
         <slot name="nav-item" :link="l" :link-key="key">
-          <nav-item :key="key" :link="key" :active="key==current" :invalid="l.invalid" @click.native="clickLink(key)" :disabled="l.disabled">
+          <nav-item :id="nbId+'_'+key" :key="key" :link="key" :active="key==current" :invalid="l.invalid" @click.native="clickLink(key)" :disabled="l.disabled">
             <slot name="nav-item-inner" :link="l" :link-name="key">
               {{l.title}}
             </slot>
@@ -28,6 +26,7 @@
 export default {
   name: 'nav-bar',
   props: {
+    id: String,
     align: {},
     current: {},
     links: {},
@@ -37,7 +36,12 @@ export default {
     justify: Boolean,
     vertical: Boolean,
   },
-  computed: {},
+  computed: {
+    nbId(){
+      if(this.id) return this.id
+      return this._uid
+    },
+  },
   methods: {
     clickLink(key) {
       if (this.links[key].disabled) return false

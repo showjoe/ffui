@@ -3,7 +3,7 @@
     <div slot="prepend" class="input-group-text" @click="$refs.typeaheadInput.focus()">
       <fa icon="search" />
     </div>
-    <input ref="typeaheadInput" type="text" class="form-control" v-model="searchQuery" @keydown.down="tabToNextItem" @keyup.up="moveCursorToEnd" />
+    <input :id="tId" ref="typeaheadInput" type="text" class="form-control" v-model="searchQuery" @keydown.down="tabToNextItem" @keyup.up="moveCursorToEnd" />
     <div ref="typeaheadList" class="typeahead-list list-group" :style="[listRect]">
       <template v-for="(item,n) in response">
         <button :key="item[valueKey]" :class="['typeahead-list-item list-group-item py-1 px-2',{'rounded-0 border-top-0':n==0}]" @click="update(item)" @keydown.down="tabToNextItem" @keydown.up="tabToPrevItem">
@@ -21,6 +21,7 @@ import axios from 'axios'
 export default {
   name: 'typeahead',
   props: {
+    id: String,
     apiKey: String,
     apiKeyName: { type: String, default: 'apiKey' },
     arrayKey: String,
@@ -57,6 +58,10 @@ export default {
     }
   },
   computed: {
+    tId() {
+      if (this.id) return this.id
+      return this._uid
+    },
     searchIndicator() {
       return false
     },
