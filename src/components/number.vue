@@ -5,7 +5,7 @@
 export default {
   name: 'number',
   props: {
-    id: String,
+    id: {},
     step: {
       type: Number,
       default: 1

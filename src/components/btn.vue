@@ -3,9 +3,7 @@
 export default {
   name: 'btn',
   props: {
-    id: {
-      type: String
-    },
+    id: {},
     block: Boolean,
     btnClass: {
       type: String,

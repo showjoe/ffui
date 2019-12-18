@@ -47,7 +47,7 @@ import Draggable from 'gsap/Draggable';
 export default {
   name: 'slider',
   props: {
-    id: String,
+    id: {},
     colours: Array,
     colourPopover: Boolean,
     colourHandle: Boolean,

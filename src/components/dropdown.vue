@@ -44,7 +44,7 @@
 export default {
   name: 'dropdown',
   props: {
-    id: String,
+    id: {},
     di: {},
     group: {},
     items: {},

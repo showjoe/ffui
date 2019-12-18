@@ -21,7 +21,7 @@ import axios from 'axios'
 export default {
   name: 'typeahead',
   props: {
-    id: String,
+    id: {},
     apiKey: String,
     apiKeyName: { type: String, default: 'apiKey' },
     arrayKey: String,

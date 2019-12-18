@@ -105,7 +105,7 @@ export default {
       prop: 'value',
       event: 'input'
     },
-    id: String,
+    id: {},
     di: Object,
     future: Boolean,
     minDate: {

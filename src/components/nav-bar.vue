@@ -26,7 +26,7 @@
 export default {
   name: 'nav-bar',
   props: {
-    id: String,
+    id: {},
     align: {},
     current: {},
     links: {},

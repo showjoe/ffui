@@ -20,7 +20,7 @@ Vue.component('fa', FontAwesomeIcon)
 export default {
   name: 'checkbox',
   props: {
-    id: String,
+    id: {},
     label: {},
     labelLeft: Boolean,
     labelRight: {

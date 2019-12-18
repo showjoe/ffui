@@ -2,7 +2,7 @@
 export default {
   name: 'list-group-item',
   props: {
-    id: String,
+    id: {},
     di: Object,
     value: {},
     trueValue: {
