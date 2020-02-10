@@ -4,8 +4,7 @@ import '../../src/assets/scss/app.scss';
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-// import { faCheck, faChessQueen, faCircle, faCoffee, faCog, faEdit, faTimes, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { faCheck, faChessQueen, faCircle, faCoffee, faCog, faEdit, faTimes, faSearch, faSpinner } from '@fortawesome/pro-duotone-svg-icons'
+import { faCheck, faChessQueen, faCircle, faCoffee, faCog, faEdit, faTimes, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import VueDummy from "vue-dummy"
 
 export default ({

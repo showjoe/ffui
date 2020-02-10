@@ -1,6 +1,6 @@
 {
   "name": "@formfactory/ffui",
-  "version": "0.1.38",
+  "version": "0.1.39",
   "license": "MIT",
   "main": "./dist/ffui.common.js",
   "module": "./dist/ffui.umd.js",
@@ -20,10 +20,8 @@
     "docs:build": "vuepress build docs"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-pro": "^5.12.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.6",
     "@fortawesome/free-solid-svg-icons": "^5.4.1",
-    "@fortawesome/pro-duotone-svg-icons": "^5.12.1",
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",

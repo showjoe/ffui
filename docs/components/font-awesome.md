@@ -4,7 +4,7 @@
 Use `<fa icon="..."/>` to add an icon
 
 ::: demo
-<fa :icon="['fad','cog']"/>
+<fa icon="cog"/>
 :::
 
 ## Size
@@ -12,14 +12,14 @@ Use `<fa icon="..."/>` to add an icon
 Use `<fa icon="..." size="..."/>` to specify a size
 
 ::: demo
-<fa :icon="['fad','cog']" size="xs"/>
-<fa :icon="['fad','cog']"/>
-<fa :icon="['fad','cog']" size="lg"/>
-<fa :icon="['fad','cog']" size="2x"/>
-<fa :icon="['fad','cog']" size="3x"/>
-<fa :icon="['fad','cog']" size="4x"/>
-<fa :icon="['fad','cog']" size="5x"/>
-<fa :icon="['fad','cog']" size="6x"/>
+<fa icon="cog" size="xs"/>
+<fa icon="cog"/>
+<fa icon="cog" size="lg"/>
+<fa icon="cog" size="2x"/>
+<fa icon="cog" size="3x"/>
+<fa icon="cog" size="4x"/>
+<fa icon="cog" size="5x"/>
+<fa icon="cog" size="6x"/>
 :::
 
 ## Fixed-width
@@ -27,7 +27,7 @@ Use `<fa icon="..." size="..."/>` to specify a size
 Use `<fa icon="..." fixed-width />` to set it to a fixed width
 
 ::: demo
-<fa :icon="['fad','cog']" fixed-width/>
+<fa icon="cog" fixed-width/>
 :::
 
 ## Rotation
@@ -35,9 +35,9 @@ Use `<fa icon="..." fixed-width />` to set it to a fixed width
 Use `<fa icon="..." rotation="..."/>` to specify a rotation
 
 ::: demo
-<fa :icon="['fad','spinner']" size="6x" rotation="90" />
-<fa :icon="['fad','spinner']" size="6x" rotation="180" />
-<fa :icon="['fad','spinner']" size="6x" rotation="270" />
+<fa icon="spinner" size="6x" rotation="90" />
+<fa icon="spinner" size="6x" rotation="180" />
+<fa icon="spinner" size="6x" rotation="270" />
 :::
 
 ## Flip
@@ -45,9 +45,9 @@ Use `<fa icon="..." rotation="..."/>` to specify a rotation
 Use `<fa icon="..." flip="..."/>` to specify a flip direction
 
 ::: demo
-<fa :icon="['fad','spinner']" size="6x" flip="horizontal" />
-<fa :icon="['fad','spinner']" size="6x" flip="vertical" />
-<fa :icon="['fad','spinner']" size="6x" flip="both" />
+<fa icon="spinner" size="6x" flip="horizontal" />
+<fa icon="spinner" size="6x" flip="vertical" />
+<fa icon="spinner" size="6x" flip="both" />
 :::
 
 ## Spin and Pulse
@@ -55,8 +55,8 @@ Use `<fa icon="..." flip="..."/>` to specify a flip direction
 Use `<fa icon="..." spin />` to specify spinning or pulsing
 
 ::: demo
-<fa :icon="['fad','spinner']" size="6x" spin />
-<fa :icon="['fad','spinner']" size="6x" pulse />
+<fa icon="spinner" size="6x" spin />
+<fa icon="spinner" size="6x" pulse />
 :::
 
 ## Border
@@ -64,7 +64,7 @@ Use `<fa icon="..." spin />` to specify spinning or pulsing
 Use `<fa icon="..." size="..."/>` to specify a border
 
 ::: demo
-<fa :icon="['fad','spinner']" size="6x" border />
+<fa icon="spinner" size="6x" border />
 :::
 
 ## Pull
@@ -72,8 +72,8 @@ Use `<fa icon="..." size="..."/>` to specify a border
 Use `<fa icon="..." pull="left" />` to pull left or right
 
 ::: demo
-<fa :icon="['fad','spinner']" size="6x" pull="left" />
-<fa :icon="['fad','spinner']" size="6x" pull="right" />
+<fa icon="spinner" size="6x" pull="left" />
+<fa icon="spinner" size="6x" pull="right" />
 :::
 
 ## Power Transforms
@@ -81,8 +81,8 @@ Use `<fa icon="..." pull="left" />` to pull left or right
 Use `<fa icon="..." transform="shrink-6 left-4" />` to apply transforms
 
 ::: demo
-<fa :icon="['fad','spinner']" transform="shrink-6 left-4" />
-<fa :icon="['fad','spinner']" :transform="{ rotate: 42 }" />
+<fa icon="spinner" transform="shrink-6 left-4" />
+<fa icon="spinner" :transform="{ rotate: 42 }" />
 :::
 
 ## Masking
@@ -98,7 +98,7 @@ Use `<fa icon="..." :mask="['far', ...]" />` to use a second icon as a mask
 Use `<fa icon="..." symbol />` to use as symbol
 
 ::: demo
-<fa :icon="['fad','edit']" symbol="edit-icon" />
+<fa icon="edit" symbol="edit-icon" />
 <svg><use xlink:href="#edit-icon"></use></svg>
 :::
 
@@ -106,8 +106,8 @@ Use `<fa icon="..." symbol />` to use as symbol
 
 ::: demo
 <fa-layers class="fa-6x">
-  <fa :icon="['fad','circle']" />
-  <fa :icon="['fad','check']" transform="shrink-7" :style="{ color: 'white' }" />
+  <fa icon="circle" />
+  <fa icon="check" transform="shrink-7" :style="{ color: 'white' }" />
 </fa-layers>
 :::
 
@@ -115,7 +115,7 @@ Use `<fa icon="..." symbol />` to use as symbol
 
 ::: demo
 <fa-layers full-width class="fa-4x">
-  <fa :icon="['fad','chess-queen']"/>
+  <fa icon="chess-queen"/>
   <fa-layers-text class="gray8" transform="down-1 shrink-9" value="Q" />
 </fa-layers>
 :::
