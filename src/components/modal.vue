@@ -2,7 +2,7 @@
   <transition name="modal" :duration="transitionDuration" @enter="enterTransition">
     <div class="modal-container" v-if="show" :style="customCssProps">
       <div ref="modal" :class="['modal',{'static':inline,fade}]" @click.stop="close('backdrop')" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="!show">
-        <div :class="['modal-dialog',size ? 'modal-'+size:'', {'modal-dialog-centered':centered}]" role="document" @click.stop="">
+        <div :class="['modal-dialog',size ? 'modal-'+size:'', {'modal-dialog-centered':centered,'modal-dialog-scrollable':scrollable}]" role="document" @click.stop="">
           <div ref="content" class="modal-content">
             <slot name="header">
               <div class="modal-header">
@@ -52,6 +52,7 @@ export default {
     fade: Boolean,
     centered: Boolean,
     size: String,
+    scrollable: Boolean,
     backdropInactive: Boolean,
     sourceCoords: {},
     transitionDuration: {
@@ -80,9 +81,18 @@ export default {
       showing: false,
     }
   },
+  mounted(){
+    if(this.showing) document.body.classList.add('modal-open')
+  },
+  watch:{
+    showing(){
+      if(this.showing) document.body.classList.add('modal-open')
+    }
+  },
   methods: {
     close(target) {
       if (this.backdropInactive && target == 'backdrop') return false
+      document.body.classList.remove('modal-open')
       this.$emit("close");
     },
     save() {
@@ -94,6 +104,7 @@ export default {
         self.$emit("showing");
         self.showing = true
         self.$refs.modal.classList.add('show')
+        if(self.showing) document.body.classList.add('modal-open')
       });
     },
 

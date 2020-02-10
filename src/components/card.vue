@@ -2,6 +2,7 @@
   <div class="card">
     <slot name="header">
       <header class="card-header" v-if="head">
+        <slot name="header-inner"></slot>
         <div class="float-right" v-if="$scopedSlots['header-right']">
           <slot name="header-right"></slot>
         </div>
@@ -24,6 +25,7 @@
     </slot>
     <slot name="footer">
       <footer class="card-footer" v-if="foot">
+        <slot name="footer-inner"></slot>
         <div class="float-right" v-if="$scopedSlots['footer-right']">
           <slot name="footer-right"></slot>
         </div>

@@ -2,6 +2,7 @@ import alert from './alert.vue'
 import btn from './btn.vue'
 import btnGroup from './btn-group.vue'
 import card from './card.vue'
+import cardGroup from './card-group.vue'
 import checkbox from './checkbox.vue'
 import collapse from './collapse.vue'
 import column from './column.vue'
@@ -28,6 +29,7 @@ export {
     btn,
     btnGroup,
     card,
+    cardGroup,
     checkbox,
     collapse,
     column,

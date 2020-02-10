@@ -1,5 +1,5 @@
 <template>
-<ul :class="['list-group',{'list-group-flush':flush}]">
+<ul :class="getClass">
     <slot ></slot>
 </ul>
 </template>
@@ -7,9 +7,23 @@
 export default {
   name:'list-group',
     props: {
-        flush:Boolean
+        flush:Boolean,
+        horizontal:{
+        	default:false
+        }
     },
-    methods:{
+    computed:{
+    	getClass(){
+    		var classes = ['list-group']
+    		if(this.flush) classes.push('list-group-flush')
+    		if(this.horizontal!==false){
+    			if(this.horizontal=='') classes.push('list-group-horizontal')
+    				else {
+    					 classes.push('list-group-horizontal-'+this.horizontal)
+    				}
+    		}
+    		return classes
+    	}
     }
 }
 </script>

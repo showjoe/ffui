@@ -4,7 +4,7 @@ module.exports = {
   description: 'Vue.js Components using bootstrap 4 styling for use in form factory projects.',
   plugins: [
     ['demo-code', {
-      minHeight: 200,
+      minHeight: 460,
       onlineBtns: {
         codepen: false,
         jsfiddle: false,
@@ -30,6 +30,7 @@ module.exports = {
           'components/btn',
           'components/btn-group',
           'components/card',
+          'components/card-group',
           'components/checkbox',
           'components/collapse',
           'components/datepicker',

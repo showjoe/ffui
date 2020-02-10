@@ -48,12 +48,22 @@ Body is true by default use `:body="false"` to disable the card-body class (Usef
 the entire header slot will be replaced with these contents (You may need to reimplement other features like title etc or adding .card-header class)
 
 ::: demo
-<card head title="Card Title">
+<card>
 	<template #header>
-		<div class="card-header text-center">
-			<btn class="float-left">Button</btn>
-			<h5 class="card-title">Card Title</h5>
+		<div class="card-header d-flex">
+			<btn>Button</btn>
+			<h5 class="mx-auto card-title">Card Title</h5>
 		</div>
+	</template>
+</card>
+:::
+
+#### header-inner
+This slot is inside the standard `.card-header`
+::: demo
+<card head>
+	<template #header-inner>
+		<h1>Big Title</h1>
 	</template>
 </card>
 :::
@@ -80,7 +90,7 @@ header-right slot container is within a div that is floated right and independan
 </card>
 :::
 
-#### footer
+#### footer, footer-left & footer-right
 ::: demo
 <card foot title="Card Title">
 	<template #footer-left>
@@ -100,14 +110,33 @@ or
 </card>
 :::
 
+#### footer-inner
+inside the .card-footer
+::: demo
+<card foot title="Card Title">
+	<template #footer-inner>
+		<div class="d-flex">
+			<btn class="mr-auto">Left Button</btn>
+			<btn class="mx-auto">Centre Button</btn>
+			<btn class="ml-auto">Right Button</btn>
+		</div>
+	</template>
+</card>
+:::
+
 Name         | Description 
 :--------    | ----------- 
 outerTop     | Above the body of the card
+header       | The header slot
+header-inner | Inside the `.card-header` (`head` prop must be true)
 header-left  | Left of the card title (`head` prop must be true)
 header-right | Right aligned slot in the header (`head` prop must be true)
 default      | The default will render inside a `.card-body` container unless `body` is set to false
 outerBottom  | Below the body of the card
-footer       | Inside the footer (`foot` prop must be true)
+footer       | The footer slot
+footer-left  | floated left in the footer (`foot` prop must be true)
+footer-right | floated right in the footer  (`foot` prop must be true)
+footer-inner | Inside the `.card-footer` (`foot` prop must be true)
 
 ## Images
 add an image with a class of `.card-img-top` or `.card-img-bottom` and use the card slots `header` and `footer`

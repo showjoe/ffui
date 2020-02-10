@@ -99,7 +99,30 @@
 	</modal>
 </div>
 :::
-<pre class="text-white">{{modal5}}</pre>
+
+## Scrollable
+
+By default the entire modal will scroll if content is long enough.
+
+::: demo
+<div>
+	<btn @click.native="modal5a.show = true">Show Modal</btn>
+	<modal :show="modal5a.show" fade @close="modal5a.show = false">
+		<p v-dummy:350></p>
+	</modal>
+</div>
+:::
+
+Add a scrollable prop and the dialog window will scroll.
+
+::: demo
+<div>
+	<btn @click.native="modal5b.show = true">Show Modal</btn>
+	<modal scrollable :show="modal5b.show" fade @close="modal5b.show = false">
+		<p v-dummy:350></p>
+	</modal>
+</div>
+:::
 
 ## backdrop-inactive
 ::: demo
@@ -198,6 +221,7 @@
 :::
 <pre class="text-white">{{modal11}}</pre>
 
+
 ### source-coords
 ::: demo
 <div>
@@ -231,6 +255,14 @@ export default {
 				show:false
     	},
     	modal5:{
+				saved:false,
+				show:false
+    	},
+    	modal5a:{
+				saved:false,
+				show:false
+    	},
+    	modal5b:{
 				saved:false,
 				show:false
     	},

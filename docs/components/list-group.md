@@ -24,6 +24,17 @@ add a flush prop to remove the margin around the list-group
 </card>
 :::
 
+## horizontal
+add a horizontal prop to display the list-items horizontally.  Add an optional breakpoint to disable horizontal on smaller screens.
+
+::: demo
+<div>
+	<list-group horizontal="lg">
+		<list-group-item v-for="i in 5" v-dummy:1,5></list-group-item>
+	</list-group>
+</div>
+:::
+
 
 ## list-group props
 Name        | Type       | Description | Default

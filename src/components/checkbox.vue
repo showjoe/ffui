@@ -52,6 +52,11 @@ export default {
       checked: (this.value == this.trueValue)
     }
   },
+  watch:{
+    isChecked(){
+      this.checked = this.isChecked
+    }
+  },
   methods: {
     update() {
       if (this.disabled || this.readonly) return false
