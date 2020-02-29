@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-import { scaleLinear, color, hsl } from "d3";
+import { format, scaleLinear, color, hsl } from "d3";
 import { TweenLite } from "gsap";
 import Draggable from 'gsap/Draggable';
 export default {
@@ -77,6 +77,7 @@ export default {
       default: 1,
       validator: (value) => { return value >= 0 }
     },
+    thin: Boolean,
     value: {},
     vertical: Boolean,
   },
@@ -103,7 +104,7 @@ export default {
       if (this.id) return this.id
       return this._uid
     },
-    containerClass() { return ['slider-container', { 'slider-container-vertical': this.vertical, 'disabled': this.disabled, 'unanswered': !this.handleVisible }] },
+    containerClass() { return ['slider-container', { 'slider-container-vertical': this.vertical, 'disabled': this.disabled, 'unanswered': !this.handleVisible, 'thin': this.thin }] },
     dimension() { return this.vertical ? 'Y' : 'X' },
     divisions() { return this.gridDivisions ? this.gridDivisions : this.max - this.min },
     gridClass() { return ['grid', { 'grid-vertical': this.vertical, 'grid-reverse': this.reverse }] },
@@ -203,7 +204,10 @@ export default {
       }
       return gradPc
     },
-    getGridValue(i) { return scaleLinear().domain([0, this.divisions]).range([this.min, this.max])(i); },
+    getGridValue(i) {
+      var f = format(".1f");
+      return f(scaleLinear().domain([0, this.divisions]).range([this.min, this.max])(i));
+    },
     getDisplayValue(value) {
       if (value != null) {
         var val = Number.parseFloat(value)
@@ -368,8 +372,11 @@ export default {
 <style lang="scss">
 $sliderLength:400px;
 $popoverSize:40px;
+$popoverThinSize:10px;
 $sliderRadius:13.5px;
+$sliderThinRadius:4px;
 $gridDepth:10px;
+$gridThinDepth:4px;
 
 .slider-container {
   position: relative;
@@ -401,6 +408,7 @@ $gridDepth:10px;
 .popover-track {
   position: relative;
   height: $popoverSize;
+  z-index: 2;
 
   .slider-popover {
     transition: 0.05s linear;
@@ -421,6 +429,7 @@ $gridDepth:10px;
 .slider {
   position: relative;
   height: $sliderRadius * 2;
+  z-index: 2;
 
   .slider-track,
   .slider-bar {
@@ -483,7 +492,7 @@ $gridDepth:10px;
     .slider-track,
     .slider-bar {
       width: 50%;
-      height: calc(100% - #{$sliderRadius} * 2);
+      height: calc(100% - #{$sliderRadius});
       left: 25%;
       top: $sliderRadius / 2;
     }
@@ -516,6 +525,100 @@ $gridDepth:10px;
     background: linear-gradient(to bottom, white 0%, gainsboro 50%, white 100%);
   }
 }
+
+
+.thin {
+  &.slider-container {
+    height: $popoverThinSize + ($sliderThinRadius * 2);
+
+  }
+
+  .slider-popover {
+    padding: 0px 4px;
+  }
+
+  &:not(.slider-container-vertical) {
+    .slider {
+      height: $sliderThinRadius * 5;
+    }
+
+    .slider-track,
+    .slider-bar {
+      height: 20%;
+      width: calc(100% - #{$sliderThinRadius} * 2);
+      top: 40%;
+      left: $sliderThinRadius / 2;
+    }
+
+    .popover-track {
+      width: $popoverThinSize;
+      height: $popoverThinSize;
+      top: -$popoverThinSize*2;
+    }
+  }
+
+  &.slider-container-vertical {
+    height: $sliderLength;
+    width: $popoverThinSize + ($sliderThinRadius * 2);
+
+    .popover-track {
+      position: absolute;
+      width: $popoverThinSize;
+      top: 0;
+      left: - ($popoverThinSize);
+    }
+
+    .slider {
+      width: $sliderThinRadius * 5;
+      height: $sliderLength;
+    }
+
+    .slider-track,
+    .slider-bar {
+      width: 20%;
+      height: calc(100% - #{$sliderThinRadius} * 2);
+      left: 40%;
+      top: $sliderThinRadius / 2;
+    }
+
+    .handle {
+      left: $sliderThinRadius / 2;
+
+    }
+  }
+
+  .handle {
+    width: $sliderThinRadius * 4;
+    height: $sliderThinRadius * 4;
+    top: $sliderThinRadius / 2;
+    background: linear-gradient(to bottom, black 0%, gainsboro 20%, black 100%);
+
+  }
+
+  .grid {
+    left: $sliderThinRadius + 2px;
+  }
+
+  .grid.grid-vertical {
+    position: absolute;
+    left: $gridThinDepth * 3;
+    width: $gridThinDepth;
+
+    .grid-num {
+      left: 0.8em;
+      top: -0.8em;
+    }
+  }
+
+  .grid:not(.grid-vertical) {
+    width: calc((100% - #{$sliderThinRadius}*2) - 4px);
+    top: - $gridThinDepth * 3.5;
+  }
+
+
+}
+
+
 
 .grid {
   position: relative;

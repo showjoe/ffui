@@ -108,7 +108,7 @@ Flip the direction of the slider
 ## step
 Set the incremental step of the slider. Must be a positive number.
 ::: demo
-  <slider :step="0.1" v-model="records.sliderVal4"/>
+  <slider :step="0.01" :grid-divisions="20" v-model="records.sliderVal4"/>
 :::
 
 ## vertical
@@ -116,9 +116,20 @@ Display the slider in vertical mode.
 
 ::: demo
   <div class="clearfix">
-  	<slider vertical v-model="records.sliderVal"/>
-  	<slider vertical reverse v-model="records.sliderVal"/>
+    <slider vertical v-model="records.sliderVal"/>
+    <slider vertical reverse v-model="records.sliderVal"/>
   </div>
+:::
+
+## thin
+Display the slider in thin mode. 
+
+::: demo
+<div class="d-flex">
+    <slider class="flex-shrink-1" vertical thin v-model="records.sliderVal"/>
+   <slider class="w-100 mx-5 my-auto" thin v-model="records.sliderVal"/>
+    <slider class="flex-shrink-1" vertical thin reverse v-model="records.sliderVal"/>
+</div>
 :::
 
 <hr>
