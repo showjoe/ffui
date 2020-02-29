@@ -307,7 +307,14 @@ export default {
   methods:{
   	sourceCoords(){
   		if(this.$refs.sourceCoordsBtn){
-	  		return this.$refs.sourceCoordsBtn.$el.getBoundingClientRect()
+  			var co = this.$refs.sourceCoordsBtn.$el.getBoundingClientRect()
+  			var coAdjusted = {
+  				top:co.top - 74,
+  				left:co.left - 218,
+  				width:co.width,
+  				height:co.height,
+  			}
+	  		return coAdjusted
 	  	}
   	}
   }
