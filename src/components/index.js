@@ -16,12 +16,14 @@ import modal from './modal.vue'
 import navBar from './nav-bar.vue'
 import navItem from './nav-item.vue'
 import number from './number.vue'
+import popover from './popover.vue'
 import progressBar from './progress-bar.vue'
 import row from './row.vue'
 import slider from './slider.vue'
 import tabContent from './tab-content.vue'
 import tabPane from './tab-pane.vue'
 import textbox from './textbox.vue'
+import tooltip from './tooltip.vue'
 import typeahead from './typeahead.vue'
 
 export {
@@ -43,11 +45,13 @@ export {
     navBar,
     navItem,
     number,
+    popover,
     progressBar,
     row,
     slider,
     tabContent,
     tabPane,
     textbox,
+    tooltip,
     typeahead,
 }

@@ -42,10 +42,12 @@ module.exports = {
           'components/navs',
           'components/number',
           'components/row_and_column',
+          'components/popover',
           'components/progress-bar',
           'components/slider',
           'components/tabs',
           'components/textbox',
+          'components/tooltip',
           'components/typeahead',
           'components/font-awesome'
         ]
