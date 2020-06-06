@@ -2,41 +2,8 @@
 @import '~bootstrap/scss/bootstrap';
 
 $form-feedback-invalid-color: #dc3545;
-.popover{
-  box-shadow: 0px 6px 6px #00000012;
-  &.bs-popover-top .arrow{
-    left:calc(50% - 0.5rem);
 
-  }
-  &.bs-popover-bottom .arrow{
-    left:calc(50% - 0.5rem);
-  }
-  &.bs-popover-left .arrow{
-    top:calc(50% - 0.5rem);
 
-  }
-  &.bs-popover-right .arrow{
-    top:calc(50% - 0.5rem);
-
-  }
-}
-.tooltip{
-  &.bs-tooltip-top .arrow{
-    left:calc(50% - 0.5rem);
-
-  }
-  &.bs-tooltip-bottom .arrow{
-    left:calc(50% - 0.5rem);
-  }
-  &.bs-tooltip-left .arrow{
-    top:calc(50% - 0.5rem);
-
-  }
-  &.bs-tooltip-right .arrow{
-    top:calc(50% - 0.5rem);
-
-  }
-}
 .was-validated {
   .is-invalid {
 
@@ -65,9 +32,13 @@ $form-feedback-invalid-color: #dc3545;
       border: red solid 2px;
     }
 
-    .invalid-feedback {
+    .invalid-feedback,
+    .invalid-tooltip {
+      z-index:20;
+      top: auto;
       display: block;
     }
+
 
     .irs,
     .irs-with-grid {
@@ -87,7 +58,10 @@ $form-feedback-invalid-color: #dc3545;
       @extend .btn-outline-success;
     }
 
-    .invalid-feedback {
+    .valid-feedback,
+    .valid-tooltip {
+      z-index:20;
+      top: auto;
       display: block;
     }
   }
@@ -95,4 +69,399 @@ $form-feedback-invalid-color: #dc3545;
 
 .nav-item.invalid {
   @extend .text-danger;
+}
+
+.form-check,
+.custom-control {
+  .form-check-input {
+    margin-top: 0.5rem;
+  }
+
+  // checkbox left
+  &.custom-checkbox,
+  &.custom-radio {
+    padding-right: 0;
+
+    label.custom-control-label {
+      position: relative;
+      padding-left: 0.5rem;
+
+      &::before {
+        top: 0.4rem;
+      }
+
+      &::after {
+        top: 0.4rem;
+      }
+    }
+  }
+
+  &.custom-switch {
+    label.custom-control-label {
+      position: relative;
+      padding-left: 0.5rem;
+
+      &::before {
+        top: 0.4rem;
+      }
+
+      &::after {
+        top: calc(0.4rem + 2px);
+      }
+    }
+  }
+
+
+  // label left
+  &.label-left {
+    padding-left: 0;
+
+    .form-check-input {
+      margin-top: 0.4rem;
+      right: 0.2rem;
+    }
+
+    .form-check-label {
+      margin-right: 1.5rem;
+    }
+
+    &.custom-checkbox,
+    &.custom-radio {
+      padding-left: 0;
+
+      label.custom-control-label {
+        position: relative;
+        padding-right: 1.5rem;
+
+        &::before {
+          top: 0.3rem !important;
+          left: auto;
+          right: 0.1rem;
+        }
+
+        &::after {
+          top: 0.3rem !important;
+          right: 0.1rem;
+          left: auto;
+        }
+      }
+    }
+
+    &.custom-switch {
+      padding-left: 0;
+
+      label.custom-control-label {
+        position: relative;
+        padding-right: 2.5rem;
+
+        &::before {
+          top: 0.3rem;
+          left: auto;
+          width: 1.75rem;
+          height: 1rem;
+          right: 0.1rem;
+
+        }
+
+        &::after {
+          top: calc(0.3rem + 2px);
+          left: auto;
+          width: calc(1rem - 4px);
+          height: calc(1rem - 4px);
+          right: calc(0.8rem + 3px);
+
+        }
+      }
+    }
+  }
+
+  &.custom-control-sm {
+    line-height: 1.5;
+
+    label.custom-control-label {
+      font-size: 0.875rem;
+      position: relative;
+
+      &::before {
+        width: 0.8rem;
+        height: 0.8rem;
+      }
+
+      &::after {
+        margin-left: -0.02rem;
+        margin-top: 0.015rem;
+        width: 0.8rem;
+        height: 0.8rem;
+      }
+    }
+
+    &.label-left {
+      label.custom-control-label {
+        padding-right: 1.5rem;
+      }
+    }
+  }
+
+  &.custom-control-lg {
+    min-height: 2.2rem;
+
+    label.custom-control-label {
+      position: relative;
+      line-height: 1.5;
+      font-size: 1.25rem;
+
+      &::before {
+        top: 0.1em;
+        width: 1.4em;
+        height: 1.4em;
+      }
+
+      &::after {
+        top: 0.1em;
+        width: 1.4em;
+        height: 1.4em;
+
+      }
+    }
+
+    &:not(.label-left) {
+      label.custom-control-label {
+        padding-left: 1.5rem;
+      }
+    }
+
+    &.label-left {
+      label.custom-control-label {
+        padding-right: 2.5rem;
+      }
+    }
+  }
+}
+
+.popover {
+  box-shadow: 0px 6px 6px #00000012;
+
+  &.bs-popover-top .arrow {
+    left: calc(50% - 0.5rem);
+  }
+
+  &.bs-popover-bottom .arrow {
+    left: calc(50% - 0.5rem);
+  }
+
+  &.bs-popover-left .arrow {
+    top: calc(50% - 0.5rem);
+  }
+
+  &.bs-popover-right .arrow {
+    top: calc(50% - 0.5rem);
+  }
+
+  &.bs-popover-auto {
+    &[data-popper-placement="top"] {
+      @extend .bs-popover-top;
+    }
+
+    &[data-popper-placement="right"] {
+      @extend .bs-popover-right;
+    }
+
+    &[data-popper-placement="bottom"] {
+      @extend .bs-popover-bottom;
+    }
+
+    &[data-popper-placement="left"] {
+      @extend .bs-popover-left;
+    }
+  }
+}
+
+.tooltip {
+  &.bs-tooltip-top .arrow {
+    left: calc(50% - 0.5rem);
+  }
+
+  &.bs-tooltip-bottom .arrow {
+    left: calc(50% - 0.5rem);
+  }
+
+  &.bs-tooltip-left .arrow {
+    top: calc(50% - 0.5rem);
+  }
+
+  &.bs-tooltip-right .arrow {
+    top: calc(50% - 0.5rem);
+  }
+
+  &.bs-tooltip-auto {
+    &[data-popper-placement="top"] {
+      @extend .bs-tooltip-top;
+    }
+
+    &[data-popper-placement="right"] {
+      @extend .bs-tooltip-right;
+    }
+
+    &[data-popper-placement="bottom"] {
+      @extend .bs-tooltip-bottom;
+    }
+
+    &[data-popper-placement="left"] {
+      @extend .bs-tooltip-left;
+    }
+  }
+}
+
+.modal-dialog {
+  z-index: 99 !important;
+
+  .arrow {
+    position: absolute;
+    display: block;
+    width: $popover-arrow-width;
+    height: $popover-arrow-height;
+    margin: 0 $popover-border-radius;
+
+    &::before,
+    &::after {
+      position: absolute;
+      display: block;
+      content: "";
+      border-color: transparent;
+      border-style: solid;
+    }
+  }
+
+}
+
+.bs-modal-top {
+  margin-bottom: $popover-arrow-height;
+
+  >.arrow {
+    bottom: subtract(-$popover-arrow-height, $popover-border-width);
+
+    &::before {
+      bottom: 0;
+      border-width: $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-top-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      bottom: $popover-border-width;
+      border-width: $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-top-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-modal-right {
+  margin-left: $popover-arrow-height;
+
+  >.arrow {
+    left: subtract(-$popover-arrow-height, $popover-border-width);
+    width: $popover-arrow-height;
+    height: $popover-arrow-width;
+    margin: $popover-border-radius 0; // make sure the arrow does not touch the popover's rounded corners
+
+    &::before {
+      left: 0;
+      border-width: ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-right-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      left: $popover-border-width;
+      border-width: ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-right-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-modal-bottom {
+  margin-top: $popover-arrow-height;
+
+  >.arrow {
+    top: subtract(-$popover-arrow-height, $popover-border-width);
+
+    &::before {
+      top: 0;
+      border-width: 0 ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2);
+      border-bottom-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      top: $popover-border-width;
+      border-width: 0 ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2);
+      border-bottom-color: $popover-arrow-color;
+    }
+  }
+
+  // This will remove the popover-header's border just below the arrow
+  .popover-header::before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: block;
+    width: $popover-arrow-width;
+    margin-left: -$popover-arrow-width / 2;
+    content: "";
+    border-bottom: $popover-border-width solid $popover-header-bg;
+  }
+}
+
+.bs-modal-left {
+  margin-right: $popover-arrow-height;
+
+  >.arrow {
+    right: subtract(-$popover-arrow-height, $popover-border-width);
+    width: $popover-arrow-height;
+    height: $popover-arrow-width;
+    margin: $popover-border-radius 0; // make sure the arrow does not touch the popover's rounded corners
+
+    &::before {
+      right: 0;
+      border-width: ($popover-arrow-width / 2) 0 ($popover-arrow-width / 2) $popover-arrow-height;
+      border-left-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      right: $popover-border-width;
+      border-width: ($popover-arrow-width / 2) 0 ($popover-arrow-width / 2) $popover-arrow-height;
+      border-left-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-modal-auto {
+  &[data-popper-placement="top"] {
+    @extend .bs-popover-top;
+
+    .arrow {
+      left: calc(50% - 0.5rem);
+    }
+  }
+
+  &[data-popper-placement="right"] {
+    @extend .bs-popover-right;
+
+    .arrow {
+      top: calc(50% - 0.5rem);
+    }
+  }
+
+  &[data-popper-placement="bottom"] {
+    @extend .bs-popover-bottom;
+
+    .arrow {
+      left: calc(50% - 0.5rem);
+    }
+  }
+
+  &[data-popper-placement="left"] {
+    @extend .bs-popover-left;
+
+    .arrow {
+      top: calc(50% - 0.5rem);
+    }
+  }
 }

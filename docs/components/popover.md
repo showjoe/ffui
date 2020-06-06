@@ -25,10 +25,12 @@ By default should automatically choose most sensible position.  You can configur
 <btn id="pop-target-4">Popover on right</btn>
 <btn id="pop-target-5">Popover on bottom</btn>
 <btn id="pop-target-6">Popover on left</btn>
+<btn id="pop-target-7">Popover on auto</btn>
 <popover event="click" position="top" target="pop-target-3" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
 <popover event="click" position="right" target="pop-target-4" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
 <popover event="click" position="bottom" target="pop-target-5" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
 <popover event="click" position="left" target="pop-target-6" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
+<popover event="click" position="auto" target="pop-target-7" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
 :::
 
 
@@ -38,8 +40,8 @@ Put html content inside the popover:
 
 ::: demo
 <btn v-popover="{title:'Popover title',html:'<b>Popover</b> text'}">Popover with HTML from directive</btn>
-<btn id="popover-target-7">Popover with HTML from component</btn>
-<popover target="popover-target-7" title="Popover title" html="<b>Popover</b> text"/>
+<btn id="popover-target-8">Popover with HTML from component</btn>
+<popover target="popover-target-8" title="Popover title" html="<b>Popover</b> text"/>
 :::
 
 
@@ -49,8 +51,8 @@ Put html content inside the popover:
 The default slot will replace the contents inside the popover
 You should use the click event to trigger so you can interact with contents of popover
 ::: demo
-<btn id="popover-target-8">Tooltip with HTML from default slot</btn>
-<popover event="click" target="popover-target-8" title="Popover title">
+<btn id="popover-target-9">Tooltip with HTML from default slot</btn>
+<popover event="click" target="popover-target-9" title="Popover title">
     <div class="d-flex">
       <btn class="mx-auto mb-4" btn-class="secondary">Click</btn>
     </div>
@@ -61,8 +63,8 @@ You should use the click event to trigger so you can interact with contents of p
 The header slot will be placed inside the popover-header container
 
 ::: demo
-<btn id="popover-target-9">Tooltip with HTML from header slot</btn>
-<popover event="click" target="popover-target-9">
+<btn id="popover-target-10">Tooltip with HTML from header slot</btn>
+<popover event="click" target="popover-target-10">
   <template v-slot:header>
     <b>Alternative title</b>
   </template>

@@ -119,6 +119,9 @@ Add a scrollable prop and the dialog window will scroll.
 <div>
 	<btn @click.native="modal5b.show = true">Show Modal</btn>
 	<modal scrollable :show="modal5b.show" fade @close="modal5b.show = false">
+		<form-group>
+			<textbox />
+		</form-group>
 		<p v-dummy:350></p>
 	</modal>
 </div>

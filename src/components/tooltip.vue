@@ -13,6 +13,8 @@
 </template>
 <script>
 import { createPopper } from '@popperjs/core/lib/popper-lite';
+import flip from '@popperjs/core/lib/modifiers/flip';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 export default {
   name: 'tooltip',
   props: {
@@ -47,7 +49,7 @@ export default {
   computed: {
 
   },
-  destroyed(){
+  destroyed() {
     this.popper.destroy()
     this.popper = null
   },
@@ -55,7 +57,6 @@ export default {
     popperInstance() {
       var button = this.target && typeof this.target == 'object' ? this.target : document.getElementById(this.target);
       if (this.target && this.$el) {
-
         if (button) {
           if (this.event == 'hover') {
             button.addEventListener('mouseover', this.toggle)
@@ -67,7 +68,8 @@ export default {
 
           return createPopper(button, this.$el, {
             placement: this.position,
-            modifiers: [{
+            modifiers: [flip, preventOverflow,
+              {
                 name: 'offset',
                 options: {
                   offset: [0, 4],

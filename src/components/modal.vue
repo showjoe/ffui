@@ -1,10 +1,12 @@
 <template>
   <transition name="modal" :duration="transitionDuration" @enter="enterTransition">
-    <div class="modal-container" v-if="show" :style="customCssProps">
-      <div ref="modal" :class="['modal',{'static':inline,fade}]" @click.stop="close('backdrop')" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="!show">
-        <div ref="modal-dialog" :class="['modal-dialog',size ? 'modal-'+size:'', {'modal-dialog-centered':centered,'modal-dialog-scrollable':scrollable}]" role="document" @click.stop="">
+    <div class="modal-container" v-if="show">
+      <div ref="modal" :class="['modal show',{'static':inline||backdropHidden,fade}]" @click.stop="close('backdrop')" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="!show">
+        <div ref="modal-dialog" :class="['modal-dialog','bs-modal-'+position, size ? 'modal-'+size:'', {'modal-dialog-centered':centered,'modal-dialog-scrollable':scrollable,'shadow-lg':backdropHidden}]"
+        role="document" @click.stop="" v-bind="$attrs" :style="customCssProps">
+          <div v-if="arrow" class="arrow"></div>
           <div ref="content" class="modal-content">
-            <slot name="header">
+            <slot name="header" v-if="head">
               <div class="modal-header">
                 <slot name="header-inner">
                   <h5 class="modal-title" id="exampleModalLabel" v-html="title"></h5>
@@ -30,18 +32,26 @@
           </div>
         </div>
       </div>
-      <div ref="backdrop" v-if="!inline" :class="['modal-backdrop show',{'static':inline,fade}]"></div>
+      <div ref="backdrop" v-if="!inline&&!backdropHidden" :class="['modal-backdrop show',{'static':inline,fade}]"></div>
     </div>
   </transition>
 </template>
 <script>
+import { createPopper } from '@popperjs/core/lib/popper-lite';
+import flip from '@popperjs/core/lib/modifiers/flip';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 export default {
   name: 'modal',
+  inheritAttrs: false,
   props: {
+    arrow: Boolean,
     title: {
       default: '',
     },
-    head: Boolean,
+    head: {
+      type: Boolean,
+      default: true,
+    },
     body: {
       type: Boolean,
       default: true,
@@ -51,9 +61,14 @@ export default {
     inline: Boolean,
     fade: Boolean,
     centered: Boolean,
+    position: {
+      default: 'bottom'
+    },
     size: String,
     scrollable: Boolean,
     backdropInactive: Boolean,
+    backdropHidden: Boolean,
+    target: {},
     sourceCoords: {},
     transitionDuration: {
       default: 150
@@ -81,15 +96,24 @@ export default {
       showing: false,
     }
   },
+  updated() {
+    this.setupModal()
+  },
   mounted() {
-    if (this.showing) document.body.classList.add('modal-open')
+    this.setupModal()
   },
   watch: {
     showing() {
-      if (this.showing) document.body.classList.add('modal-open')
+      this.setupModal()
     }
   },
   methods: {
+    setupModal(){
+      if (this.showing) {
+        this.popper = this.popperInstance()
+        if(!this.backdropHidden) document.body.classList.add('modal-open')
+      }
+    },
     close(target) {
       if (this.backdropInactive && target == 'backdrop') return false
       document.body.classList.remove('modal-open')
@@ -110,7 +134,7 @@ export default {
     enterTransition() {
       if (this.sourceCoords) {
         this.$refs.modal.classList.add('show')
-        var co = this.getInvertedTranslation(this.sourceCoords,this.$refs['content'].getBoundingClientRect())
+        var co = this.getInvertedTranslation(this.sourceCoords, this.$refs['content'].getBoundingClientRect())
         var t = 'translate(' + co.left + 'px, ' + co.top + 'px) scale(' + co.width + ', ' + co.height + ')'
         this.$refs['content'].style.transform = t
       }
@@ -121,10 +145,29 @@ export default {
         self.$refs.modal.classList.add('show')
         self.$refs['content'].style.transition = '1s ease'
         self.$refs['content'].style.transform = ''
-        if (self.showing) document.body.classList.add('modal-open')
+        if (self.showing&&!self.backdropHidden) document.body.classList.add('modal-open')
       });
     },
-
+    popperInstance() {
+      var target = this.target && typeof this.target == 'object' ? this.target : document.getElementById(this.target);
+      return createPopper(target, this.$refs['modal-dialog'], {
+        placement: this.position,
+        modifiers: [flip, preventOverflow,
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 4],
+            },
+          },
+          {
+            name: 'arrow',
+            options: {
+              padding: 15, // 5px from the edges of the popper
+            },
+          },
+        ],
+      });
+    }
   }
 }
 </script>
@@ -145,17 +188,6 @@ button.close {
   cursor: pointer;
 }
 
-.modal-enter-active,
-.modal-leave-active {
-  .modal.show {
-    .modal-backdrop {}
-
-    .modal-dialog {
-      transition: all $td ease;
-    }
-  }
-}
-
 .modal-enter,
 .modal-leave-to {
   .modal-backdrop.show {
@@ -173,5 +205,10 @@ button.close {
       opacity: 0;
     }
   }
+}
+
+.modal-dialog {
+  transition: all $td ease;
+  z-index: 99 !important;
 }
 </style>

@@ -17,6 +17,8 @@
 </template>
 <script>
 import { createPopper } from '@popperjs/core/lib/popper-lite';
+import flip from '@popperjs/core/lib/modifiers/flip';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 export default {
   name: 'popover',
   props: {
@@ -52,7 +54,7 @@ export default {
   computed: {
 
   },
-  destroyed(){
+  destroyed() {
     this.popper.destroy()
     this.popper = null
   },
@@ -69,10 +71,11 @@ export default {
           } else {
             button.addEventListener(this.event, this.toggle)
           }
-
+          
           return createPopper(button, this.$el, {
             placement: this.position,
-            modifiers: [{
+            modifiers: [flip, preventOverflow,
+              {
                 name: 'offset',
                 options: {
                   offset: [0, 4],
@@ -81,6 +84,7 @@ export default {
               {
                 name: 'arrow',
                 options: {
+                  offset: [0, 4],
                   padding: 5, // 5px from the edges of the popper
                 },
               },
@@ -90,6 +94,7 @@ export default {
       }
     },
     toggle() {
+      console.log(this.popper)
       this.show = !this.show
     }
   },
