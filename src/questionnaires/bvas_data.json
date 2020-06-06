@@ -1,0 +1,1688 @@
+{
+  "defaultTemplate":
+  {
+    "BV_AssessorName": null,
+    "BV_FirstAssessment": null,
+    "BV_GF_None": null,
+    "BV_GF_Myalgia": null,
+    "BV_GF_Arthralgia": null,
+    "BV_GF_Fever": null,
+    "BV_GF_WeightLoss": null,
+    "BV_Cu_None": null,
+    "BV_Cu_Infarct": null,
+    "BV_Cu_Purpura": null,
+    "BV_Cu_Ulcer": null,
+    "BV_Cu_Gangrene": null,
+    "BV_Cu_Other": null,
+    "BV_Mu_None": null,
+    "BV_Mu_MouthUlcers": null,
+    "BV_Mu_GenitalUlcers": null,
+    "BV_Mu_AdnexalInflammation": null,
+    "BV_Mu_SignificantProptosis": null,
+    "BV_Mu_ScleritisEpiscleritis": null,
+    "BV_Mu_Conjunctivitis": null,
+    "BV_Mu_BlurredVision": null,
+    "BV_Mu_SuddenVisualLoss": null,
+    "BV_Mu_Uveitis": null,
+    "BV_Mu_RetinalChanges": null,
+    "BV_En_None": null,
+    "BV_En_BloodyNasalDischarge": null,
+    "BV_En_ParanasalSinusInvolvement": null,
+    "BV_En_SubglotticStenosis": null,
+    "BV_En_ConductiveHearingLoss": null,
+    "BV_En_SensorineuralHearingLoss": null,
+    "BV_Ch_None": null,
+    "BV_Ch_Wheeze": null,
+    "BV_Ch_Nodules": null,
+    "BV_Ch_PleuralEffusion": null,
+    "BV_Ch_Infiltrate": null,
+    "BV_Ch_EndobronchialInvolvement": null,
+    "BV_Ch_MassiveHaemoptysis": null,
+    "BV_Ch_RespiratoryFailure": null,
+    "BV_Ca_None": null,
+    "BV_Ca_LossPulse": null,
+    "BV_Ca_ValvularHeartDisease": null,
+    "BV_Ca_Pericarditis": null,
+    "BV_Ca_IschaemicCardiacPain": null,
+    "BV_Ca_Cardiomyopathy": null,
+    "BV_Ca_CongestiveCardiacFailure": null,
+    "BV_Ab_None": null,
+    "BV_Ab_Peritonitis": null,
+    "BV_Ab_BloodyDiarrhoea": null,
+    "BV_Ab_IschaemicAbdominalPain": null,
+    "BV_Re_None": null,
+    "BV_Re_Hypertension": null,
+    "BV_Re_Proteinuria": null,
+    "BV_Re_Haematuria": null,
+    "BV_Re_Creatinine125": null,
+    "BV_Re_Creatinine250": null,
+    "BV_Re_Creatinine500": null,
+    "BV_Re_RiseInSerumCreatinine": null,
+    "BV_Ne_None": null,
+    "BV_Ne_Headache": null,
+    "BV_Ne_Meningitis": null,
+    "BV_Ne_OrganicConfusion": null,
+    "BV_Ne_Seizures": null,
+    "BV_Ne_CerebrovascularAccident": null,
+    "BV_Ne_SpinalCordLesion": null,
+    "BV_Ne_CranialNervePalsy": null,
+    "BV_Ne_SensoryPeripheralNeuropathy": null,
+    "BV_Ne_MononeuritisMultiplex": null,
+    "BV_Ot_None": null,
+    "BV_Ot_A": null,
+    "BV_Ot_A_Active": null,
+    "BV_Ot_B": null,
+    "BV_Ot_B_Active": null,
+    "BV_Ot_C": null,
+    "BV_Ot_C_Active": null,
+    "BV_Ot_D": null,
+    "BV_Ot_D_Active": null,
+    "BV_PD_Only": null,
+    "BV_Score": null
+  },
+  "questionnaire":
+  {
+    "id": 5,
+    "group": 3,
+    "group_name": "ukivas_encounter",
+    "type": "",
+    "name": "bvas",
+    "title": "BVAS",
+    "namespace": "Questionnaire",
+    "model_name": "Bvas",
+    "model_type": "Encounter"
+  },
+  "dataitems":
+  {
+    "BV_AssessorName":
+    {
+      "name": "BV_AssessorName",
+      "section": null,
+      "label": "Name of Assessor:",
+      "type": "string"
+    },
+    "BV_FirstAssessment":
+    {
+      "name": "BV_FirstAssessment",
+      "section": null,
+      "label": "Is this the patient\u2019s first assessment?",
+      "type": "integer",
+      "default": null,
+      "lookup_type": "\\FormFactory\\Questionnaire\\Lookup",
+      "json": null,
+      "lookup":
+      {
+        "id": 10,
+        "name": "YN",
+        "items": [
+        {
+          "label": "Yes",
+          "value": "1"
+        },
+        {
+          "label": "No",
+          "value": "2"
+        }]
+      }
+    },
+    "BV_GF_None":
+    {
+      "name": "BV_GF_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 1,
+        "none": 1,
+        "persistent": 2,
+        "worse": 3
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_GF_Myalgia,BV_GF_Arthralgia,BV_GF_Fever,BV_GF_WeightLoss",
+        "message": "Select None if no general features found"
+      }]
+    },
+    "BV_GF_Myalgia":
+    {
+      "name": "BV_GF_Myalgia",
+      "section": null,
+      "label": "Myalgia",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_GF_None"],
+        "group": 1,
+        "persistent": 1,
+        "worse": 1
+      },
+      "lookup": null
+    },
+    "BV_GF_Arthralgia":
+    {
+      "name": "BV_GF_Arthralgia",
+      "section": null,
+      "label": "Arthralgia \/ arthritis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_GF_None"],
+        "group": 1,
+        "persistent": 1,
+        "worse": 1
+      },
+      "lookup": null
+    },
+    "BV_GF_Fever":
+    {
+      "name": "BV_GF_Fever",
+      "section": null,
+      "label": "Fever &ge;38&deg;C",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_GF_None"],
+        "group": 1,
+        "persistent": 2,
+        "worse": 2
+      },
+      "lookup": null
+    },
+    "BV_GF_WeightLoss":
+    {
+      "name": "BV_GF_WeightLoss",
+      "section": null,
+      "label": "Weight loss &ge;2 kg",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_GF_None"],
+        "group": 1,
+        "persistent": 2,
+        "worse": 2
+      },
+      "lookup": null
+    },
+    "BV_Cu_None":
+    {
+      "name": "BV_Cu_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 2,
+        "none": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_Cu_Infarct,BV_Cu_Purpura,BV_Cu_Ulcer,BV_Cu_Gangrene,BV_Cu_Other",
+        "message": "Select None if no cutaneous features found"
+      }]
+    },
+    "BV_Cu_Infarct":
+    {
+      "name": "BV_Cu_Infarct",
+      "section": null,
+      "label": "Infarct",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Cu_None"],
+        "group": 2,
+        "persistent": 1,
+        "worse": 2
+      },
+      "lookup": null
+    },
+    "BV_Cu_Purpura":
+    {
+      "name": "BV_Cu_Purpura",
+      "section": null,
+      "label": "Purpura",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Cu_None"],
+        "group": 2,
+        "persistent": 1,
+        "worse": 2
+      },
+      "lookup": null
+    },
+    "BV_Cu_Ulcer":
+    {
+      "name": "BV_Cu_Ulcer",
+      "section": null,
+      "label": "Ulcer",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Cu_None"],
+        "group": 2,
+        "persistent": 1,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Cu_Gangrene":
+    {
+      "name": "BV_Cu_Gangrene",
+      "section": null,
+      "label": "Gangrene",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Cu_None"],
+        "group": 2,
+        "major": 1,
+        "persistent": 2,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Cu_Other":
+    {
+      "name": "BV_Cu_Other",
+      "section": null,
+      "label": "Other skin vasculitis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Cu_None"],
+        "group": 2,
+        "persistent": 1,
+        "worse": 2
+      },
+      "lookup": null
+    },
+    "BV_Mu_None":
+    {
+      "name": "BV_Mu_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 3,
+        "none": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_Mu_MouthUlcers,BV_Mu_GenitalUlcers,BV_Mu_AdnexalInflammation,BV_Mu_SignificantProptosis,BV_Mu_ScleritisEpiscleritis,BV_Mu_Conjunctivitis,BV_Mu_BlurredVision,BV_Mu_SuddenVisualLoss,BV_Mu_Uveitis,BV_Mu_RetinalChanges",
+        "message": "Select None if no mucous membrane \/ eye features found"
+      }]
+    },
+    "BV_Mu_MouthUlcers":
+    {
+      "name": "BV_Mu_MouthUlcers",
+      "section": null,
+      "label": "Mouth ulcers",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "persistent": 1,
+        "worse": 2
+      },
+      "lookup": null
+    },
+    "BV_Mu_GenitalUlcers":
+    {
+      "name": "BV_Mu_GenitalUlcers",
+      "section": null,
+      "label": "Genital ulcers",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "persistent": 1,
+        "worse": 1
+      },
+      "lookup": null
+    },
+    "BV_Mu_AdnexalInflammation":
+    {
+      "name": "BV_Mu_AdnexalInflammation",
+      "section": null,
+      "label": "Adnexal inflammation",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "persistent": 2,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Mu_SignificantProptosis":
+    {
+      "name": "BV_Mu_SignificantProptosis",
+      "section": null,
+      "label": "Significant proptosis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "persistent": 2,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Mu_ScleritisEpiscleritis":
+    {
+      "name": "BV_Mu_ScleritisEpiscleritis",
+      "section": null,
+      "label": "Scleritis \/ Episcleritis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "persistent": 1,
+        "worse": 2
+      },
+      "lookup": null
+    },
+    "BV_Mu_Conjunctivitis":
+    {
+      "name": "BV_Mu_Conjunctivitis",
+      "section": null,
+      "label": "Conjunctivitis \/ Blepharitis \/ Keratitis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "persistent": 1,
+        "worse": 1
+      },
+      "lookup": null
+    },
+    "BV_Mu_BlurredVision":
+    {
+      "name": "BV_Mu_BlurredVision",
+      "section": null,
+      "label": "Blurred vision",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "persistent": 2,
+        "worse": 3
+      },
+      "lookup": null
+    },
+    "BV_Mu_SuddenVisualLoss":
+    {
+      "name": "BV_Mu_SuddenVisualLoss",
+      "section": null,
+      "label": "Sudden visual loss",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "persistent": 6,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Mu_Uveitis":
+    {
+      "name": "BV_Mu_Uveitis",
+      "section": null,
+      "label": "Uveitis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "persistent": 2,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Mu_RetinalChanges":
+    {
+      "name": "BV_Mu_RetinalChanges",
+      "section": null,
+      "label": "Retinal changes (vasculitis \/ thrombosis \/ exudate \/ haemorrhage)",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Mu_None"],
+        "group": 3,
+        "major": 1,
+        "persistent": 2,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_En_None":
+    {
+      "name": "BV_En_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 4,
+        "none": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_En_BloodyNasalDischarge,BV_En_ParanasalSinusInvolvement,BV_En_SubglotticStenosis,BV_En_ConductiveHearingLoss,BV_En_SensorineuralHearingLoss",
+        "message": "Select None if no ENT features found"
+      }]
+    },
+    "BV_En_BloodyNasalDischarge":
+    {
+      "name": "BV_En_BloodyNasalDischarge",
+      "section": null,
+      "label": "Bloody nasal discharge \/ crusts \/ ulcers \/ granulomata",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_En_None"],
+        "group": 4,
+        "persistent": 2,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_En_ParanasalSinusInvolvement":
+    {
+      "name": "BV_En_ParanasalSinusInvolvement",
+      "section": null,
+      "label": "Paranasal sinus involvement",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_En_None"],
+        "group": 4,
+        "persistent": 1,
+        "worse": 2
+      },
+      "lookup": null
+    },
+    "BV_En_SubglotticStenosis":
+    {
+      "name": "BV_En_SubglotticStenosis",
+      "section": null,
+      "label": "Subglottic stenosis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_En_None"],
+        "group": 4,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_En_ConductiveHearingLoss":
+    {
+      "name": "BV_En_ConductiveHearingLoss",
+      "section": null,
+      "label": "Conductive hearing loss",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_En_None"],
+        "group": 4,
+        "persistent": 1,
+        "worse": 3
+      },
+      "lookup": null
+    },
+    "BV_En_SensorineuralHearingLoss":
+    {
+      "name": "BV_En_SensorineuralHearingLoss",
+      "section": null,
+      "label": "Sensorineural hearing loss",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_En_None"],
+        "group": 4,
+        "major": 1,
+        "persistent": 2,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Ch_None":
+    {
+      "name": "BV_Ch_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 5,
+        "none": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_Ch_Wheeze,BV_Ch_Nodules,BV_Ch_PleuralEffusion,BV_Ch_Infiltrate,BV_Ch_EndobronchialInvolvement,BV_Ch_MassiveHaemoptysis,BV_Ch_RespiratoryFailure",
+        "message": "Select None if no Chest features found"
+      }]
+    },
+    "BV_Ch_Wheeze":
+    {
+      "name": "BV_Ch_Wheeze",
+      "section": null,
+      "label": "Wheeze",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ch_None"],
+        "group": 5,
+        "persistent": 1,
+        "worse": 2
+      },
+      "lookup": null
+    },
+    "BV_Ch_Nodules":
+    {
+      "name": "BV_Ch_Nodules",
+      "section": null,
+      "label": "Nodules or cavities",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ch_None"],
+        "group": 5,
+        "persistent": 3,
+        "worse": 3
+      },
+      "lookup": null
+    },
+    "BV_Ch_PleuralEffusion":
+    {
+      "name": "BV_Ch_PleuralEffusion",
+      "section": null,
+      "label": "Pleural effusion \/ pleurisy",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ch_None"],
+        "group": 5,
+        "persistent": 2,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Ch_Infiltrate":
+    {
+      "name": "BV_Ch_Infiltrate",
+      "section": null,
+      "label": "Infiltrate",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ch_None"],
+        "group": 5,
+        "persistent": 2,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Ch_EndobronchialInvolvement":
+    {
+      "name": "BV_Ch_EndobronchialInvolvement",
+      "section": null,
+      "label": "Endobronchial involvement",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ch_None"],
+        "group": 5,
+        "persistent": 2,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Ch_MassiveHaemoptysis":
+    {
+      "name": "BV_Ch_MassiveHaemoptysis",
+      "section": null,
+      "label": "Massive haemoptysis \/ alveolar haemorrhage",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ch_None"],
+        "group": 5,
+        "major": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Ch_RespiratoryFailure":
+    {
+      "name": "BV_Ch_RespiratoryFailure",
+      "section": null,
+      "label": "Respiratory failure",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ch_None"],
+        "group": 5,
+        "major": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Ca_None":
+    {
+      "name": "BV_Ca_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 6,
+        "none": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_Ca_LossPulse,BV_Ca_ValvularHeartDisease,BV_Ca_Pericarditis,BV_Ca_IschaemicCardiacPain,BV_Ca_Cardiomyopathy,BV_Ca_CongestiveCardiacFailure",
+        "message": "Select None if no Cardiovascular features found"
+      }]
+    },
+    "BV_Ca_LossPulse":
+    {
+      "name": "BV_Ca_LossPulse",
+      "section": null,
+      "label": "Loss of pulses",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ca_None"],
+        "group": 6,
+        "persistent": 1,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Ca_ValvularHeartDisease":
+    {
+      "name": "BV_Ca_ValvularHeartDisease",
+      "section": null,
+      "label": "Valvular heart disease",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ca_None"],
+        "group": 6,
+        "persistent": 2,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Ca_Pericarditis":
+    {
+      "name": "BV_Ca_Pericarditis",
+      "section": null,
+      "label": "Pericarditis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ca_None"],
+        "group": 6,
+        "persistent": 1,
+        "worse": 3
+      },
+      "lookup": null
+    },
+    "BV_Ca_IschaemicCardiacPain":
+    {
+      "name": "BV_Ca_IschaemicCardiacPain",
+      "section": null,
+      "label": "Ischaemic cardiac pain",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ca_None"],
+        "group": 6,
+        "major": 1,
+        "persistent": 2,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Ca_Cardiomyopathy":
+    {
+      "name": "BV_Ca_Cardiomyopathy",
+      "section": null,
+      "label": "Cardiomyopathy",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ca_None"],
+        "group": 6,
+        "major": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Ca_CongestiveCardiacFailure":
+    {
+      "name": "BV_Ca_CongestiveCardiacFailure",
+      "section": null,
+      "label": "Congestive cardiac failure",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ca_None"],
+        "group": 6,
+        "major": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Ab_None":
+    {
+      "name": "BV_Ab_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 7,
+        "none": 1,
+        "persistent": 4,
+        "worse": 9
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_Ab_Peritonitis,BV_Ab_BloodyDiarrhoea,BV_Ab_IschaemicAbdominalPain",
+        "message": "Select None if no Abdominal features found"
+      }]
+    },
+    "BV_Ab_Peritonitis":
+    {
+      "name": "BV_Ab_Peritonitis",
+      "section": null,
+      "label": "Peritonitis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ab_None"],
+        "group": 7,
+        "persistent": 3,
+        "worse": 9
+      },
+      "lookup": null
+    },
+    "BV_Ab_BloodyDiarrhoea":
+    {
+      "name": "BV_Ab_BloodyDiarrhoea",
+      "section": null,
+      "label": "Bloody diarrhoea",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ab_None"],
+        "group": 7,
+        "persistent": 3,
+        "worse": 9
+      },
+      "lookup": null
+    },
+    "BV_Ab_IschaemicAbdominalPain":
+    {
+      "name": "BV_Ab_IschaemicAbdominalPain",
+      "section": null,
+      "label": "Ischaemic abdominal pain",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ab_None"],
+        "group": 7,
+        "major": 1,
+        "persistent": 2,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Re_None":
+    {
+      "name": "BV_Re_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 8,
+        "none": 1,
+        "persistent": 6,
+        "worse": 12
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_Re_Hypertension,BV_Re_Proteinuria,BV_Re_Haematuria,BV_Re_Creatinine125,BV_Re_Creatinine250,BV_Re_Creatinine500,BV_Re_RiseInSerumCreatinine",
+        "message": "Select None if no Renal features found"
+      }]
+    },
+    "BV_Re_Hypertension":
+    {
+      "name": "BV_Re_Hypertension",
+      "section": null,
+      "label": "Hypertension",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Re_None"],
+        "group": 8,
+        "persistent": 1,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Re_Proteinuria":
+    {
+      "name": "BV_Re_Proteinuria",
+      "section": null,
+      "label": "Proteinuria &gt;1+",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Re_None"],
+        "group": 8,
+        "persistent": 2,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Re_Haematuria":
+    {
+      "name": "BV_Re_Haematuria",
+      "section": null,
+      "label": " Haematuria &#8805;10 RBCs\/hpf",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Re_None"],
+        "group": 8,
+        "major": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Re_Creatinine125":
+    {
+      "name": "BV_Re_Creatinine125",
+      "section": null,
+      "label": "Serum creatinine 125-249 &#181;mol\/L (1.41-2.82mg\/dl)",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Re_None"],
+        "group": 8,
+        "persistent": 0,
+        "worse": 4
+      },
+      "lookup": null
+    },
+    "BV_Re_Creatinine250":
+    {
+      "name": "BV_Re_Creatinine250",
+      "section": null,
+      "label": "Serum creatinine 250-499 &#181;mol\/L (2.83-5.64mg\/dl)",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Re_None"],
+        "group": 8,
+        "persistent": 0,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Re_Creatinine500":
+    {
+      "name": "BV_Re_Creatinine500",
+      "section": null,
+      "label": "Serum creatinine &#8805;500 &#181;mol\/L (&#8805;5.66mg\/dl)",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Re_None"],
+        "group": 8,
+        "major": 1,
+        "persistent": 0,
+        "worse": 8
+      },
+      "lookup": null
+    },
+    "BV_Re_RiseInSerumCreatinine":
+    {
+      "name": "BV_Re_RiseInSerumCreatinine",
+      "section": null,
+      "label": "Rise in serum creatinine >30% or fall in creatinine clearance &gt;25%",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Re_None"],
+        "group": 8,
+        "major": 1,
+        "persistent": 6,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Ne_None":
+    {
+      "name": "BV_Ne_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 9,
+        "none": 1,
+        "persistent": 6,
+        "worse": 9
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_Ne_Headache,BV_Ne_Meningitis,BV_Ne_OrganicConfusion,BV_Ne_Seizures,BV_Ne_CerebrovascularAccident,BV_Ne_SpinalCordLesion,BV_Ne_CranialNervePalsy,BV_Ne_SensoryPeripheralNeuropathy,BV_Ne_MononeuritisMultiplex",
+        "message": "Select None if no Nervous system features found"
+      }]
+    },
+    "BV_Ne_Headache":
+    {
+      "name": "BV_Ne_Headache",
+      "section": null,
+      "label": "Headache",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ne_None"],
+        "group": 9,
+        "persistent": 1,
+        "worse": 1
+      },
+      "lookup": null
+    },
+    "BV_Ne_Meningitis":
+    {
+      "name": "BV_Ne_Meningitis",
+      "section": null,
+      "label": "Meningitis",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ne_None"],
+        "group": 9,
+        "persistent": 1,
+        "worse": 3
+      },
+      "lookup": null
+    },
+    "BV_Ne_OrganicConfusion":
+    {
+      "name": "BV_Ne_OrganicConfusion",
+      "section": null,
+      "label": "Organic confusion",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ne_None"],
+        "group": 9,
+        "persistent": 1,
+        "worse": 3
+      },
+      "lookup": null
+    },
+    "BV_Ne_Seizures":
+    {
+      "name": "BV_Ne_Seizures",
+      "section": null,
+      "label": "Seizures (not hypertensive)",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ne_None"],
+        "group": 9,
+        "persistent": 3,
+        "worse": 9
+      },
+      "lookup": null
+    },
+    "BV_Ne_CerebrovascularAccident":
+    {
+      "name": "BV_Ne_CerebrovascularAccident",
+      "section": null,
+      "label": "Cerebrovascular accident",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ne_None"],
+        "group": 9,
+        "major": 1,
+        "persistent": 3,
+        "worse": 9
+      },
+      "lookup": null
+    },
+    "BV_Ne_SpinalCordLesion":
+    {
+      "name": "BV_Ne_SpinalCordLesion",
+      "section": null,
+      "label": "Spinal cord lesion",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ne_None"],
+        "group": 9,
+        "major": 1,
+        "persistent": 3,
+        "worse": 9
+      },
+      "lookup": null
+    },
+    "BV_Ne_CranialNervePalsy":
+    {
+      "name": "BV_Ne_CranialNervePalsy",
+      "section": null,
+      "label": "Cranial nerve palsy",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ne_None"],
+        "group": 9,
+        "major": 1,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Ne_SensoryPeripheralNeuropathy":
+    {
+      "name": "BV_Ne_SensoryPeripheralNeuropathy",
+      "section": null,
+      "label": "Sensory peripheral neuropathy",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ne_None"],
+        "group": 9,
+        "persistent": 3,
+        "worse": 6
+      },
+      "lookup": null
+    },
+    "BV_Ne_MononeuritisMultiplex":
+    {
+      "name": "BV_Ne_MononeuritisMultiplex",
+      "section": null,
+      "label": "Mononeuritis multiplex",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ne_None"],
+        "group": 9,
+        "major": 1,
+        "persistent": 3,
+        "worse": 9
+      },
+      "lookup": null
+    },
+    "BV_Ot_None":
+    {
+      "name": "BV_Ot_None",
+      "section": null,
+      "label": "None",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "group": 10,
+        "none": 1,
+        "persistent": 0,
+        "worse": 0
+      },
+      "lookup": null,
+      "validation_rules": [
+      {
+        "rule": "required_without_all:BV_Ot_A,BV_Ot_B,BV_Ot_C,BV_Ot_D",
+        "message": "Select None if no Other system features found"
+      }]
+    },
+    "BV_Ot_A":
+    {
+      "name": "BV_Ot_A",
+      "section": null,
+      "label": "",
+      "type": "string",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ot_None", "BV_Ot_A_Active"]
+      },
+      "lookup": null
+    },
+    "BV_Ot_A_Active":
+    {
+      "name": "BV_Ot_A_Active",
+      "section": null,
+      "label": "a.",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ot_None", "BV_Ot_A"],
+        "group": 10,
+        "other_field": "BV_Ot_A"
+      },
+      "lookup": null
+    },
+    "BV_Ot_B":
+    {
+      "name": "BV_Ot_B",
+      "section": null,
+      "label": "",
+      "type": "string",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ot_None", "BV_Ot_B_Active"]
+      },
+      "lookup": null
+    },
+    "BV_Ot_B_Active":
+    {
+      "name": "BV_Ot_B_Active",
+      "section": null,
+      "label": "b.",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ot_None", "BV_Ot_B"],
+        "group": 10,
+        "other_field": "BV_Ot_B"
+      },
+      "lookup": null
+    },
+    "BV_Ot_C":
+    {
+      "name": "BV_Ot_C",
+      "section": null,
+      "label": "",
+      "type": "string",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ot_None", "BV_Ot_C_Active"]
+      },
+      "lookup": null
+    },
+    "BV_Ot_C_Active":
+    {
+      "name": "BV_Ot_C_Active",
+      "section": null,
+      "label": "c.",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ot_None", "BV_Ot_C"],
+        "group": 10,
+        "other_field": "BV_Ot_C"
+      },
+      "lookup": null
+    },
+    "BV_Ot_D":
+    {
+      "name": "BV_Ot_D",
+      "section": null,
+      "label": "",
+      "type": "string",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ot_None", "BV_Ot_D_Active"]
+      },
+      "lookup": null
+    },
+    "BV_Ot_D_Active":
+    {
+      "name": "BV_Ot_D_Active",
+      "section": null,
+      "label": "d.",
+      "type": "boolean",
+      "default": null,
+      "lookup_type": null,
+      "json":
+      {
+        "validate-others": ["BV_Ot_None", "BV_Ot_D"],
+        "group": 10,
+        "other_field": "BV_Ot_D"
+      },
+      "lookup": null
+    },
+    "BV_PD_Only":
+    {
+      "name": "BV_PD_Only",
+      "section": null,
+      "label": "PERSISTENT DISEASE ONLY: (Tick here if all the abnormalities are due to persistent disease)",
+      "type": "integer"
+    },
+    "BV_Score":
+    {
+      "name": "BV_Score",
+      "section": null,
+      "label": "Score",
+      "type": "integer"
+    }
+  },
+  "validation":
+  {
+    "rules":
+    {
+      "BV_AssessorName": ["required"],
+      "BV_FirstAssessment": ["required"],
+      "BV_GF_None": ["required_without_all:BV_GF_Myalgia,BV_GF_Arthralgia,BV_GF_Fever,BV_GF_WeightLoss"],
+      "BV_GF_Myalgia": [],
+      "BV_GF_Arthralgia": [],
+      "BV_GF_Fever": [],
+      "BV_GF_WeightLoss": [],
+      "BV_Cu_None": ["required_without_all:BV_Cu_Infarct,BV_Cu_Purpura,BV_Cu_Ulcer,BV_Cu_Gangrene,BV_Cu_Other"],
+      "BV_Cu_Infarct": [],
+      "BV_Cu_Purpura": [],
+      "BV_Cu_Ulcer": [],
+      "BV_Cu_Gangrene": [],
+      "BV_Cu_Other": [],
+      "BV_Mu_None": ["required_without_all:BV_Mu_MouthUlcers,BV_Mu_GenitalUlcers,BV_Mu_AdnexalInflammation,BV_Mu_SignificantProptosis,BV_Mu_ScleritisEpiscleritis,BV_Mu_Conjunctivitis,BV_Mu_BlurredVision,BV_Mu_SuddenVisualLoss,BV_Mu_Uveitis,BV_Mu_RetinalChanges"],
+      "BV_Mu_MouthUlcers": [],
+      "BV_Mu_GenitalUlcers": [],
+      "BV_Mu_AdnexalInflammation": [],
+      "BV_Mu_SignificantProptosis": [],
+      "BV_Mu_ScleritisEpiscleritis": [],
+      "BV_Mu_Conjunctivitis": [],
+      "BV_Mu_BlurredVision": [],
+      "BV_Mu_SuddenVisualLoss": [],
+      "BV_Mu_Uveitis": [],
+      "BV_Mu_RetinalChanges": [],
+      "BV_En_None": ["required_without_all:BV_En_BloodyNasalDischarge,BV_En_ParanasalSinusInvolvement,BV_En_SubglotticStenosis,BV_En_ConductiveHearingLoss,BV_En_SensorineuralHearingLoss"],
+      "BV_En_BloodyNasalDischarge": [],
+      "BV_En_ParanasalSinusInvolvement": [],
+      "BV_En_SubglotticStenosis": [],
+      "BV_En_ConductiveHearingLoss": [],
+      "BV_En_SensorineuralHearingLoss": [],
+      "BV_Ch_None": ["required_without_all:BV_Ch_Wheeze,BV_Ch_Nodules,BV_Ch_PleuralEffusion,BV_Ch_Infiltrate,BV_Ch_EndobronchialInvolvement,BV_Ch_MassiveHaemoptysis,BV_Ch_RespiratoryFailure"],
+      "BV_Ch_Wheeze": [],
+      "BV_Ch_Nodules": [],
+      "BV_Ch_PleuralEffusion": [],
+      "BV_Ch_Infiltrate": [],
+      "BV_Ch_EndobronchialInvolvement": [],
+      "BV_Ch_MassiveHaemoptysis": [],
+      "BV_Ch_RespiratoryFailure": [],
+      "BV_Ca_None": ["required_without_all:BV_Ca_LossPulse,BV_Ca_ValvularHeartDisease,BV_Ca_Pericarditis,BV_Ca_IschaemicCardiacPain,BV_Ca_Cardiomyopathy,BV_Ca_CongestiveCardiacFailure"],
+      "BV_Ca_LossPulse": [],
+      "BV_Ca_ValvularHeartDisease": [],
+      "BV_Ca_Pericarditis": [],
+      "BV_Ca_IschaemicCardiacPain": [],
+      "BV_Ca_Cardiomyopathy": [],
+      "BV_Ca_CongestiveCardiacFailure": [],
+      "BV_Ab_None": ["required_without_all:BV_Ab_Peritonitis,BV_Ab_BloodyDiarrhoea,BV_Ab_IschaemicAbdominalPain"],
+      "BV_Ab_Peritonitis": [],
+      "BV_Ab_BloodyDiarrhoea": [],
+      "BV_Ab_IschaemicAbdominalPain": [],
+      "BV_Re_None": ["required_without_all:BV_Re_Hypertension,BV_Re_Proteinuria,BV_Re_Haematuria,BV_Re_Creatinine125,BV_Re_Creatinine250,BV_Re_Creatinine500,BV_Re_RiseInSerumCreatinine"],
+      "BV_Re_Hypertension": [],
+      "BV_Re_Proteinuria": [],
+      "BV_Re_Haematuria": [],
+      "BV_Re_Creatinine125": [],
+      "BV_Re_Creatinine250": [],
+      "BV_Re_Creatinine500": [],
+      "BV_Re_RiseInSerumCreatinine": [],
+      "BV_Ne_None": ["required_without_all:BV_Ne_Headache,BV_Ne_Meningitis,BV_Ne_OrganicConfusion,BV_Ne_Seizures,BV_Ne_CerebrovascularAccident,BV_Ne_SpinalCordLesion,BV_Ne_CranialNervePalsy,BV_Ne_SensoryPeripheralNeuropathy,BV_Ne_MononeuritisMultiplex"],
+      "BV_Ne_Headache": [],
+      "BV_Ne_Meningitis": [],
+      "BV_Ne_OrganicConfusion": [],
+      "BV_Ne_Seizures": [],
+      "BV_Ne_CerebrovascularAccident": [],
+      "BV_Ne_SpinalCordLesion": [],
+      "BV_Ne_CranialNervePalsy": [],
+      "BV_Ne_SensoryPeripheralNeuropathy": [],
+      "BV_Ne_MononeuritisMultiplex": [],
+      "BV_Ot_None": ["required_without_all:BV_Ot_A,BV_Ot_B,BV_Ot_C,BV_Ot_D"],
+      "BV_Ot_A": [],
+      "BV_Ot_A_Active": [],
+      "BV_Ot_B": [],
+      "BV_Ot_B_Active": [],
+      "BV_Ot_C": [],
+      "BV_Ot_C_Active": [],
+      "BV_Ot_D": [],
+      "BV_Ot_D_Active": [],
+      "BV_PD_Only": [],
+      "BV_Score": []
+    },
+    "messages":
+    {
+      "required.BV_AssessorName": "Required",
+      "required.BV_FirstAssessment": "Required",
+      "required_without_all.BV_GF_None": "Select None if no general features found",
+      "required_without_all.BV_Cu_None": "Select None if no cutaneous features found",
+      "required_without_all.BV_Mu_None": "Select None if no mucous membrane \/ eye features found",
+      "required_without_all.BV_En_None": "Select None if no ENT features found",
+      "required_without_all.BV_Ch_None": "Select None if no Chest features found",
+      "required_without_all.BV_Ca_None": "Select None if no Cardiovascular features found",
+      "required_without_all.BV_Ab_None": "Select None if no Abdominal features found",
+      "required_without_all.BV_Re_None": "Select None if no Renal features found",
+      "required_without_all.BV_Ne_None": "Select None if no Nervous system features found",
+      "required_without_all.BV_Ot_None": "Select None if no Other system features found"
+    }
+  },
+  "records":
+  {
+    "BV_AssessorName": null,
+    "BV_FirstAssessment": null,
+    "BV_GF_None": null,
+    "BV_GF_Myalgia": null,
+    "BV_GF_Arthralgia": null,
+    "BV_GF_Fever": null,
+    "BV_GF_WeightLoss": null,
+    "BV_Cu_None": null,
+    "BV_Cu_Infarct": null,
+    "BV_Cu_Purpura": null,
+    "BV_Cu_Ulcer": null,
+    "BV_Cu_Gangrene": null,
+    "BV_Cu_Other": null,
+    "BV_Mu_None": null,
+    "BV_Mu_MouthUlcers": null,
+    "BV_Mu_GenitalUlcers": null,
+    "BV_Mu_AdnexalInflammation": null,
+    "BV_Mu_SignificantProptosis": null,
+    "BV_Mu_ScleritisEpiscleritis": null,
+    "BV_Mu_Conjunctivitis": null,
+    "BV_Mu_BlurredVision": null,
+    "BV_Mu_SuddenVisualLoss": null,
+    "BV_Mu_Uveitis": null,
+    "BV_Mu_RetinalChanges": null,
+    "BV_En_None": null,
+    "BV_En_BloodyNasalDischarge": null,
+    "BV_En_ParanasalSinusInvolvement": null,
+    "BV_En_SubglotticStenosis": null,
+    "BV_En_ConductiveHearingLoss": null,
+    "BV_En_SensorineuralHearingLoss": null,
+    "BV_Ch_None": null,
+    "BV_Ch_Wheeze": null,
+    "BV_Ch_Nodules": null,
+    "BV_Ch_PleuralEffusion": null,
+    "BV_Ch_Infiltrate": null,
+    "BV_Ch_EndobronchialInvolvement": null,
+    "BV_Ch_MassiveHaemoptysis": null,
+    "BV_Ch_RespiratoryFailure": null,
+    "BV_Ca_None": null,
+    "BV_Ca_LossPulse": null,
+    "BV_Ca_ValvularHeartDisease": null,
+    "BV_Ca_Pericarditis": null,
+    "BV_Ca_IschaemicCardiacPain": null,
+    "BV_Ca_Cardiomyopathy": null,
+    "BV_Ca_CongestiveCardiacFailure": null,
+    "BV_Ab_None": null,
+    "BV_Ab_Peritonitis": null,
+    "BV_Ab_BloodyDiarrhoea": null,
+    "BV_Ab_IschaemicAbdominalPain": null,
+    "BV_Re_None": null,
+    "BV_Re_Hypertension": null,
+    "BV_Re_Proteinuria": null,
+    "BV_Re_Haematuria": null,
+    "BV_Re_Creatinine125": null,
+    "BV_Re_Creatinine250": null,
+    "BV_Re_Creatinine500": null,
+    "BV_Re_RiseInSerumCreatinine": null,
+    "BV_Ne_None": null,
+    "BV_Ne_Headache": null,
+    "BV_Ne_Meningitis": null,
+    "BV_Ne_OrganicConfusion": null,
+    "BV_Ne_Seizures": null,
+    "BV_Ne_CerebrovascularAccident": null,
+    "BV_Ne_SpinalCordLesion": null,
+    "BV_Ne_CranialNervePalsy": null,
+    "BV_Ne_SensoryPeripheralNeuropathy": null,
+    "BV_Ne_MononeuritisMultiplex": null,
+    "BV_Ot_None": null,
+    "BV_Ot_A": null,
+    "BV_Ot_A_Active": null,
+    "BV_Ot_B": null,
+    "BV_Ot_B_Active": null,
+    "BV_Ot_C": null,
+    "BV_Ot_C_Active": null,
+    "BV_Ot_D": null,
+    "BV_Ot_D_Active": null,
+    "BV_PD_Only": null,
+    "BV_Score": null,
+    "patient_id": 239,
+    "encounter_id": "3",
+    "bvas_score": 0,
+    "updated_by_name": "",
+    "updatedByUser": null
+  },
+  "specific":
+  {
+    "apiLookups": null
+  },
+  "encounter":
+  {
+    "id": 3,
+    "patient_id": 239,
+    "type": 1,
+    "date": "2020-03-01",
+    "notes": null,
+    "created_at": "2020-03-30 12:58:41",
+    "updated_at": "2020-03-30 12:58:41"
+  },
+  "lang":{
+     "title": "BVAS",
+     "long_title": "BVAS (as of {date} - {dateType})",
+     "no_other": "No other abnormalities to record",
+     "bvas_score": "BVAS Score:",
+     "persistent_only": "PERSISTENT DISEASE ONLY",
+     "groups": [
+     {
+       "title": "1. General"
+     },
+     {
+       "title": "2. Cutaneous"
+     },
+     {
+       "title": "3. Mucous membranes / eyes"
+     },
+     {
+       "title": "4. ENT"
+     },
+     {
+       "title": "5. Chest"
+     },
+     {
+       "title": "6. Cardiovascular"
+     },
+     {
+       "title": "7. Abdominal"
+     },
+     {
+       "title": "8. Renal"
+     },
+     {
+       "title": "9. Nervous system"
+     },
+     {
+       "title": "10. Other"
+     }]
+   }
+}
