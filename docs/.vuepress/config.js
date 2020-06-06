@@ -15,6 +15,9 @@ module.exports = {
   themeConfig: {
     repo: 'showjoe/ffui',
     docsDir: 'docs',
+    docsRepo: 'showjoe/ffui/',
+    docsBranch: 'gh-pages',
+    editLinks: true,
     sidebar: [{
         title: 'Introduction',
         collapsable: false,
@@ -25,30 +28,44 @@ module.exports = {
       {
         title: 'Components',
         collapsable: false,
+        sidebarDepth: 2,
         children: [
           'components/alert',
-          'components/btn',
-          'components/btn-group',
-          'components/card',
-          'components/card-group',
-          'components/checkbox',
+          'components/badge',
           'components/collapse',
-          'components/datepicker',
-          'components/dropdown',
-          'components/form-group',
-          'components/input-group',
-          'components/list-group',
+          {
+            title: 'Buttons',
+            path: '/components/btn',
+            collapsable: true,
+            children: ['components/btn', 'components/btn-group']
+          },
+          {
+            title: 'Cards',
+            path: '/components/card',
+            collapsable: true,
+            children: ['components/card', 'components/card-group']
+          },
+          {
+            title: 'Forms',
+            collapsable: true,
+            path: '/components/forms',
+            children: ['components/form-group', 'components/checkbox', 'components/radio', 'components/datepicker', 'components/dropdown', 'components/datepicker', 'components/input-group', 'components/number', 'components/slider', 'components/textbox', 'components/typeahead']
+          },
+          {
+            title: 'Lists',
+            path: '/components/list-group',
+            collapsable: true,
+            children: ['components/list-group', 'components/list-group-item']
+          },
+          'components/media',
           'components/modal',
+          'components/modal-guide',
           'components/navs',
-          'components/number',
           'components/row_and_column',
           'components/popover',
           'components/progress-bar',
-          'components/slider',
           'components/tabs',
-          'components/textbox',
           'components/tooltip',
-          'components/typeahead',
           'components/font-awesome'
         ]
       }
