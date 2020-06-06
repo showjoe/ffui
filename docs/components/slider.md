@@ -5,7 +5,12 @@
 :::
 
 ::: tip
-By default the handle isn't shown so it doesn't influence the user
+By default the handle isn't shown so it's starting position does not influence the user
+:::
+
+## Show Handle On Null
+::: demo
+  <slider v-model="records.sliderVal" show-handle-on-null/>
 :::
 
 ## Colours
@@ -69,10 +74,18 @@ Set maximum value
   <slider :max="15" v-model="records.sliderVal3"/>
 :::
 
-## hide-popover
-Hide popover
+## hiding elements
+use the following to hide elements of the slider:
 
+hide-bar, hide-grid, hide-handle, hide-popover
 ::: demo
+hide-bar:
+  <slider hide-bar v-model="records.sliderVal"/>
+hide-grid:
+  <slider hide-grid v-model="records.sliderVal"/>
+hide-handle:
+  <slider hide-handle v-model="records.sliderVal"/>
+hide-popover:
   <slider hide-popover v-model="records.sliderVal"/>
 :::
 

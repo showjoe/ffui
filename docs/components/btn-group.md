@@ -77,6 +77,18 @@ Use `sm` or `lg` to use different size buttons
 </div>
 :::
 
+## Nested btn-group
+Use `sm` or `lg` to use different size buttons
+
+::: demo
+<div>
+	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem"  v-slot:append="">
+	<btn-group :di="dataitems.MyDataitem" v-model="records.MyDataitem"  v-slot:append=""></btn-group>
+		<dropdown btn-split :items="dataitems.MyDataitem.lookup.items" v-model="records.MyDataitem"/>
+	</btn-group>
+</div>
+:::
+
 ## Slots
 Use these slots to customize the btn-group
 

@@ -58,7 +58,7 @@ Default slot will be after dropdown trigger button.
 Add child content using `slot="list"` to alter content in the list - the slot represents an entire dropdown-item so will need to reimplement click handlers and other classes
 
 ::: demo
-  <dropdown :items="dataitems.Country.lookup.items" v-model="records.Country">
+  <dropdown :items="dataitems.Country.lookup.items" v-model="records.Country" btn-split>
     <img v-if="records.Country" slot="btn" :src="countryFlagUrl(records.Country)">
     <template #list="{item}">
       <a :class="['dropdown-item',{'active':item.value == records.Country}]" @click="records.Country = item.value">
