@@ -2,7 +2,6 @@
   <div class="card">
     <slot name="header">
       <header class="card-header" v-if="head">
-        <slot name="header-inner"></slot>
         <div class="float-right" v-if="$scopedSlots['header-right']">
           <slot name="header-right"></slot>
         </div>
@@ -11,6 +10,7 @@
         </div>
         <h5 v-if="title" class="card-title" v-html="title" />
         <h6 v-if="subtitle" class="card-subtitle" v-html="subtitle" />
+        <slot name="header-inner"></slot>
       </header>
     </slot>
     <slot name="body">

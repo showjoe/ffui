@@ -1,21 +1,46 @@
 # Tabs
 ## Basic Example
 
+<pre class="text-white">{{getPages()}}</pre>
+
 ::: demo
 <div>
-	<nav-bar tabs fill :links="getPages()" :current="currentTab" @change="changeTab"/>
-	<tab-content :tabs="getPages()" :current="currentTab" fade>
-		<template #home>
-			<h4>Home page</h4>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, aliquam. Doloremque doloribus assumenda vel, eveniet accusantium porro neque ipsam aliquam labore, sit aspernatur tempora, et sapiente placeat, deserunt laudantium recusandae!
-		</template>
-		<template #profile>
-			<h4>Profile page</h4>
-			Some text for my profile page!
-			<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magni reprehenderit, quasi dolor architecto, repudiandae nulla, obcaecati eius quos quisquam maxime dolore voluptatibus, modi id. Cupiditate minima tempora eum placeat.</div>
-		</template>
-	</tab-content>
+  <nav-bar tabs fill :links="getPages()" :current="currentTab" @change="changeTab"/>
+  <tab-content :tabs="getPages()" :current="currentTab" fade class="p-4">
+    <template #home>
+      <h4>Home page</h4>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, aliquam. Doloremque doloribus assumenda vel, eveniet accusantium porro neque ipsam aliquam labore, sit aspernatur tempora, et sapiente placeat, deserunt laudantium recusandae!
+    </template>
+    <template #profile>
+      <h4>Profile page</h4>
+      Some text for my profile page!
+      <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magni reprehenderit, quasi dolor architecto, repudiandae nulla, obcaecati eius quos quisquam maxime dolore voluptatibus, modi id. Cupiditate minima tempora eum placeat.</div>
+    </template>
+  </tab-content>
 </div>
+:::
+
+## Card header
+::: demo
+<card head foot title="Tabs in a Card Header">
+  <template #header-inner>
+    <nav-bar tabs fill :links="getPages()" :current="currentTab" @change="changeTab" class="card-header-tabs"/>
+  </template>
+  <tab-content :tabs="getPages()" :current="currentTab" fade>
+    <template #home>
+      <h4>Home page</h4>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, aliquam. Doloremque doloribus assumenda vel, eveniet accusantium porro neque ipsam aliquam labore, sit aspernatur tempora, et sapiente placeat, deserunt laudantium recusandae!
+    </template>
+    <template #profile>
+      <h4>Profile page</h4>
+      Some text for my profile page!
+      <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magni reprehenderit, quasi dolor architecto, repudiandae nulla, obcaecati eius quos quisquam maxime dolore voluptatibus, modi id. Cupiditate minima tempora eum placeat.</div>
+    </template>
+  </tab-content>
+  <template #footer-inner>
+    {{currentTab}}
+  </template>
+</card>
 :::
 
 <hr>
