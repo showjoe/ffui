@@ -1,23 +1,23 @@
 <template>
-  <div :class="cbContainerClass">
+  <div :class="rdContainerClass">
     <input
     v-if="type!='standard'||type=='standard'&&!labelLeft"
-    type="checkbox"
-    :class="cbInputClass"
-    :id="cbId"
+    type="radio"
+    :class="rdInputClass"
+    :id="rdId"
     @change="update"
     :value="value"
     :disabled="disabled"
     :checked="isChecked"
     >
-    <label :for="cbId" :class="cbLabelClass" :id="'label'+cbId">
+    <label :for="rdId" :class="rdLabelClass" :id="'label'+rdId">
       <slot>{{label}}</slot>
     </label>
     <input
     v-if="type=='standard'&&labelLeft"
-    type="checkbox"
-    :class="cbInputClass"
-    :id="cbId"
+    type="radio"
+    :class="rdInputClass"
+    :id="rdId"
     @change="update"
     :value="value"
     :disabled="disabled"
@@ -27,12 +27,13 @@
 </template>
 <script>
 export default {
-  name: 'checkbox',
+  name: 'radio',
   model: {
-    prop: 'value',
+    prop: 'checked',
     event: 'change'
   },
   props: {
+    checked: {},
     id: {},
     inline: Boolean,
     label: {},
@@ -43,10 +44,10 @@ export default {
     },
     value: {},
     trueValue: {
-      default: 1
+      default: true
     },
     falseValue: {
-      default: null
+      default: false
     },
     size: {
       type: String,
@@ -56,22 +57,22 @@ export default {
       default: 'custom'
     },
     disabled: Boolean,
-    readonly: Boolean
+  },
+  data() {
+    return {
+      // checked: (this.value == this.trueValue)
+    }
   },
   computed: {
-    cbId() {
+    rdId() {
       if (this.id) return this.id
       return this._uid
     },
-    noLabel(){
-      console.log(this.$slots.default) 
-      return !this.label && !this.$slots.default
-    },
-    cbContainerClass() {
+    rdContainerClass() {
       return [{
           'form-check': this.type == 'standard',
           'form-check-inline': this.type == 'standard' && this.inline,
-          'custom-control custom-checkbox': this.type == 'custom',
+          'custom-control custom-radio': this.type == 'custom',
           'custom-control custom-switch': this.type == 'switch',
           ['custom-control-' + this.size]: this.type == 'custom' && this.size,
 
@@ -81,40 +82,26 @@ export default {
         { checked: this.isChecked, disabled: this.disabled, readonly: this.readonly }
       ]
     },
-    cbInputClass() {
+    rdInputClass() {
       return [{
         'form-check-input': this.type == 'standard',
-        'custom-control-input': this.type == 'custom' || this.type == 'switch',
-        'position-static': this.type == 'standard'&&this.noLabel
+        'custom-control-input': this.type == 'custom' || this.type == 'switch'
       }]
     },
-    cbLabelClass() {
+    rdLabelClass() {
       return [{
         'form-check-label': this.type == 'standard',
         'custom-control-label': this.type == 'custom' || this.type == 'switch'
       }]
     },
     isChecked() {
-      // if(this.value != this.trueValue){ this.$set('record', this.falseValue); }
-      return this.value == this.trueValue
+      return this.value == this.checked
     },
   },
-  data() {
-    return {
-      checked: (this.value == this.trueValue)
-    }
-  },
-  watch: {
-    isChecked() {
-      this.checked = this.isChecked
-    }
-  },
   methods: {
-    update(event) {
-      console.log('update',event,this.disabled || this.readonly) 
+    update() {
       if (this.disabled || this.readonly) return false
-        console.log('update',event.target.checked,this.value) 
-      this.$emit('change',event.target.checked ? this.trueValue:this.falseValue)
+      this.$emit('change',this.value)
     }
   }
 }
