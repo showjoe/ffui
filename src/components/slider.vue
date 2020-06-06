@@ -1,28 +1,28 @@
 <template>
-  <div ref="sliderContainer" :class="containerClass" :id="sId">
-    <slot name="popover-track" v-if="!hidePopover">
+  <div ref="sliderContainer" :class="containerClass" :id="sId" @click="clickSliderTrack" @mousedown="grabHandle" @touchstart="grabHandle">
+    <slot name="popover-track" :value="getDisplayValue(value)" :position="popoverPosition" :colour="getColourFromValue(value)" v-if="!hidePopover">
       <div class="popover-track">
         <div ref="popover1" class="slider-popover" :style="popoverStyle(1)">
           <slot name="popover1">
-            <div v-if="range" v-html="getDisplayValue(this.value[0])" />
-            <div v-else v-html="getDisplayValue(this.value)" />
+            <div v-if="range" v-html="getDisplayValue(value[0])" />
+            <div v-else v-html="getDisplayValue(value)" />
           </slot>
         </div>
         <div v-if="range" ref="popover2" class="slider-popover" :style="popoverStyle(2)">
           <slot name="popover2">
-            <div v-html="getDisplayValue(this.value[1])" />
+            <div v-html="getDisplayValue(value[1])" />
           </slot>
         </div>
       </div>
     </slot>
-    <div ref="slider" class="slider" @resize="resize" @click="clickSliderTrack">
+    <div ref="slider" class="slider" @resize="resize"  tabindex="0" @keydown="keyDown">
       <div ref="sliderTrack" class="slider-track">
         <slot name="slider-track"></slot>
       </div>
-      <div ref="sliderBar" class="slider-bar" :style="sliderBarStyle">
+      <div ref="sliderBar" class="slider-bar" :style="sliderBarStyle" v-show="!hideBar">
         <slot name="slider-bar"></slot>
       </div>
-      <div ref="handle1" class="handle" :style="handleStyle" v-show="!hideHandle">
+      <div ref="handle1" class="handle" :style="handleStyle" v-show="!hideHandle" role="slider" :aria-valuemin="min" :aria-valuenow="value" :aria-valuemax="max" :aria-valuetext="getDisplayValue(value)" :aria-orientation="vertical?'vertical':'horizontal'" aria-labelledby="idTemp">
         <slot name="handle" :value="value"></slot>
       </div>
       <div v-if="range" ref="handle2" class="handle" :style="handleStyle" v-show="!hideHandle">
@@ -41,9 +41,13 @@
   </div>
 </template>
 <script>
-import { format, scaleLinear, color, hsl } from "d3";
-import { TweenLite } from "gsap";
-import Draggable from 'gsap/Draggable';
+import { format } from "d3-format";
+import { scaleLinear } from "d3-scale";
+import { color, hsl } from "d3-color";
+import { 
+    TweenLite
+} from "gsap/all";
+import {Draggable} from 'gsap/Draggable';
 export default {
   name: 'slider',
   props: {
@@ -52,10 +56,12 @@ export default {
     colourPopover: Boolean,
     colourHandle: Boolean,
     disabled: Boolean,
+    hideBar: Boolean,
     hideGrid: Boolean,
     hideHandle: Boolean,
     hidePopover: Boolean,
     gridDivisions: Number,
+    showHandleOnNull: Boolean,
     labels: Object,
     min: {
       // minimum possible value
@@ -89,6 +95,9 @@ export default {
       handle1: false,
       handle2: false,
       handleRadius: false,
+      sliderRadius: false,
+      showHandle: false,
+      px: {}
     }
   },
   mounted() {
@@ -109,8 +118,8 @@ export default {
     divisions() { return this.gridDivisions ? this.gridDivisions : this.max - this.min },
     gridClass() { return ['grid', { 'grid-vertical': this.vertical, 'grid-reverse': this.reverse }] },
     handleStyle() {
+      var colour = this.getColourFromValue(this.value)
       if (this.colours && this.colourHandle) {
-        var colour = this.getColourFromValue(this.value)
         var d3Col = hsl(color(colour))
         d3Col.s = d3Col.s * 3
         d3Col.l = d3Col.l / 3
@@ -120,7 +129,7 @@ export default {
         }
       } else return {}
     },
-    handleVisible() { return this.value != null },
+    handleVisible() { return this.showHandle || this.showHandleOnNull || this.value != null },
     handle1Value() {
       if (this.handle1) {
         var val = 0;
@@ -143,9 +152,6 @@ export default {
         return parseFloat(Number.parseFloat(val).toFixed(this.stepDepth))
       } else return false
     },
-    px() {
-      return { min: this.handle1['min' + this.dimension], max: this.handle1['max' + this.dimension] }
-    },
     sliderBarStyle() {
       if (this.colours)
         return {
@@ -163,7 +169,9 @@ export default {
       if (this.range) {
         this.setupHandle(2, this.$refs.handle2)
       }
+      this.sliderRadius = this.$refs.slider[this.vertical ? 'offsetWidth' : 'offsetHeight'] / 2
       this.setHandleRadius()
+      this.px = { min: this.handle1['min' + this.dimension], max: this.handle1['max' + this.dimension] }
       this.setPositionFromValue()
     },
     setupHandle(num, ref) {
@@ -175,7 +183,10 @@ export default {
         onDragEnd: this['setHandle' + num + 'PositionDrop'],
       })[0];
     },
-    popoverPosition(n) { return this['handle' + n + 'Pos'] },
+    popoverPosition(n) { return this['handle' + n + 'Pos'] + this.sliderRadius - this.handleRadius },
+    popoverColour() {
+
+    },
     popoverStyle(n) {
       var styleObj = {}
       styleObj[this.vertical ? 'top' : 'left'] = this.popoverPosition(n) + this.handleRadius - (this.popoverSize(n) / 2) + 'px'
@@ -218,44 +229,65 @@ export default {
       }
     },
     getColourFromValue(val) {
+      if(!this.colours) return false
       var domain = [this.min]
       for (var i = 1; i < this.colours.length - 1; i++) { domain.push(this.max / this.colours.length * i) }
       domain.push(this.max)
-      return scaleLinear().domain(domain).range(this.colours)(val);
+      var colour = scaleLinear().domain(domain).range(this.colours)(val);
+      this.$emit('colour-change', colour)
+      return colour
     },
     steps(value) {
       var step = (this.px.max / (this.max - this.min)) * this.step
       return Math.round(value / step) * step
     },
-    setHandle1Position() {
-      this.handle1Pos = this.handle1['end' + this.dimension]
-      var pos = this.steps(this.handle1Pos)
-      this.redrawBar(this.handle1Pos + (this.handleRadius / 2), true)
+    grabHandle(e) {
+      var self = this
+      this.showHandle = true
+      var pos = e.target.classList.contains('slider-track') ? e.offsetX : this.handle1['end' + this.dimension]
+      var handle = this.getClosestHandle(pos)
+      this.$nextTick(() => {
+        self[handle].startDrag(e, true)
+      })
+    },
+    setHandle1Position(e) {
+      if (this.disabled) return;
+      var pos = e.target.classList.contains('slider-track') ? e.offsetX : this.handle1['end' + this.dimension]
+      pos = this.getWithinRange(pos)
+      this.handle1Pos = pos
+      // var steppedPos = this.steps(pos)
+      this.redrawBar(this.handle1Pos, true)
       this.handle1PosPx = pos
     },
     setHandle2Position() {
+      if (this.disabled) return;
       this.handle2Pos = this.handle2['end' + this.dimension]
       this.handle2PosPx = this.steps(this.handle2Pos)
       this.redrawBar(this.handle2Pos + (this.handleRadius / 2), true)
     },
-    setHandle1PositionDrop() {
-      var pos = this.steps(this.handle1['end' + this.dimension])
-      this.handle1Pos = pos
-      this.handle1PosPx = pos
+    setHandle1PositionDrop(e) {
+      if (this.disabled) return;
+      var pos = e.target.classList.contains('slider-track') ? e.offsetX : this.handle1['end' + this.dimension]
+      var steppedPos = this.steps(pos)
+      this.handle1Pos = steppedPos
+      this.handle1PosPx = steppedPos
       TweenLite.to(this.$refs.handle1, 0.2, {
-        [this.dimension.toLowerCase()]: pos
+        [this.dimension.toLowerCase()]: steppedPos
       });
-      this.redrawBar(pos, true)
+      this.redrawBar(steppedPos, true)
     },
     setHandle2PositionDrop() {
+      if (this.disabled) return;
       var pos = this.steps(this.handle2['end' + this.dimension])
-      this.handle2Pos = pos
-      this.handle2PosPx = pos
+      var steppedPos = this.steps(pos)
+      // console.log('setHandle2PositionDrop on dragEnd', pos, steppedPos,this.handle2)
+      this.handle2Pos = steppedPos
+      this.handle2PosPx = steppedPos
       var handleProps = {
-        [this.dimension.toLowerCase()]: pos
+        [this.dimension.toLowerCase()]: steppedPos
       }
       TweenLite.to(this.$refs.handle2, 0.2, handleProps);
-      this.redrawBar(pos, true)
+      this.redrawBar(steppedPos + this.handleRadius * 2, true)
     },
     getPositionFromValue(val) {
       if (val === null) return false
@@ -266,6 +298,7 @@ export default {
     setPositionFromValue() {
       var pos = 0
       if (this.value === null || !this.handle1) return false
+      // console.log('setPositionFromValue', this.value)
       if (this.range) {
         pos = [this.getPositionFromValue(this.value[0]), this.getPositionFromValue(this.value[1])].sort((a, b) => { return a - b })
         TweenLite.to(this.$refs.handle1, 0.2, {
@@ -289,7 +322,56 @@ export default {
         this.handle1PosPx = pos
       }
     },
-    getWithinRange(number) { return (number < this.px.min) ? this.px.min : (number > this.px.max) ? this.px.max : (this.step) ? this.steps(number) : number },
+    keyDown(event) {
+      if (this.disabled) return;
+      // console.log('key ' + event.key + ' (' + event.keyCode + ')')
+      var value = this.value;
+      var preventDefault = true
+      switch (event.keyCode) {
+        case 9:
+          preventDefault = false
+          break;
+        case 33:
+          value = value + (this.step*10)
+          break;
+        case 34:
+          value = value - (this.step*10)
+          break;
+        case 35:
+          value = this.max
+          break;
+        case 36:
+          value =  this.min
+          break;
+        case 38:
+        case 39:
+          value = value + this.step
+          break;
+        case 37:
+        case 40:
+          value = value - this.step
+          break;
+        default:
+          // code block
+          // console.log('OTHER',event.key,event.keyCode,preventDefault)
+      }
+      if(preventDefault) event.preventDefault()
+
+      value = (value < this.min) ? this.min : (value > this.max) ? this.max : value
+      // console.log(value) 
+      var pos = this.getPositionFromValue(value)
+      var steppedPos = this.steps(pos)
+      // console.log(value, pos)
+      this.handle1Pos = steppedPos
+      this.handle1PosPx = steppedPos
+      TweenLite.to(this.$refs.handle1, 0.2, {
+        [this.dimension.toLowerCase()]: steppedPos
+      });
+      this.redrawBar(steppedPos, true)
+    },
+    getWithinRange(number) {
+      return (number < this.px.min) ? this.px.min : (number > this.px.max) ? this.px.max : number
+    },
     redrawBar(pos, animate) {
       var barProps = {}
       if (this.range) {
@@ -299,14 +381,15 @@ export default {
       } else {
         if (this.reverse) {
           barProps[this.dimension == 'X' ? 'x' : 'y'] = pos + 'px'
-          barProps[this.dimension == 'X' ? 'width' : 'height'] = ((this.px.max + this.handleRadius) - pos) + 'px'
+          barProps[this.dimension == 'X' ? 'width' : 'height'] = ((this.px.max + this.sliderRadius) - pos) + 'px'
         } else {
-          barProps[this.dimension == 'X' ? 'width' : 'height'] = pos + 'px'
+          barProps[this.dimension == 'X' ? 'width' : 'height'] = (pos) + 'px'
         }
       }
-      TweenLite.to(this.$refs.sliderBar, animate ? 0.2 : 0, barProps);
+      TweenLite.to(this.$refs.sliderBar, animate ? 0.1 : 0, barProps);
     },
     getClosestHandle(px) {
+      if (!this.range) return 'handle1'
       if (px < this.handle1Pos) {
         return 'handle1'
       } else if (px > this.handle2Pos) {
@@ -321,9 +404,11 @@ export default {
       if (this.disabled || e.target.classList.contains('handle')) return;
       e.preventDefault()
       e.stopPropagation()
-      var pos = this.getWithinRange(e['offset' + this.dimension] - this.handleRadius)
+      var pos = this.steps(this.getWithinRange(e['offset' + this.dimension] - this.handleRadius))
+      // console.log('clickSliderTrack', pos)
       if (this.range) {
         var handle = this.getClosestHandle(pos)
+        // console.log(handle,pos) 
         this[handle + 'Pos'] = pos
         TweenLite.to(this.$refs[handle], 0.2, {
           [this.dimension.toLowerCase()]: pos
@@ -339,14 +424,19 @@ export default {
         });
         this.redrawBar(pos, true)
         this.handle1PosPx = pos
-        this.handle1.update()
+        this.handle1.update(true, true)
       }
     }
   },
   watch: {
     steps() { if (this.handle1) { this.handle1.update() } },
     value(val) {
-      if (val !== this.handle1Value) this.setPositionFromValue()
+      if (this.range) {
+        if (val[0] !== this.handle1Value && val[1] !== this.handle2Value) this.setPositionFromValue()
+
+      } else {
+        if (val !== this.handle1Value) this.setPositionFromValue()
+      }
     },
     handle1Pos() {
       if (this.range) {

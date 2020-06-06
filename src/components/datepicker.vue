@@ -5,11 +5,17 @@
     </div>
     <input :id="dpId" :disabled="disabled" ref="datepickerinput" :pattern="inputPattern" :type="inputType" :class="['form-control datetimepicker-input',size?'form-control-'+size:'',{show}]" :value="val" @change="inputChange" v-mask="{mask, greedy: true, placeholder }" />
     <div :class="['datepicker-backdrop',{show}]" @click="togglePicker"></div>
+    <div :class="['input-group-append']" @click="togglePicker">
+      <button role="button" :aria-haspopup="show" class="btn btn-outline-secondary py-0"><i :class="['mt-1 mb-0 fasvg', {'fa-calendar':type=='date'||type=='datetime', 'fa-clock':type=='time'}]" /></button>
+    </div>
+    <div class="input-group-append" v-if="$slots.append||$scopedSlots.append">
+      <slot name="append"></slot>
+    </div>
     <transition name="fade">
-      <div v-if="show" :class="['calendar','calendar-'+size,{show}]">
+      <div v-if="show" :class="['calendar','calendar-'+size,{show}]" aria-controls="date" aria-hidden="false">
         <header class="calendar-header">
           <div class="mr-auto">
-            <div @click="prev" class="prev-button">
+            <div role="button" @click="prev" class="prev-button">
               <div class="fasvg fa-chevron-left"></div>
               <i class="hover-circle"></i>
             </div>
@@ -22,7 +28,7 @@
             <span v-if="mode=='decades'" class="year-button py-2" v-text="visible_date.format('YYYY').substring(0,2) + '00'" />
           </div>
           <div class="ml-auto">
-            <div @click="next" class="next-button">
+            <div role="button" @click="next" class="next-button">
               <div class="fasvg fa-chevron-right"></div>
               <i class="hover-circle"></i>
             </div>
@@ -47,7 +53,7 @@
             <span v-for="i in 7" :key="'weekdays_'+i" class="day-block" :title="$options.moment.weekdays(i)" v-text="$options.moment.weekdaysShort(i)" />
           </div>
           <div class="days-of-month">
-            <span v-for="n in 42" :key="'days_'+n" @click="clickDate(getCalendarDate('day',n))" :class="getBlockClass('day',n)">
+            <span v-for="n in 42" :key="'days_'+n" :id="'day'+_uid+'_'+getCalendarDate('day',n).format('YYYY-MM-DD')" role="button" @click="clickDate(getCalendarDate('day',n))" :class="getBlockClass('day',n)" :tabindex="visible_date.isSame(getCalendarDate('day',n), 'day') ? 0:-1" @keydown="keyDown">
               <span class="date" v-text="getCalendarDate('day',n).format('D')" />
               <i class="hover-circle"></i>
             </span>
@@ -78,21 +84,15 @@
           </div>
         </div>
         <div class="calendar-footer">
-          <form-group v-if="mode=='days'" class="m-auto" hide-label>
-            <checkbox label="Unknown Day" v-model="unknownDay" />
+          <form-group v-if="mode=='days'" class="mx-auto" hide-label>
+            <checkbox label="Unknown Day" class="m-auto" v-model="unknownDay" />
           </form-group>
-          <form-group v-if="mode=='months'" class="m-auto" hide-label>
-            <checkbox label="Unknown Month" v-model="unknownMonth" />
+          <form-group v-if="mode=='months'" class="mx-auto" hide-label>
+            <checkbox label="Unknown Month" class="m-auto" v-model="unknownMonth" />
           </form-group>
         </div>
       </div>
     </transition>
-    <div :class="['input-group-append']" @click="togglePicker">
-      <div class="input-group-text"><i :class="['fasvg', {'fa-calendar':type=='date'||type=='datetime', 'fa-clock':type=='time'}]" /></div>
-    </div>
-    <div class="input-group-append" v-if="$slots.append||$scopedSlots.append">
-      <slot name="append"></slot>
-    </div>
   </div>
 </template>
 <script>
@@ -133,7 +133,10 @@ export default {
         return 'DD/MM/YYYY'
       }
     },
-    size: String,
+    size: {
+      type: String,
+      default: 'md'
+    },
     type: {
       type: String,
       default: 'date'
@@ -171,7 +174,7 @@ export default {
   },
   mounted() {
     window.moment = moment
-    if(this.value) this.setupDatePicker()
+    if (this.value) this.setupDatePicker()
   },
   watch: {
     date() {
@@ -183,19 +186,19 @@ export default {
       this.setupDatePicker()
     },
     unknownDay() {
-        var y = 'YYYY'
-        var m = this.unknownMonth ? '00':'MM'
-        var d = this.unknownDay ? '00':'DD'
-        var format = y + '-' + m + '-' + d
-        this.updateDate(this.visible_date.format(format))
+      var y = 'YYYY'
+      var m = this.unknownMonth ? '00' : 'MM'
+      var d = this.unknownDay ? '00' : 'DD'
+      var format = y + '-' + m + '-' + d
+      this.updateDate(this.visible_date.format(format))
     },
     unknownMonth() {
-        this.unknownDay = true
-        var y = 'YYYY'
-        var m = this.unknownMonth ? '00':'MM'
-        var d = this.unknownDay ? '00':'DD'
-        var format = y + '-' + m + '-' + d
-        this.updateDate(this.visible_date.format(format))
+      this.unknownDay = true
+      var y = 'YYYY'
+      var m = this.unknownMonth ? '00' : 'MM'
+      var d = this.unknownDay ? '00' : 'DD'
+      var format = y + '-' + m + '-' + d
+      this.updateDate(this.visible_date.format(format))
     }
   },
   computed: {
@@ -207,12 +210,12 @@ export default {
     format() {
       return this.$options.formats[this.mode]
     },
-    inputType(){
+    inputType() {
       return this.type == 'time' ? this.type : false
     },
-    inputPattern(){
-      var string = this.type == 'date' ? "\\d{1,2}/\\d{1,2}/\\d{4}|--/\\d{1,2}/\\d{4}|--/--/\\d{4}":""
-      
+    inputPattern() {
+      var string = this.type == 'date' ? "\\d{1,2}/\\d{1,2}/\\d{4}|--/\\d{1,2}/\\d{4}|--/--/\\d{4}" : ""
+
       return string
     },
     currentMonth() {
@@ -288,6 +291,7 @@ export default {
       this.mode = this.viewMode
       if (this.mode == 'days' && this.unknownMonth) this.mode = 'months'
       if (this.mode == 'decades' && this.value) this.mode = 'days'
+      // var today = this.$el.querySelectorAll('.day-block.active')
     },
     clickDate(date) {
       if (this.disabled || this.dayIsDisabled(date)) return false
@@ -295,8 +299,50 @@ export default {
       this.visible_date = date
       this.unknownDay = false
       var self = this
-      if (!this.keepOpen) setTimeout(()=>{self.show = false}, 250 );
+      if (!this.keepOpen) setTimeout(() => { self.show = false }, 250);
       this.updateDate(this.date.format('YYYY-MM-DD'))
+    },
+    keyDown(event) {
+      if (this.disabled) return;
+      console.log('key ' + event.key + ' (' + event.keyCode + ')', this.visible_date, event.target)
+      var preventDefault = true
+      switch (event.keyCode) {
+        case 9:
+          preventDefault = false
+          break;
+        case 32:
+          this.date = this.visible_date
+          break;
+        case 33:
+          break;
+        case 34:
+          break;
+        case 35:
+          break;
+        case 36:
+          break;
+        case 38:
+          this.visible_date = this.visible_date.clone().subtract(1, 'week')
+          break;
+        case 39:
+          /* right cursor */
+          this.visible_date = this.visible_date.clone().add(1, 'day')
+          break;
+        case 37:
+          /* left cursor */
+          this.visible_date = this.visible_date.clone().subtract(1, 'day')
+          break;
+        case 40:
+          this.visible_date = this.visible_date.clone().add(1, 'week')
+          break;
+        default:
+          // code block
+      }
+      if (preventDefault) event.preventDefault()
+      var el = this.$el.querySelector('#day' + this._uid + '_' + this.visible_date.format('YYYY-MM-DD'))
+      el.focus()
+      console.log(preventDefault, el)
+
     },
     getSafeMoment(date) {
       var d = date.substr(0, 10).split('-');
@@ -594,22 +640,27 @@ $font-size: $day-block-width/3;
       align-items: center;
       text-align: center;
 
-      &:nth-child(-n+2),&:nth-child(n+8){
+      &:nth-child(-n+2),
+      &:nth-child(n+8) {
         transition: all .5s;
         // height: 0;
         // border:none;
         // overflow: hidden;
       }
+
       &.scroll-list-move {
         transition: all .5s;
       }
-      &.scroll-list-enter{
+
+      &.scroll-list-enter {
         transition: all .5s;
       }
+
       &.scroll-list-enter-active {
         transition: all .5s;
         background: green;
       }
+
       &.scroll-list-enter-to {
         transition: all .5s;
         background: red;
@@ -895,26 +946,27 @@ $font-size: $day-block-width/3;
 }
 
 .fasvg.fa-arrow-up {
-  background-image: url("../assets/icons/arrow-up.svg") !important;
+
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 448 512'><path d='M4.465 263.536l7.07 7.071c4.686 4.686 12.284 4.686 16.971 0L207 92.113V468c0 6.627 5.373 12 12 12h10c6.627 0 12-5.373 12-12V92.113l178.494 178.493c4.686 4.686 12.284 4.686 16.971 0l7.07-7.071c4.686-4.686 4.686-12.284 0-16.97l-211.05-211.05c-4.686-4.686-12.284-4.686-16.971 0L4.465 246.566c-4.687 4.686-4.687 12.284 0 16.97z'/></svg>") !important;
 }
 
 .fasvg.fa-arrow-down {
-  background-image: url("../assets/icons/arrow-down.svg") !important;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 448 512'><path d='M443.5 248.5l-7.1-7.1c-4.7-4.7-12.3-4.7-17 0L241 419.9V44c0-6.6-5.4-12-12-12h-10c-6.6 0-12 5.4-12 12v375.9L28.5 241.4c-4.7-4.7-12.3-4.7-17 0l-7.1 7.1c-4.7 4.7-4.7 12.3 0 17l211 211.1c4.7 4.7 12.3 4.7 17 0l211-211.1c4.8-4.8 4.8-12.3.1-17z'/></svg>") !important;
 }
 
 .fasvg.fa-calendar {
-  background-image: url("../assets/icons/calendar-alt.svg") !important;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 448 512'><path d='M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z'/></svg>") !important;
 }
 
 .fasvg.fa-clock {
-  background-image: url("../assets/icons/clock.svg") !important;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 512 512'><path d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z'/></svg>") !important;
 }
 
 .fasvg.fa-chevron-left {
-  background-image: url("../assets/icons/chevron-left.svg") !important;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 256 512'><path d='M238.475 475.535l7.071-7.07c4.686-4.686 4.686-12.284 0-16.971L50.053 256 245.546 60.506c4.686-4.686 4.686-12.284 0-16.971l-7.071-7.07c-4.686-4.686-12.284-4.686-16.97 0L10.454 247.515c-4.686 4.686-4.686 12.284 0 16.971l211.051 211.05c4.686 4.686 12.284 4.686 16.97-.001z'/></svg>") !important;
 }
 
 .fasvg.fa-chevron-right {
-  background-image: url("../assets/icons/chevron-right.svg") !important;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 256 512'><path d='M17.525 36.465l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L205.947 256 10.454 451.494c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l211.051-211.05c4.686-4.686 4.686-12.284 0-16.971L34.495 36.465c-4.686-4.687-12.284-4.687-16.97 0z'/></svg>") !important;
 }
 </style>

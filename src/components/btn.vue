@@ -4,6 +4,10 @@ export default {
   name: 'btn',
   props: {
     id: {},
+    groupId: {
+      type: String,
+      default: ''
+    },
     block: Boolean,
     btnClass: {
       type: String,
@@ -39,8 +43,8 @@ export default {
       default: ''
     },
     isRouterLink: Boolean,
-    to:{
-      type:[Object,String]
+    to: {
+      type: [Object, String]
     }
 
   },
@@ -50,28 +54,34 @@ export default {
     var children = [];
     var propObj = {
       class: this.classObj,
-      props:{},
-      domProps: {
-        id:this.id,
+      attrs: {
+        id: this.groupId ? this.groupId + '-' + this.bId : this.bId,
         disabled: this.disabled,
-        readonly: this.readonly
+        readonly: this.readonly,
+        role: 'button',
+        'aria-pressed': this.active ? 'true':'false',
+        'aria-disabled': this.disabled
+      },
+      props: {},
+      domProps: {
+
       },
       on: { click: this.btnClick }
     }
-    if(this.isRouterLink){
+    if (this.isRouterLink) {
       tag = 'router-link',
-      propObj.props.to = this.to
-    }else{
-      propObj.domProps.type = 'button'
+        propObj.props.to = this.to
+    } else {
+      propObj.attrs.type = 'button'
     }
     children.push(this.$slots.default)
     return h(tag, propObj, children)
   },
   created() {},
   computed: {
-    bId(){
-      if(this.id) return this.id
-      return this._uid
+    bId() {
+      if (this.id) return this.id
+      return this.$options.name + this._uid
     },
     classObj() {
       var outline = this.outline ? 'outline-' : ''

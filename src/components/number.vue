@@ -1,5 +1,5 @@
 <template>
-  <input :id="nId" type="number" ref="textbox" :step="step" :value="value" :min="min" :max="max" :disabled="disabled" @input="update" :class="['form-control',size ? 'form-control-'+size:'']" />
+  <input :id="nId" type="number" inputmode="numeric" ref="textbox" :step="step" :value="value" :min="min" :max="max" :disabled="disabled" @input="update" :class="['form-control',size ? 'form-control-'+size:'']" />
 </template>
 <script>
 export default {

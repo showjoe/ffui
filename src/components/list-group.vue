@@ -1,5 +1,5 @@
 <template>
-  <ul :class="getClass">
+  <ul :class="getClass" role="group">
     <slot></slot>
   </ul>
 </template>

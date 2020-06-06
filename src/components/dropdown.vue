@@ -1,13 +1,13 @@
 <template>
-  <div :class="[typeClass,positionClass,{ 'w-100': this.justified }]">
-    <btn :id="ddId" :btnClass="btnClass" :outline="btnOutline" :class="{'w-100': this.justified, 'dropdown-toggle':btnCaret&&!btnSplit}" aria-haspopup="true" :aria-expanded="show" :size="btnSize" @click.native="show=!show">
+  <div :class="[typeClass,positionClass,{ 'w-100': this.justified }]" role="group">
+    <btn :id="ddId" :btnClass="btnClass" :outline="btnOutline" :class="{'w-100': this.justified, 'dropdown-toggle':btnCaret&&!btnSplit}" role="button" aria-haspopup="true" :aria-expanded="show" :size="btnSize" @click.native="show=!show">
       <slot name="btn" :chosen-label="chosenLabel"></slot>
       <span v-if="!this.value" v-text="btnLabel"></span>
       <span v-else v-text="chosenLabel"></span>
     </btn>
-    <btn v-if="btnSplit" :btnClass="btnClass" :outline="btnOutline" class="dropdown-toggle dropdown-toggle-split" @click.native="show=!show"></btn>
+    <btn v-if="btnSplit" :btnClass="btnClass" :outline="btnOutline"  role="button" class="dropdown-toggle dropdown-toggle-split" @click.native="show=!show"></btn>
     <slot></slot>
-    <div :class="['dropdown-menu',{'show':show}]">
+    <div :class="['dropdown-menu',{'show':show}]"  :aria-labelledby="ddId">
       <button :id="ddId+'_null'" :class="['dropdown-item',{disabled,readonly}]" v-if="nullOption" @click="selectItem({value:null})">
         <slot name="nullOption"> --- </slot>
       </button>
@@ -96,8 +96,7 @@ export default {
     },
     typeClass() {
       var typeClassArr = []
-      if (this.btnSplit) typeClassArr.push('btn-group')
-      else typeClassArr.push('dropdown')
+      typeClassArr.push('btn-group dropdown')
       return typeClassArr
     },
     chosenLabel() {

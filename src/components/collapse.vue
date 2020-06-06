@@ -1,6 +1,12 @@
 <template>
   <transition name="collapse" @enter="enter" @after-enter="afterEnter" @before-leave="beforeLeave" @leave="leave" :duration="duration">
-    <div ref="collapsible" v-if="show" :class="['collapse',{show}]">
+    <div
+    ref="collapsible"
+    v-if="show"
+    :class="['collapse',{show}]"
+    role="region"
+    :aria-expanded="show"
+    >
       <slot></slot>
     </div>
   </transition>

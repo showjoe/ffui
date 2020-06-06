@@ -28,7 +28,8 @@ export default {
     var tag = this.tag
     var self = this
     var propsObject = {
-      domProps:{},
+      attrs: {},
+      domProps: {},
       class: [
         "list-group-item",
         { "disabled": this.disabled },
@@ -46,6 +47,8 @@ export default {
         } else {
           tag = 'button'
         }
+        propsObject.attrs.role = 'button'
+
         propsObject.on = { click: (e) => { self.$emit('click', e) } }
       }
       if (this.isRouterLink && this.to) {
@@ -70,7 +73,7 @@ export default {
     }
   },
   computed: {
-    lgiId(){
+    lgiId() {
       if (this.id) return this.id
       if (this.di) return this.di.name
       return this._uid
