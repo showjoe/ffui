@@ -2,51 +2,42 @@
 export default {
   name: 'form-group',
   props: {
+    id: String,
     di: Object,
     index: Number,
     label: String,
+    helptext: String,
     hideLabel: Boolean,
     hideError: Boolean,
-    cols: String,
+    cols: [String, Array, Object],
     bp: String,
     sizes: Object,
     flip: Boolean,
     error: {}
   },
+  inputChildren: ['textbox'],
+  data() {
+    return {
+      inputId: null
+    }
+  },
+  created() {
+    this.$on('setInputId', this.setInputId)
+  },
   render(h) {
     var children = []
-    var col0Children = []
-    var labelProps = { class: 'col-form-label', attrs: {}, domProps: { innerHTML: this.getLabel() } }
-
-    this.injectSlot('pre_label', { di: this.di }, col0Children)
-
-    if (this.di) labelProps.attrs.for = this.di.name
-    var label = h('label', labelProps)
-    if (!this.hideLabel) col0Children.push(label)
-    this.injectSlot('label', { di: this.di }, col0Children)
-
     if (this.cols) {
-
-      var col1 = h('div', { class: [this.colWidths(0)] }, col0Children)
-      children.push(col1)
-
-      var slotChildren = []
-
-      this.injectSlot('default', { di: this.di }, slotChildren)
-      this.injectSlot('below_input', { di: this.di }, slotChildren)
-
-      var col2 = h('div', { class: [this.colWidths(1)] }, slotChildren)
-      children.push(col2)
+      children.push(this.renderCol1(h), this.renderCol2(h))
       if (this.flip) children.reverse()
     } else {
-      children.push(col0Children)
-      this.injectSlot('default', { di: this.di }, children)
-      this.injectSlot('below_input', { di: this.di }, children)
+      children.push(this.renderSingleCol(h))
     }
-    if (!this.hideError)
-      children.push(this.getErrorMessage(h))
-    //   children.push(col2)
-    return h('div', { class: ['form-group', this.sizeClass, { 'row': this.cols }, this.hasError ? 'is-invalid' : 'is-valid'] },
+    return h('div', {
+        class: ['form-group', this.sizeClass, { 'row': this.cols }, this.hasError ? 'is-invalid' : 'is-valid'],
+        domProps: {
+          id: this.fgId
+        }
+      },
       children)
   },
   computed: {
@@ -58,8 +49,25 @@ export default {
     //     return state.errors[this.di.name]
     //   }
     // }),
+    fgId() {
+      if (this.id) return this.id
+      return this.$options.name + '_' + this._uid
+    },
+    labelId() {
+      // var id = this.id ? this.id : this._uid
+      return 'label_' + this._uid
+    },
+    helptextId() {
+      return 'helptext_' + this._uid
+    },
     questionnaireRef() { return this.$root.questionnaireRef },
     hasError() { return this.error ? this.error.length > 0 : false },
+    hasHelptext() {
+      return this.helptextComputed ? true : false
+    },
+    helptextComputed() {
+      return this.$scopedSlots.helptext ? this.$scopedSlots.helptext() : this.helptext ? this.helptext : this.di && this.di.json && this.di.json.helptext ? this.di.json.helptext : false
+    },
     sizeClass() {
       var classes = []
       var bp = false
@@ -83,31 +91,87 @@ export default {
       } else if (Object.prototype.toString.call(this.sizes)) {
         for (bp in this.sizes) { if (this.sizes.hasOwnProperty(bp)) classes.push('col-' + bp + '-' + this.sizes[bp]) }
       }
-      return [classes]
+      return ['mb-1', classes]
     },
   },
   methods: {
-    injectSlot(slot, data, parent) {
-      if (this.$scopedSlots[slot]) parent.push(this.$scopedSlots[slot](data))
-      else if (this.$slots[slot]) parent.push(this.$slots[slot])
+    makeSizeClass(sizes) {
+      var classes = []
+      for (var bp in sizes) {
+        classes.push('col-' + bp + '-' + sizes[bp])
+      }
+      return classes
     },
-    getLabel() {
+    renderLabel(h) {
+      if (!this.hideLabel) {
+        if (this.getLabelText()) return h('label', { class: 'col-form-label', attrs: { for: this.inputId, id: this.labelId }, domProps: { innerHTML: this.getLabelText() } })
+      }
+    },
+    renderPreLabel() {
+      return this.$scopedSlots.pre_label ? this.$scopedSlots.pre_label({ di: this.di }) : false
+    },
+    renderErrorMessage(h) {
+      return this.hasError && this.error ? h('feedback', { props: { type: this.hasError ? 'invalid' : 'valid' } }, [this.getErrorMessage()]) : false
+    },
+    renderErrorSlot() {
+      return this.$scopedSlots.error ? this.$scopedSlots.error({ error: this.getErrorMessage() }) : false
+    },
+    renderInput() {
+      return this.$scopedSlots.default({ di: this.di, error: this.getErrorMessage() })
+    },
+    renderHelptext(h) {
+      if (this.helptextComputed) return h('small', { attrs: { id: this.helptextId }, class: ['form-text text-muted'] }, [this.helptextComputed])
+    },
+    renderBelowInput() {
+      return this.$scopedSlots.below_input ? this.$scopedSlots.below_input({ di: this.di }) : false
+    },
+    renderCol1(h) {
+      return h('div', { class: [this.colWidths(0)] }, [
+        this.renderPreLabel(), this.renderLabel(h)
+      ])
+    },
+    renderSingleCol(h) {
+      return h('div', { class: [this.colWidths(0)] }, [
+        this.renderPreLabel(), this.renderLabel(h), this.renderInput(), this.renderHelptext(h), this.renderBelowInput(), this.hideError ? false : this.renderErrorMessage(h), this.renderErrorSlot(h)
+      ])
+    },
+    renderCol2(h) {
+      return h('div', { class: [this.colWidths(1)] },
+        [
+          this.renderInput(), this.renderHelptext(h), this.renderBelowInput(), this.hideError ? false : this.renderErrorMessage(h), this.renderErrorSlot(h)
+        ]
+      )
+    },
+    setInputId(e) {
+      // console.log('setInputId', e)
+      this.inputId = e
+    },
+    getLabelText() {
       var label = this.label
       if (this.di) label = this.di.label
       return label
     },
-    getErrorMessage(h) {
-      return this.hasError && this.error ? h('div', { class: { 'col invalid-feedback': this.hasError } }, [this.error[0]]) : false
+    getErrorMessage() {
+      // console.log(this) 
+      return this.error ? this.error[0]:false
     },
     colWidths(i) {
-      var cols = this.cols.split('|')
-      var str = 'col-'
-      str += this.bp ? this.bp + '-' : ''
-      return str + cols[i]
+      if (this.cols) {
+        if (typeof this.cols == 'object') {
+          return this.makeSizeClass(this.cols[i])
+        } else {
+          var cols = this.cols.split('|')
+          var str = 'col-'
+          str += this.bp ? this.bp + '-' : ''
+          return str + cols[i]
+        }
+      }
     },
+    getLabelId() {
+
+    }
   }
 }
 </script>
 <style lang="scss">
-
 </style>
