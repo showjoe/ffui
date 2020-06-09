@@ -17,10 +17,18 @@ module.exports = {
   },
   pluginOptions: {
     moment: {
-      locales: ['en']
+      locales: [
+        'en','ja'
+      ]
     },
     webpackBundleAnalyzer: {
       openAnalyzer: true
+    },
+    i18n: {
+      locale: 'en',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableInSFC: true
     }
   }
 }

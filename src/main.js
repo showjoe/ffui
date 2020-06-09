@@ -16,7 +16,9 @@ library.add(faSquare, faCheckSquare, faCertificate)
 
 import './assets/scss/app.scss';
 import router from './router'
+import i18n from './i18n'
 new Vue({
   router,
+  i18n,
   render: h => h(App)
 }).$mount('#app')
