@@ -1,7 +1,7 @@
 {
   "name": "@formfactory/ffui",
   "license": "MIT",
-  "version": "0.1.42",
+  "version": "0.1.43",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
