@@ -47,19 +47,33 @@ Default slot will be after dropdown trigger button.
   </dropdown>
 :::
 
-`btn` slot will be inside dropdown trigger button.
+`btn` slot will replace the dropdown trigger button.
 
 ::: demo
   <dropdown :items="dataitems.Country.lookup.items" v-model="records.Country">
-    <div slot="btn">Extra Content</div>
+    <template #btn="{toggleDropdown,chosenLabel}">
+      <a @click="toggleDropdown" class="dropdown-toggle d-inline-block">
+        <img src="https://www.gravatar.com/avatar/4a5a41b51bef54d817bab9bd67cee15d.jpg?s=200&d=mm" class="rounded-circle" width="40" alt="Photo">
+        <label for="">{{chosenLabel}}</label>
+      </a>
+    </template>
   </dropdown>
 :::
+
+`btn-inner` slot will be inside dropdown trigger button.
+
+::: demo
+  <dropdown :items="dataitems.Country.lookup.items" v-model="records.Country">
+    <div slot="btn-inner">Extra Content</div>
+  </dropdown>
+:::
+
 
 Add child content using `slot="list"` to alter content in the list - the slot represents an entire dropdown-item so will need to reimplement click handlers and other classes
 
 ::: demo
   <dropdown :items="dataitems.Country.lookup.items" v-model="records.Country" btn-split>
-    <img v-if="records.Country" slot="btn" :src="countryFlagUrl(records.Country)">
+    <img v-if="records.Country" slot="btn-inner" :src="countryFlagUrl(records.Country)">
     <template #list="{item}">
       <a :class="['dropdown-item',{'active':item.value == records.Country}]" @click="records.Country = item.value">
         <img :src="countryFlagUrl(item.value)">
@@ -72,13 +86,33 @@ Add child content using `slot="list"` to alter content in the list - the slot re
 Or choose to alter the contents of each dropdown-item in the list using `slot="list-item-prepend"` or  `slot="list-item-append"` this will avoid needing to duplicate the necessary classes and props for the dropdown-item
 
 ::: demo
-<dropdown :items="dataitems.Country.lookup.items" v-model="records.Country">
-  <img v-if="records.Country" slot="btn" :src="countryFlagUrl(records.Country)">
+<dropdown :items="dataitems.Country.lookup.items" v-model="records.Country" class="w-50">
+  <img v-if="records.Country" slot="btn-inner" :src="countryFlagUrl(records.Country)">
   <template #list-item-prepend="{item}">
-    <img :src="countryFlagUrl(item.value)">
+    <img class="ml-n3" :src="countryFlagUrl(item.value)">
   </template>
 </dropdown>
 :::
+
+## Fully slot-driven
+
+You should be careful to set the various aria tags when using these slots.
+
+::: demo
+<dropdown>
+  <template #btn="{toggleDropdown,chosenLabel,show}">
+    <button id="ddButton" @click="toggleDropdown" class="btn dropdown-toggle d-inline-block" role="button" aria-haspopup="true" :aria-expanded="show">
+      <img src="https://www.gravatar.com/avatar/4a5a41b51bef54d817bab9bd67cee15d.jpg?s=200&d=mm" class="rounded-circle" width="40" alt="Photo">
+    </button>
+  </template>
+  <template #dropdown="{show}">
+    <div :class="['dropdown-menu',{'show':show}]" aria-labelledby="ddButton">
+      <router-link :to="{ name: 'dashboard' }" class="dropdown-item pl-3"> Test </router-link>
+    </div>
+  </template>
+</dropdown>
+:::
+
 
 
 ## grouping
