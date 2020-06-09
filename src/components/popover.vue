@@ -94,7 +94,6 @@ export default {
       }
     },
     toggle() {
-      console.log(this.popper)
       this.show = !this.show
     }
   },

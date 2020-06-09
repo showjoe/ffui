@@ -64,7 +64,6 @@ export default {
       return this._uid
     },
     noLabel(){
-      console.log(this.$slots.default) 
       return !this.label && !this.$slots.default
     },
     cbContainerClass() {
@@ -111,9 +110,7 @@ export default {
   },
   methods: {
     update(event) {
-      console.log('update',event,this.disabled || this.readonly) 
       if (this.disabled || this.readonly) return false
-        console.log('update',event.target.checked,this.value) 
       this.$emit('change',event.target.checked ? this.trueValue:this.falseValue)
     }
   }
