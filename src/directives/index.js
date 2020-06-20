@@ -1,8 +1,10 @@
+import mask from './mask'
 import popover from './popover'
 import tooltip from './tooltip'
 
 export {
-    popover,
-    tooltip,
+  mask,
+  popover,
+  tooltip,
 
 }

@@ -1,3 +1,20 @@
 {
-  "message": "hello i18n !!"
+  "components": {
+    "datepicker": {
+      "alias": "ffdate",
+      "alias_no_unknowns": "ffdate_no_unknowns",
+      "formats": {
+        "date": "DD/MM/YYYY",
+        "datetime": "DD/MM/YYYY HH:mm",
+        "month_year": "MMMM YYYY",
+        "mysqldate": "YYYY-MM-DD",
+        "time": "HH:mm",
+        "year": "YYYY"
+      },
+      "mask_replace": "DD/MM/YYYY",
+      "placeholder": "DD/MM/YYYY",
+      "unknown_day": "Unknown Day",
+      "unknown_month": "Unknown Month"
+    }
+  }
 }

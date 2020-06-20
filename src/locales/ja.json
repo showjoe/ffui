@@ -1,0 +1,20 @@
+{
+  "components": {
+    "datepicker": {
+      "alias": "ffdate_ja",
+      "alias_no_unknowns": "ffdate_ja_no_unknowns",
+      "formats": {
+        "date": "YYYY年M月D日",
+        "datetime": "YYYY年M月D日 HH:mm",
+        "month_year": "YYYY年M月",
+        "mysqldate": "YYYY-MM-DD",
+        "time": "HH:mm",
+        "year": "YYYY年"
+      },
+      "mask_replace": "YYYY年MM月DD日",
+      "placeholder": "____年__月__日",
+      "unknown_day": "不明な日",
+      "unknown_month": " 不明な月"
+    }
+  }
+}
