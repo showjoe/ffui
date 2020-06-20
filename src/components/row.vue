@@ -22,7 +22,7 @@ export default {
       var bp = false
       if (!this.sizes) return classes
       if (typeof this.sizes == "number") {
-        classes = ['col-' + this.sizes]
+        classes = ['row-cols-' + this.sizes]
       } else if (Array.isArray(this.sizes)) {
         /* Sizes prop is array of objects */
         for (var key in this.sizes) {

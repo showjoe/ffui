@@ -104,6 +104,7 @@ export default {
     },
     renderLabel(h) {
       if (!this.hideLabel) {
+        if (this.$slots.label) return this.$slots.label
         if (this.getLabelText()) return h('label', { class: 'col-form-label', attrs: { for: this.inputId, id: this.labelId }, domProps: { innerHTML: this.getLabelText() } })
       }
     },

@@ -19,6 +19,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export {
   components,
+  directives,
   install
   // rest of the component
 }

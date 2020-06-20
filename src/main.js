@@ -6,8 +6,8 @@ import { faSquare, faCheckSquare, faCertificate } from '@fortawesome/free-solid-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import 'bootstrap';
 import * as ffui from './'
-const moment = require('moment')
-window.moment = moment
+// const moment = require('moment')
+// window.moment = moment
 Vue.config.productionTip = false
 Vue.use(ffui)
 
