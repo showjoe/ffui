@@ -61,6 +61,7 @@ Add a btn-class prop to set the styling
 Using v-model with individual buttons.  By default they will act as boolean 'checkbox' style buttons 
 
 <pre class="text-white">{{records}}</pre>
+here
 
 ::: demo
 <div>

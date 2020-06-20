@@ -38,7 +38,7 @@
     </template>
   </tab-content>
   <template #footer-inner>
-    {{currentTab}}
+    Footer
   </template>
 </card>
 :::

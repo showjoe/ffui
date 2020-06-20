@@ -1,0 +1,14 @@
+$enable-gradients: true;
+@import '../../../src/assets/scss/app.scss';
+
+
+.bd-highlight {
+    background-color: rgba(86,61,124,.15);
+    border: 1px solid rgba(86,61,124,.15);
+}
+.bd-example {
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: .2rem;
+}

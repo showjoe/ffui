@@ -1,7 +1,7 @@
 
 # Popover
 
-Popover is enabled by using the v-popover directive or the popover component
+Popover is enabled by using the [popover directive](../directives/popover) or the popover component
 
 ## popover directive
 ::: demo
@@ -26,11 +26,11 @@ By default should automatically choose most sensible position.  You can configur
 <btn id="pop-target-5">Popover on bottom</btn>
 <btn id="pop-target-6">Popover on left</btn>
 <btn id="pop-target-7">Popover on auto</btn>
-<popover event="click" position="top" target="pop-target-3" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
-<popover event="click" position="right" target="pop-target-4" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
-<popover event="click" position="bottom" target="pop-target-5" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
-<popover event="click" position="left" target="pop-target-6" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
-<popover event="click" position="auto" target="pop-target-7" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
+<popover event="hover" position="top" target="pop-target-3" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
+<popover event="hover" position="right" target="pop-target-4" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
+<popover event="hover" position="bottom" target="pop-target-5" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
+<popover event="hover" position="left" target="pop-target-6" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
+<popover event="hover" position="auto" target="pop-target-7" title="Popover title" body="And heres some amazing content. Its very engaging. Right?"/>
 :::
 
 

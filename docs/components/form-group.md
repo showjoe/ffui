@@ -67,6 +67,20 @@ Specify an alternative label (if not provided by dataitem)
 </card>
 :::
 
+or use the label slot to replace with a different solution
+
+::: demo
+<card>
+  <form-group :sizes="{md:6}" cols="4|8">
+    <template #label>
+      Alternative Label
+    </template>
+    <textbox :di="dataitems.MyDataitem1" v-model="records.MyDataitem1"/>
+  </form-group>
+</card>
+:::
+
+
 ## helptext
 Specify helptext
 
@@ -86,7 +100,7 @@ Slots can be helpful for placing additional content in praticular places within 
 <card>
   <form-group :di="dataitems.MyDataitem1" :sizes="{md:6}">
     <template #pre_label>
-      <span class="text-info">pre_label slot</span>
+      <span class="text-info">pre_label slot </span>
     </template>
     <textbox v-model="records.MyDataitem1"/>
   </form-group>
@@ -97,7 +111,7 @@ Slots can be helpful for placing additional content in praticular places within 
 <card>
   <form-group :di="dataitems.MyDataitem1" :sizes="{md:6}">
     <template #label>
-      <span class="text-primary">label slot</span>
+      <span class="text-primary">label slot </span>
     </template>
     <textbox v-model="records.MyDataitem1"/>
   </form-group>

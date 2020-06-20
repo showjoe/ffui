@@ -4,7 +4,7 @@ module.exports = {
   description: 'Vue.js Components using bootstrap 4 styling for use in form factory projects.',
   plugins: [
     ['demo-code', {
-      minHeight: 460,
+      minHeight: 200,
       onlineBtns: {
         codepen: false,
         jsfiddle: false,
@@ -23,6 +23,30 @@ module.exports = {
         collapsable: false,
         children: [
           'introduction/guide'
+        ]
+      }, {
+        title: 'Layout',
+        collapsable: false,
+        children: [
+          'layout/overview',
+          'layout/grid',
+        ]
+      }, {
+        title: 'Content',
+        collapsable: false,
+        children: [
+          'content/typography',
+          'content/code',
+          'content/images',
+          'content/figures',
+        ]
+      }, {
+        title: 'Directives',
+        collapsable: false,
+        children: [
+          'directives/mask',
+          'directives/popover',
+          'directives/tooltip'
         ]
       },
       {
@@ -49,7 +73,7 @@ module.exports = {
             title: 'Forms',
             collapsable: true,
             path: '/components/forms',
-            children: ['components/form-group', 'components/checkbox', 'components/radio', 'components/datepicker', 'components/dropdown', 'components/datepicker', 'components/input-group', 'components/number', 'components/slider', 'components/textbox', 'components/typeahead']
+            children: ['components/form-group', 'components/checkbox', 'components/radio', 'components/datepicker', 'components/dropdown', 'components/input-group', 'components/number', 'components/slider', 'components/textbox', 'components/typeahead']
           },
           {
             title: 'Lists',
@@ -67,6 +91,30 @@ module.exports = {
           'components/tabs',
           'components/tooltip',
           'components/font-awesome'
+        ]
+      }, {
+        title: 'Utilities',
+        collapsable: false,
+        children: [
+          'utilities/borders',
+          'utilities/colors',
+          'utilities/display',
+          'utilities/embed',
+          'utilities/flex',
+          'utilities/float',
+          'utilities/image-replacement',
+          'utilities/interactions',
+          'utilities/overflow',
+          'utilities/position',
+          'utilities/screen-readers',
+          'utilities/shadows',
+          'utilities/sizing',
+          'utilities/spacing',
+          'utilities/stretched-link',
+          'utilities/text',
+          'utilities/vertical-align',
+          'utilities/visibility',
+
         ]
       }
     ]
