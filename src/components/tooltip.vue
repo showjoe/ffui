@@ -36,10 +36,11 @@ export default {
     },
   },
   mounted() {
+    if(this.target&&this.$el) 
     this.popper = this.popperInstance()
   },
   updated() {
-    this.popper = this.popperInstance()
+    this.popper.update()
   },
   data() {
     return {
@@ -65,9 +66,9 @@ export default {
           } else {
             button.addEventListener(this.event, this.toggle)
           }
-
           return createPopper(button, this.$el, {
             placement: this.position,
+            container: 'body',
             modifiers: [flip, preventOverflow,
               {
                 name: 'offset',
@@ -87,6 +88,7 @@ export default {
       }
     },
     toggle() {
+      this.popper.update()
       this.show = !this.show
     }
   },

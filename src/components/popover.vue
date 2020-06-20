@@ -44,7 +44,7 @@ export default {
     this.popper = this.popperInstance()
   },
   updated() {
-    this.popper = this.popperInstance()
+    this.popper.update()
   },
   data() {
     return {
@@ -94,6 +94,7 @@ export default {
       }
     },
     toggle() {
+      this.popper.update()
       this.show = !this.show
     }
   },
