@@ -64,13 +64,11 @@ If you want to separate the checkbox from it's label you must remember to still 
 
 ::: demo
 <media class="border">
-    <checkbox size="lg" id="cb1" v-model="records.checkbox1" aria-labelledby="cb-label" class="m-5"></checkbox>
-    <template #body>
-        <label for="cb1" id="cb-label" class="mt-0">
+    <checkbox slot="media" size="lg" id="cb1" v-model="records.checkbox1" aria-labelledby="cb-label" class="m-5"/>
+        <label for="cb1" id="cb-label" class="mt-2">
             <h5>Label</h5>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aut ipsa, natus tenetur suscipit quod reprehenderit quisquam! Eaque, beatae quisquam dolores, in, fugit at cupiditate molestias maiores neque animi minima.</p>
         </label>
-    </template>
 </media>
 :::
 

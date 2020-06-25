@@ -24,16 +24,31 @@ You can individually import components
 
 ``` js
 import Vue from 'vue'
-import {checkbox} from '@formfactory/ffui'
+import {checkbox} from '@formfactory/ffui/src/components'
 
 Vue.component('checkbox',checkbox)
 ```
 
-Or import the whole library
+You can dynamically (lazy load) components using code like this:
+
+``` js
+import Vue from 'vue'
+Vue.directive(_key, import( /* webpackChunkName: "chunk_name" */ '@formfactory/ffui/src/components/dropdown.vue').then(dropdown => dropdown))
+
+```
+
+Or import the whole library (each component and directive is [dynamically imported](https://webpack.js.org/guides/code-splitting/#dynamic-imports) by default)
 
 ``` js
 import Vue from 'vue'
 import ffui from '@formfactory/ffui/'
 Vue.use(ffui)
 ```
-<textbox/>
+
+You can use an options object to configure:  The code below will skip importing the modal guide
+
+``` js
+import Vue from 'vue'
+import ffui from '@formfactory/ffui/'
+Vue.use(ffui,{ components: { skip: ['modalGuide'] } })
+```

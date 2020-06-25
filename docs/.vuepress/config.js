@@ -4,7 +4,6 @@ module.exports = {
   description: 'Vue.js Components using bootstrap 4 styling for use in form factory projects.',
   plugins: [
     ['demo-code', {
-      minHeight: 200,
       onlineBtns: {
         codepen: false,
         jsfiddle: false,
@@ -22,7 +21,8 @@ module.exports = {
         title: 'Introduction',
         collapsable: false,
         children: [
-          'introduction/guide'
+          'introduction/guide',
+          'introduction/i18n',
         ]
       }, {
         title: 'Layout',
@@ -40,14 +40,6 @@ module.exports = {
           'content/images',
           'content/figures',
         ]
-      }, {
-        title: 'Directives',
-        collapsable: false,
-        children: [
-          'directives/mask',
-          'directives/popover',
-          'directives/tooltip'
-        ]
       },
       {
         title: 'Components',
@@ -56,7 +48,6 @@ module.exports = {
         children: [
           'components/alert',
           'components/badge',
-          'components/collapse',
           {
             title: 'Buttons',
             path: '/components/btn',
@@ -69,12 +60,18 @@ module.exports = {
             collapsable: true,
             children: ['components/card', 'components/card-group']
           },
+          'components/checkbox',
+          'components/collapse',
+          'components/datepicker',
+          'components/dropdown',
+          'components/font-awesome',
           {
             title: 'Forms',
             collapsable: true,
             path: '/components/forms',
-            children: ['components/form-group', 'components/checkbox', 'components/radio', 'components/datepicker', 'components/dropdown', 'components/input-group', 'components/number', 'components/slider', 'components/textbox', 'components/typeahead']
+            children: ['components/form-group']
           },
+          'components/input-group',
           {
             title: 'Lists',
             path: '/components/list-group',
@@ -85,12 +82,25 @@ module.exports = {
           'components/modal',
           'components/modal-guide',
           'components/navs',
-          'components/row_and_column',
+          'components/number',
           'components/popover',
           'components/progress-bar',
+          'components/radio',
+          'components/row_and_column',
+          'components/slider',
           'components/tabs',
+          'components/textbox',
           'components/tooltip',
-          'components/font-awesome'
+          'components/typeahead'
+
+        ]
+      }, {
+        title: 'Directives',
+        collapsable: false,
+        children: [
+          'directives/mask',
+          'directives/popover',
+          'directives/tooltip'
         ]
       }, {
         title: 'Utilities',

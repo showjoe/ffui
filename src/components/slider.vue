@@ -44,7 +44,7 @@
 import { format } from "d3-format";
 import { scaleLinear } from "d3-scale";
 import { color, hsl } from "d3-color";
-import { gsap,TweenLite } from "gsap";
+import { gsap, TweenLite } from "gsap";
 import { Draggable } from "gsap/Draggable.js";
 gsap.registerPlugin(Draggable);
 export default {

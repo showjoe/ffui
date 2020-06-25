@@ -27,7 +27,6 @@ export default {
       var bp = false
       // var autoStr = this.auto ? '-auto' : ''
       if (!this.sizes) return classes
-      console.log(typeof this.sizes)
       if (typeof this.sizes == "number" || typeof this.sizes == "string") {
         classes = ['col-' + this.sizes]
       } else if (Array.isArray(this.sizes)) {
@@ -37,7 +36,6 @@ export default {
             var sizeArr = this.sizes[key]
             if (typeof sizeArr == "number") { classes.push('col-' + sizeArr) }
             for (bp in sizeArr) {
-              console.log(bp, sizeArr[bp])
               if (sizeArr.hasOwnProperty(bp)) {
                 classes.push('col-' + bp + '-' + sizeArr[bp])
               }

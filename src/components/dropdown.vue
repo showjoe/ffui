@@ -9,7 +9,7 @@
     </slot>
     <btn v-if="btnSplit" :btnClass="btnClass" :outline="btnOutline" role="button" class="dropdown-toggle dropdown-toggle-split" @click.native="toggleDropdown"></btn>
     <slot></slot>
-    <slot name="dropdown" :show="show">
+    <slot name="dropdown" :show="show" :toggle-dropdown="toggleDropdown" :items="items">
       <div ref="dropdown-menu" :class="['dropdown-menu',{'show':show}]" :aria-labelledby="ddId">
         <button :id="ddId+'_null'" :class="['dropdown-item',{disabled,readonly}]" v-if="nullOption" @click="selectItem({value:null})">
           <slot name="nullOption"> --- </slot>

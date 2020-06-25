@@ -1,6 +1,5 @@
 import Inputmask from 'inputmask'
 
-
 Inputmask.extendAliases({
   'mysqldate': {
     regex:"([0-9]{4})-(0[1-9]|1[012]|00)-(0[1-9]|[12][0-9]|3[01]|00)",
@@ -22,7 +21,6 @@ Inputmask.extendAliases({
 export default {
   inserted: function(el, binding) {
     var mask = binding.value
-    console.log(binding) 
     new Inputmask(mask).mask(el);
   }
 }
