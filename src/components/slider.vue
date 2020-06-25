@@ -44,9 +44,10 @@
 import { format } from "d3-format";
 import { scaleLinear } from "d3-scale";
 import { color, hsl } from "d3-color";
-import { gsap, TweenLite } from "gsap";
-import { Draggable } from "gsap/Draggable.js";
-gsap.registerPlugin(Draggable);
+import { gsap } from "gsap";
+import { CSSRulePlugin } from "gsap/CSSRulePlugin";
+import { Draggable } from "gsap/Draggable";
+
 export default {
   name: 'slider',
   props: {
@@ -100,6 +101,7 @@ export default {
     }
   },
   mounted() {
+    gsap.registerPlugin(CSSRulePlugin, Draggable);
     window.addEventListener('resize', this.resize)
     this.setPositionFromValue()
     this.setupSlider()
@@ -270,7 +272,7 @@ export default {
       var steppedPos = this.steps(pos)
       this.handle1Pos = steppedPos
       this.handle1PosPx = steppedPos
-      TweenLite.to(this.$refs.handle1, 0.2, {
+      gsap.to(this.$refs.handle1, 0.2, {
         [this.dimension.toLowerCase()]: steppedPos
       });
       this.redrawBar(steppedPos, true)
@@ -285,7 +287,7 @@ export default {
       var handleProps = {
         [this.dimension.toLowerCase()]: steppedPos
       }
-      TweenLite.to(this.$refs.handle2, 0.2, handleProps);
+      gsap.to(this.$refs.handle2, 0.2, handleProps);
       this.redrawBar(steppedPos + this.handleRadius * 2, true)
     },
     getPositionFromValue(val) {
@@ -300,10 +302,10 @@ export default {
       // console.log('setPositionFromValue', this.value)
       if (this.range) {
         pos = [this.getPositionFromValue(this.value[0]), this.getPositionFromValue(this.value[1])].sort((a, b) => { return a - b })
-        TweenLite.to(this.$refs.handle1, 0.2, {
+        gsap.to(this.$refs.handle1, 0.2, {
           [this.dimension.toLowerCase()]: pos[0]
         });
-        TweenLite.to(this.$refs.handle2, 0.2, {
+        gsap.to(this.$refs.handle2, 0.2, {
           [this.dimension.toLowerCase()]: pos[1]
         });
         this.handle1Pos = pos[0]
@@ -313,7 +315,7 @@ export default {
         this.redrawBar(pos, true)
       } else {
         pos = this.getPositionFromValue(this.value)
-        TweenLite.to(this.$refs.handle1, 0.2, {
+        gsap.to(this.$refs.handle1, 0.2, {
           [this.dimension.toLowerCase()]: pos
         });
         this.handle1Pos = pos
@@ -363,7 +365,7 @@ export default {
       // console.log(value, pos)
       this.handle1Pos = steppedPos
       this.handle1PosPx = steppedPos
-      TweenLite.to(this.$refs.handle1, 0.2, {
+      gsap.to(this.$refs.handle1, 0.2, {
         [this.dimension.toLowerCase()]: steppedPos
       });
       this.redrawBar(steppedPos, true)
@@ -385,7 +387,7 @@ export default {
           barProps[this.dimension == 'X' ? 'width' : 'height'] = (pos) + 'px'
         }
       }
-      TweenLite.to(this.$refs.sliderBar, animate ? 0.1 : 0, barProps);
+      gsap.to(this.$refs.sliderBar, animate ? 0.1 : 0, barProps);
     },
     getClosestHandle(px) {
       if (!this.range) return 'handle1'
@@ -409,7 +411,7 @@ export default {
         var handle = this.getClosestHandle(pos)
         // console.log(handle,pos) 
         this[handle + 'Pos'] = pos
-        TweenLite.to(this.$refs[handle], 0.2, {
+        gsap.to(this.$refs[handle], 0.2, {
           [this.dimension.toLowerCase()]: pos
         });
         this.redrawBar(pos, true)
@@ -418,7 +420,7 @@ export default {
       } else {
 
         this.handle1Pos = pos
-        TweenLite.to(this.$refs.handle1, 0.2, {
+        gsap.to(this.$refs.handle1, 0.2, {
           [this.dimension.toLowerCase()]: pos
         });
         this.redrawBar(pos, true)
