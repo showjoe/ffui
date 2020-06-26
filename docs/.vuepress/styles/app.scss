@@ -1,14 +1,101 @@
 $enable-gradients: true;
 @import '../../../src/assets/scss/app.scss';
 
-
-.bd-highlight {
-    background-color: rgba(86,61,124,.15);
-    border: 1px solid rgba(86,61,124,.15);
+.page{
+	background:var(--light);
 }
+.bd-highlight {
+  background-color: rgba(86, 61, 124, .15);
+  border: 1px solid rgba(86, 61, 124, .15);
+}
+
 .bd-example {
-    padding: 1.5rem;
-    margin-right: 0;
-    margin-left: 0;
-    border-width: .2rem;
+  padding: 1.5rem;
+  margin-right: 0;
+  margin-left: 0;
+  border-width: .2rem;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+  padding: 2px;
+}
+
+.bootstrap-datetimepicker-widget .picker-switch table {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.bootstrap-datetimepicker-widget .picker-switch td {
+  width: 140px;
+}
+
+.bootstrap-datetimepicker-widget td.day.active {
+  background: blue;
+  color: white;
+}
+
+.dropdown-item.active:not(.disabled),
+.dropdown-item:active:not(.disabled) {
+  color: #fff !important;
+}
+
+.dropdown-item.active.disabled,
+.dropdown-item:active.disabled {
+  background: #d7d8db;
+}
+
+.content:not(.custom) {
+  max-width: 960px !important;
+
+}
+
+.theme-default-content:not(.custom) {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+}
+
+.sidebar-group-items {
+  font-size: 1em;
+}
+
+.sidebar-group.is-sub-group>.sidebar-heading {
+  font-size: 1em !important;
+
+}
+
+kbd {
+  padding: .2rem .4rem;
+  font-size: 87.5%;
+  color: #fff;
+  background-color: #212529;
+  border-radius: .2rem;
+  border: none;
+}
+
+.content:not(.custom) a.dropdown-item:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.theme-default-content .demo-and-code-wrapper{
+	.code-control {
+		font-size: 1rem;
+		height:auto;
+		background-color:transparent;
+		margin-top:1rem;
+		margin-bottom:-1rem;
+		.online-wrapper{
+			display:none;
+		}
+	  .control-btn {
+	    flex: 0;
+	    min-width: 128px;
+	    margin-left: auto;
+	  }
+	}
+	.code-wrapper{
+	}
 }

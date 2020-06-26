@@ -1,3 +1,7 @@
+---
+title: Colors
+pageClass: colors-demo
+---
 # Colors
 
 ## Color
@@ -127,12 +131,14 @@ Sometimes contextual classes cannot be applied due to the specificity of another
 Using color to add meaning only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that information denoted by the color is either obvious from the content itself (e.g. the visible text), or is included through alternative means, such as additional text hidden with the `.sr-only` class.
 :::
 
-<style>
-  span[class^=bg-gradient]{
-    width:22%;
-    padding:1%;
-    margin-left:1%;
-    margin-top:1%;
-    display:inline-block;
-  }
+<style lang="scss">
+	.colors-demo{
+	  span[class^=bg-gradient]{
+	    width:22%;
+	    padding:1%;
+	    margin-left:1%;
+	    margin-top:1%;
+	    display:inline-block;
+	  }
+	}
 </style>

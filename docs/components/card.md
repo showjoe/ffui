@@ -3,6 +3,7 @@
 ## Basic Example
 Add `<card>My First Card</card>` to the template in the `*.vue` file you are working on to add a card with the correct bootstrap classes.
 It should look like this:
+
 <card>My First Card</card>
 
 ## Title

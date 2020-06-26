@@ -1,5 +1,6 @@
 ---
 title: Grid
+pageClass: border-columns
 ---
 
 # Grid system
@@ -571,26 +572,28 @@ $container-max-widths: (
 
 When making any changes to the Sass variables or maps, you’ll need to save your changes and recompile. Doing so will output a brand new set of predefined grid classes for column widths, offsets, and ordering. Responsive visibility utilities will also be updated to use the custom breakpoints. Make sure to set grid values in px (not rem, em, or %).
 
-<style>
-.demo-and-code-wrapper {
-	margin-top:1rem;
-	padding:1rem;
-}
-.code-wrapper{
-	margin:0 -1rem 0 -1rem;
-}
-.row{
-}
-.row>.col,.row>.col-auto, .row>[class^=col-] {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-    background-color: rgba(86,61,124,.15);
-    border: 1px solid rgba(86,61,124,.2);
-}
-.va-demo .row{
-	min-height:160px;
-	border:thin solid #666;
-	background:var(--light);
-	margin-bottom:1rem;
-}
+<style lang="scss">
+	.border-columns{
+		.demo-and-code-wrapper {
+			margin-top:1rem;
+			padding:1rem;
+		}
+		.code-wrapper{
+			margin:0 -1rem 0 -1rem;
+		}
+		.row{
+		}
+		.row>.col,.row>.col-auto, .row>[class^=col-] {
+		    padding-top: .75rem;
+		    padding-bottom: .75rem;
+		    background-color: rgba(86,61,124,.15);
+		    border: 1px solid rgba(86,61,124,.2);
+		}
+		.va-demo .row{
+			min-height:160px;
+			border:thin solid #666;
+			background:var(--light);
+			margin-bottom:1rem;
+		}
+	}
 </style>

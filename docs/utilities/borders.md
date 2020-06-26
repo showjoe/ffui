@@ -1,4 +1,7 @@
-# Borders
+---
+title: Borders
+pageClass: border-demo
+---
 
 ## Border
 
@@ -119,28 +122,30 @@ export default {
   }
 }
 </script>
-<style>
-  .border-demo-additive [class^=border]{
-    display: inline-block;
-    width: 5rem;
-    height: 5rem;
-    margin: .25rem;
-    background-color: #f5f5f5;
-    border-color:#bdc9d6;
-  }
-  .border-demo-subtractive span{
-        display: inline-block;
-    width: 5rem;
-    height: 5rem;
-    margin: .25rem;
-    background-color: #f5f5f5;
-    border:1px solid #bdc9d6;
-  }
-  .border-demo-colors span{
-    display: inline-block;
-    width: 5rem;
-    height: 5rem;
-    margin: .25rem;
-    background-color: #f5f5f5;
+<style lang="scss">
+  .border-demo{
+    .border-demo-additive [class^=border]{
+      display: inline-block;
+      width: 5rem;
+      height: 5rem;
+      margin: .25rem;
+      background-color: #f5f5f5;
+      border-color:#bdc9d6;
+    }
+    .border-demo-subtractive span{
+      display: inline-block;
+      width: 5rem;
+      height: 5rem;
+      margin: .25rem;
+      background-color: #f5f5f5;
+      border:1px solid #bdc9d6;
+    }
+    .border-demo-colors span{
+      display: inline-block;
+      width: 5rem;
+      height: 5rem;
+      margin: .25rem;
+      background-color: #f5f5f5;
+    }
   }
 </style>
