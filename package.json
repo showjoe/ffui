@@ -1,6 +1,6 @@
 {
   "name": "@formfactory/ffui",
-  "version": "0.1.45",
+  "version": "0.1.46",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
