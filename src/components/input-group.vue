@@ -1,5 +1,5 @@
 <template>
-<div class="input-group">
+<div :class="['input-group',size ? 'input-group-'+size:'']">
   <div class="input-group-prepend" v-if="$slots.prepend||$scopedSlots.prepend">
     <slot name="prepend"></slot>
   </div>
@@ -14,6 +14,7 @@ export default {
   name:'inputGroup',
   props: {
     value:{},
+    size: String,
     di:{}
   },  
 }

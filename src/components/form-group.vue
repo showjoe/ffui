@@ -4,6 +4,7 @@ export default {
   props: {
     id: String,
     di: Object,
+    formRow:Boolean,
     index: Number,
     label: String,
     helptext: String,
@@ -11,9 +12,14 @@ export default {
     hideError: Boolean,
     cols: [String, Array, Object],
     bp: String,
+    size: String,
     sizes: Object,
     flip: Boolean,
-    error: {}
+    error: {},
+    tag:{
+      type:String,
+      default:'div'
+    }
   },
   inputChildren: ['textbox'],
   data() {
@@ -32,8 +38,18 @@ export default {
     } else {
       children.push(this.renderSingleCol(h))
     }
-    return h('div', {
-        class: ['form-group', this.sizeClass, { 'row': this.cols }, this.hasError ? 'is-invalid' : 'is-valid'],
+    if(this.cols && this.sizes){
+      /* create a parent div with a class of row */
+      return h(this.tag, {
+        class: ['form-group', this.sizeClass, this.hasError ? 'is-invalid' : 'is-valid'],
+        domProps: {
+          id: this.fgId
+        }
+      },
+      [h('div',{class:['row',{'form-row':this.formRow }]},[children])])
+    } else
+    return h(this.tag, {
+        class: ['form-group', this.sizeClass, { 'row': this.cols,'form-row':this.formRow }, this.hasError ? 'is-invalid' : 'is-valid'],
         domProps: {
           id: this.fgId
         }
@@ -41,14 +57,6 @@ export default {
       children)
   },
   computed: {
-    // ...mapState({
-    //   error(state) {
-    //     if (this.di && _.has(this.di, 'section') && this.index > -1) {
-    //       return state.errors[this.di.section+'.'+this.index+'.'+this.di.name]
-    //     }
-    //     return state.errors[this.di.name]
-    //   }
-    // }),
     fgId() {
       if (this.id) return this.id
       return this.$options.name + '_' + this._uid
@@ -91,7 +99,7 @@ export default {
       } else if (Object.prototype.toString.call(this.sizes)) {
         for (bp in this.sizes) { if (this.sizes.hasOwnProperty(bp)) classes.push('col-' + bp + '-' + this.sizes[bp]) }
       }
-      return ['mb-1', classes]
+      return [classes]
     },
   },
   methods: {
@@ -103,9 +111,21 @@ export default {
       return classes
     },
     renderLabel(h) {
+      var labelClass = []
       if (!this.hideLabel) {
-        if (this.$slots.label) return this.$slots.label
-        if (this.getLabelText()) return h('label', { class: 'col-form-label', attrs: { for: this.inputId, id: this.labelId }, domProps: { innerHTML: this.getLabelText() } })
+        if (this.$scopedSlots['label-outer']){
+          return this.$scopedSlots['label-outer']({di:this.di})
+        }
+        else if(this.$slots.label||this.getLabelText()){
+            var slotContents = this.$scopedSlots.default({di:this.di})
+            for (var i = slotContents.length - 1; i >= 0; i--) {
+              if(slotContents[i].componentOptions&&['textbox','number','datepicker','dropdown'].includes(slotContents[i].componentOptions.tag)){
+                labelClass = ['col-form-label', this.size ? 'col-form-label-' + this.size : '']
+              }
+            }
+          return h('label', { class: labelClass, attrs: { for: this.inputId, id: this.labelId } }, [this.$slots.label ? this.$slots.label : this.getLabelText()])
+        }
+        else return false
       }
     },
     renderPreLabel() {
@@ -118,7 +138,7 @@ export default {
       return this.$scopedSlots.error ? this.$scopedSlots.error({ error: this.getErrorMessage() }) : false
     },
     renderInput() {
-      return this.$scopedSlots.default({ di: this.di, error: this.getErrorMessage() })
+      return this.$scopedSlots.default({ di: this.di, size: this.size, error: this.getErrorMessage() })
     },
     renderHelptext(h) {
       if (this.helptextComputed) return h('small', { attrs: { id: this.helptextId }, class: ['form-text text-muted'] }, [this.helptextComputed])
@@ -132,9 +152,9 @@ export default {
       ])
     },
     renderSingleCol(h) {
-      return h('div', { class: [this.colWidths(0)] }, [
+      return [
         this.renderPreLabel(), this.renderLabel(h), this.renderInput(), this.renderHelptext(h), this.renderBelowInput(), this.hideError ? false : this.renderErrorMessage(h), this.renderErrorSlot(h)
-      ])
+      ]
     },
     renderCol2(h) {
       return h('div', { class: [this.colWidths(1)] },
@@ -154,7 +174,7 @@ export default {
     },
     getErrorMessage() {
       // console.log(this) 
-      return this.error ? this.error[0]:false
+      return this.error ? this.error[0] : false
     },
     colWidths(i) {
       if (this.cols) {

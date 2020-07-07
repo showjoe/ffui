@@ -5,7 +5,7 @@ type="text"
 ref="textbox"
 :value="value"
 @input="update"
-:class="['form-control',size ? 'form-control-'+size:'']"
+:class="[plaintext ? 'form-control-plaintext':'form-control',size ? 'form-control-'+size:'']"
 :aria-describedby="computedDescribedBy"
 />
 </template>
@@ -16,6 +16,7 @@ export default {
     id:{},
     di:{},
     describedBy:{},
+    plaintext:Boolean,
     value:{},
     size:String
   },
