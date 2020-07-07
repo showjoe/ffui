@@ -13,7 +13,7 @@ export default {
     },
     tag: {
       type: String,
-      default: 'div'
+      default: 'li'
     },
     disabled: Boolean,
     readonly: Boolean,
@@ -26,6 +26,7 @@ export default {
   },
   render(h) {
     var tag = this.tag
+    if(this.isLink) tag = 'div'
     var self = this
     var propsObject = {
       attrs: {},
@@ -59,7 +60,7 @@ export default {
       }
     }
     propsObject.domProps.id = this.lgiId
-    return h(tag, propsObject, this.$slots.default)
+    return h(tag, propsObject, [this.$slots.default])
   },
   methods: {
     toggleListGroupItem() {
@@ -74,9 +75,9 @@ export default {
   },
   computed: {
     lgiId() {
-      if (this.id) return this.id
-      if (this.di) return this.di.name
-      return this._uid
+      if (this.id) return 'lgi_'+this.id
+      if (this.di) return 'lgi_'+this.di.name
+      return 'lgi_'+this._uid
     },
     active() { return this.value == this.trueValue }
   },
