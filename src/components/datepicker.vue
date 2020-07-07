@@ -4,7 +4,7 @@
       <slot name="prepend"></slot>
     </div>
     <input :id="dpId" :disabled="disabled" ref="datepickerinput" :type="inputType" :class="['form-control datetimepicker-input',size?'form-control-'+size:'',{show}]" :value="val" @change="inputChange" v-mask="vmask" />
-    <div :class="['datepicker-backdrop',{show}]" @click="togglePicker"></div>
+    <div key="bg" :class="['datepicker-backdrop',{show}]" @click="show?togglePicker:false"></div>
     <div :class="['input-group-append']" v-if="type!='time'">
       <btn @click.native="togglePicker" role="button" :aria-haspopup="show" class="btn btn-outline-secondary py-0">
         <i :class="['mt-1 mb-0 fasvg', {'fa-calendar':type=='date'||type=='datetime', 'fa-clock':type=='time'}]" />
@@ -13,8 +13,8 @@
     <div class="input-group-append" v-if="$slots.append||$scopedSlots.append">
       <slot name="append"></slot>
     </div>
-    <transition name="fade">
-      <div v-if="show" :class="['calendar','calendar-'+size,{show}]" aria-controls="date" aria-hidden="false">
+    <div :id="'calendar_'+_uid" ref="calendar" :class="['calendar','calendar-'+size,{show}]" aria-controls="date" aria-hidden="false">
+      <div  v-if="visible_date">
         <header class="calendar-header">
           <div class="mr-auto">
             <div role="button" @click="prev" class="prev-button">
@@ -36,7 +36,7 @@
             </div>
           </div>
         </header>
-        <div v-if="mode=='days'" class="calendar-body">
+        <div v-if="localeData&&mode=='days'" class="calendar-body">
           <div class="days-of-week">
             <span v-for="i in 7" :key="'weekdays_'+i" class="day-block" v-tooltip="{text:localeData._weekdays[i-1]}" :title="localeData._weekdays[i-1]" v-text="localeData._weekdaysShort[i-1]" />
           </div>
@@ -47,7 +47,7 @@
             </span>
           </div>
         </div>
-        <div v-if="mode=='months'" class="months-body">
+        <div v-if="localeData&&mode=='months'" class="months-body">
           <div class="months">
             <span v-for="(m,n) in localeData._months" :key="'month_'+n" @click="setMonth(n)" :class="getBlockClass('month',n)">
               <i class="hover-circle"></i>
@@ -80,12 +80,20 @@
           </form-group>
         </div>
       </div>
-    </transition>
+    </div>
   </div>
 </template>
 <script>
 import moment from 'moment'
 import date_mixin from '../mixins/date'
+import { createPopper } from '@popperjs/core/lib/popper-lite';
+import flip from '@popperjs/core/lib/modifiers/flip';
+import offset from '@popperjs/core/lib/modifiers/offset';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
+// import arrow from '@popperjs/core/lib/modifiers/arrow';
+// import computeStyles from '@popperjs/core/lib/modifiers/computeStyles';
+
+
 export default {
   name: 'datepicker',
   mixins: [date_mixin],
@@ -99,9 +107,12 @@ export default {
     future: Boolean,
     locale: {
       type: String,
-      default() {
+      default () {
         return this.$options.propsData.locale ? this.$options.propsData.locale : this.$i18n ? this.$i18n.locale : 'en'
       }
+    },
+    position: {
+      default: 'bottom'
     },
     minDate: {
       default: false
@@ -112,14 +123,14 @@ export default {
     mask: {},
     placeholder: {
       type: String,
-      default() {
+      default () {
         var props = this.$options.propsData
         if (props.type && props.type == 'time') return this.$options.formats.time
         if (props.type && props.type == 'datetime') return this.$options.formats.datetime
         return this.$options.formats.date
       }
     },
-    noUnknowns:Boolean,
+    noUnknowns: Boolean,
     size: {
       type: String,
       default: 'md'
@@ -155,10 +166,20 @@ export default {
       currentTime: { h: false, m: false }
     }
   },
-  mounted() {
-    // this.$i18n.locale = this.locale
+  created() {
     this.localeData = this.moment.localeData(this.locale)
-    this.setupDatePicker()
+
+  },
+  mounted() {
+    this.$nextTick(() => {
+          this.popper = this.popperInstance()
+      })
+    // this.$i18n.locale = this.locale
+    this.setupVal()
+  },
+  destroy() {
+    console.log('destroy', this.popper)
+    if (this.popper) this.popper.destroy()
   },
   watch: {
     date() {
@@ -182,7 +203,7 @@ export default {
       this.updateDate(this.visible_date.format(format))
     },
     value() {
-      this.setupDatePicker()
+      this.setupVal()
     }
   },
   computed: {
@@ -206,9 +227,9 @@ export default {
       return this.visible_date.clone().hour()
     },
     dpId() {
-      if (this.id) return this.id
-      if (this.di) return this.di.name
-      return this._uid
+      if (this.id) return 'dp' + this.id
+      if (this.di) return 'dp' + this.di.name
+      return 'dp' + this._uid
     },
     firstDayOfMonth() {
       return this.visible_date.clone().subtract(this.visible_date.date() - 1, 'days')
@@ -256,7 +277,7 @@ export default {
     },
     vmask() {
       if (this.mask) return this.mask
-      var alias = this.noUnknowns ? this.lang('alias_no_unknowns'):this.lang('alias')
+      var alias = this.noUnknowns ? this.lang('alias_no_unknowns') : this.lang('alias')
       var placeholder = this.lang('placeholder')
       return { alias, placeholder }
     }
@@ -341,7 +362,7 @@ export default {
     },
     inputChange(e) {
       if (this.disabled) return false
-      if(this.type == 'time'){ this.updateDate(e.target.value); return false;}
+      if (this.type == 'time') { this.updateDate(e.target.value); return false; }
       this.updateDate(this.maskCompleted() ? this.formatDateForStorage(e.target.value) : null)
     },
     keyDown(event) {
@@ -414,7 +435,7 @@ export default {
       this.visible_date = this.visible_date.clone().year(n)
       this.mode = 'months'
     },
-    setupDatePicker() {
+    setupVal() {
       if (this.value) {
         if (this.type == 'time') {
           this.date = this.moment(new Date(this.value))
@@ -431,34 +452,70 @@ export default {
         this.visible_date = this.moment().locale(this.locale)
       }
     },
+    setupDatePicker() {
+      console.log('setupDatePicker', this.value)
+
+
+    },
     // storeIncompleteDates(dateArray) {
     //   dateArray[0] = dateArray[0].replace('--', '00')
     //   dateArray[1] = dateArray[1].replace('--', '00')
     //   return dateArray
     // },
     togglePicker() {
-      if (this.value) {
-        this.setupDatePicker()
-      } else {
-        this.val = null
-        this.visible_date = this.moment().locale(this.locale)
-      }
-      this.show = !this.show
+      this.setupVal()
+      // if (!this.value) {
+      //   this.val = null
+      //   this.visible_date = this.moment().locale(this.locale)
+      // }
       this.mode = this.viewMode
       if (this.mode == 'days' && this.unknownMonth) this.mode = 'months'
+      this.show = !this.show
+      
     },
     updateDate(value) {
       if (value == this.value) return false
       this.$emit('input', value)
-    }
+    },
+    popperInstance() {
+
+      // console.log('createPopper', this.popper)
+      const reference = document.querySelector('#' + this.dpId);
+      const popper = document.querySelector('#calendar_' + this._uid);
+      // console.log(reference,popper,'#calendar_' + this.dpId) 
+      // if(this.popper) {const state = await this.popper.update(); }
+      // else
+      return createPopper(reference, popper, {
+        placement: this.position,
+        onFirstUpdate: state => console.log('Popper positioned on', state.placement),
+        modifiers: [
+        flip, 
+        offset, 
+        preventOverflow,
+          {
+            name: 'flip',
+            options: {
+              fallbackPlacements: ['top'],
+            },
+          },
+          {
+            name: 'preventOverflow',
+            options: {},
+          },
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 2],
+            },
+          }
+        ],
+      });
+    },
+
   }
 }
 </script>
 <style lang="scss">
-$width: 300px;
-$day-block-width: $width/7;
-$font-size: $day-block-width/3;
-
 .input-group,
 .input-group-append,
 .datetimepicker-input,
@@ -469,34 +526,37 @@ $font-size: $day-block-width/3;
 }
 
 .calendar {
+  opacity: 0;
+  --width: 18rem;
+  --day-block-width: calc(var(--width)/7.01);
+  --font-size: calc(var(--day-block-width)/3);
   position: absolute;
   top: 100%;
   left: 0;
   background-color: #fff;
-  width: $width;
+  width: var(--width);
   box-sizing: border-box;
   box-shadow: 0px 5px 20px -11px #000;
   transition: all .3s;
   border-radius: 0.25rem;
-  font-size: $font-size;
+  font-size: var(--font-size);
 
   &.show {
+    opacity: 1;
     display: flex;
     flex-direction: column;
   }
 }
 
+
 .calendar.calendar-lg {
-  $width: $width*1.4;
-  width: $width;
-  $day-block-width: $width/7;
-  $font-size: $day-block-width/3;
-  font-size: $font-size * 1.2;
+  --width: 24rem;
+  font-size: calc(var(--font-size) * 1.2);
 
   .day-block {
-    flex-basis: $day-block-width;
-    min-height: $day-block-width;
-    font-size: $font-size;
+    flex-basis: var(--day-block-width);
+    min-height: var(--day-block-width);
+    font-size: var(--font-size);
   }
 
 
@@ -504,31 +564,61 @@ $font-size: $day-block-width/3;
   .next-button {
     position: relative;
     display: flex;
-    width: $day-block-width;
-    height: $day-block-width;
+    width: var(--day-block-width);
+    height: var(--day-block-width);
   }
 }
 
+@media (max-width: 425px) {
+  .input-group.date {
+  }
+
+  .calendar.calendar-lg {
+    --width: 22rem;
+  }
+}
+
+// @media (min-width: 426px) {
+//   .calendar.calendar-lg {
+//     $width: 24rem;
+//     width: $width;
+//     $day-block-width: $width/7;
+//     $font-size: $day-block-width/3;
+//     font-size: $font-size * 1.2;
+
+//     .day-block {
+//       flex-basis: $day-block-width;
+//       min-height: $day-block-width;
+//       font-size: $font-size;
+//     }
+
+
+//     .prev-button,
+//     .next-button {
+//       position: relative;
+//       display: flex;
+//       width: $day-block-width;
+//       height: $day-block-width;
+//     }
+//   }
+// }
+
 .calendar.calendar-sm {
-  $width: $width*0.8;
-  width: $width;
-  $day-block-width: $width/7;
-  $font-size: $day-block-width/2.6;
-  font-size: $font-size;
+  --width: 14rem;
 
-  .day-block {
-    flex-basis: $day-block-width;
-    min-height: $day-block-width;
-    font-size: $font-size;
-  }
+  // .day-block {
+  //   flex-basis: $day-block-width;
+  //   min-height: $day-block-width;
+  //   font-size: $font-size;
+  // }
 
-  .prev-button,
-  .next-button {
-    position: relative;
-    display: flex;
-    width: $day-block-width;
-    height: $day-block-width;
-  }
+  // .prev-button,
+  // .next-button {
+  //   position: relative;
+  //   display: flex;
+  //   width: $day-block-width;
+  //   height: $day-block-width;
+  // }
 }
 
 .calendar-header {
@@ -552,8 +642,8 @@ $font-size: $day-block-width/3;
   .next-button {
     position: relative;
     display: flex;
-    width: $day-block-width;
-    height: $day-block-width;
+    width: var(--day-block-width);
+    height: var(--day-block-width);
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -589,9 +679,11 @@ $font-size: $day-block-width/3;
   width: 100%;
   font-weight: bold;
 }
-.days-of-week{
-  font-size: $font-size;
+
+.days-of-week {
+  // font-size: $font-size;
 }
+
 .days-of-week,
 .days-of-month {
   //Make the container display flex
@@ -610,7 +702,7 @@ $font-size: $day-block-width/3;
 
 .months,
 .years {
-  height: $width;
+  height: var(--width);
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -681,8 +773,8 @@ $font-size: $day-block-width/3;
 }
 
 .day-block {
-  flex-basis: $day-block-width;
-  min-height: $day-block-width;
+  flex-basis: var(--day-block-width);
+  min-height: var(--day-block-width);
   box-sizing: border-box;
   border: 1px solid #dadada;
   border-left: none;
@@ -725,7 +817,7 @@ $font-size: $day-block-width/3;
 }
 
 .datepicker-backdrop {
-  display: none;
+  // display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -794,5 +886,4 @@ $font-size: $day-block-width/3;
 .fasvg.fa-chevron-right {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 256 512'><path d='M17.525 36.465l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L205.947 256 10.454 451.494c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l211.051-211.05c4.686-4.686 4.686-12.284 0-16.971L34.495 36.465c-4.686-4.687-12.284-4.687-16.97 0z'/></svg>") !important;
 }
-
 </style>

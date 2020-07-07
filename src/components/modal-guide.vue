@@ -53,7 +53,7 @@ export default {
     scrollToModal() {
       var self = this;
       this.$nextTick(() => {
-        var el = document.getElementById(self.currentStep.target)
+        var el = document.querySelector(self.currentStep.target)
         el.scrollIntoView(false);
       });
     }

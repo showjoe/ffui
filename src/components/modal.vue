@@ -1,9 +1,8 @@
 <template>
   <transition name="modal" :duration="transitionDuration" @enter="enterTransition">
-    <div class="modal-container" v-if="show">
-      <div ref="modal" :class="['modal show',{'static':inline||backdropHidden,fade}]" @click.stop="close('backdrop')" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="!show">
-        <div ref="modal-dialog" :class="['modal-dialog','bs-modal-'+position, size ? 'modal-'+size:'', {'modal-dialog-centered':centered,'modal-dialog-scrollable':scrollable,'shadow-lg':backdropHidden}]"
-        role="document" @click.stop="" v-bind="$attrs" :style="customCssProps">
+    <div class="modal-container" v-show="show">
+      <div ref="modal" :class="['modal',{'static':inline,fade,show}]" @click.stop="close('backdrop')" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="!show">
+        <div ref="modal-dialog" :class="['modal-dialog', size ? 'modal-'+size:'', {'modal-dialog-centered':centered,'modal-dialog-scrollable':scrollable,'shadow-lg':backdropHidden}]" role="document" @click.stop="" v-bind="$attrs">
           <div v-if="arrow" class="arrow"></div>
           <div ref="content" class="modal-content">
             <slot name="header" v-if="head">
@@ -39,7 +38,10 @@
 <script>
 import { createPopper } from '@popperjs/core/lib/popper-lite';
 import flip from '@popperjs/core/lib/modifiers/flip';
+import offset from '@popperjs/core/lib/modifiers/offset';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
+import arrow from '@popperjs/core/lib/modifiers/arrow';
+import computeStyles from '@popperjs/core/lib/modifiers/computeStyles';
 export default {
   name: 'modal',
   inheritAttrs: false,
@@ -62,7 +64,7 @@ export default {
     fade: Boolean,
     centered: Boolean,
     position: {
-      default: 'bottom'
+      default: 'auto'
     },
     size: String,
     scrollable: Boolean,
@@ -96,28 +98,25 @@ export default {
       showing: false,
     }
   },
-  updated() {
-    this.setupModal()
-  },
-  mounted() {
-    this.setupModal()
-  },
+  destroyed() { if (this.popper) this.popper.destroy() },
+  mounted() { this.setupModal() },
   watch: {
-    showing() {
-      this.setupModal()
-    }
+    showing() { this.setupModal() },
+    target() { this.setupModal() },
+    show() { this.showing = this.show },
   },
   methods: {
-    setupModal(){
+    setupModal() {
       if (this.showing) {
-        this.popper = this.popperInstance()
-        if(!this.backdropHidden) document.body.classList.add('modal-open')
+        if (!this.backdropHidden && !document.body.classList.contains('modal-open')) document.body.classList.add('modal-open')
+        if (this.target) this.$nextTick(() => { this.popper = this.popperInstance() })
       }
     },
     close(target) {
       if (this.backdropInactive && target == 'backdrop') return false
-      document.body.classList.remove('modal-open')
+      if (document.body.classList.contains('modal-open')) document.body.classList.remove('modal-open')
       this.$emit("close");
+      this.showing = false
     },
     save() {
       this.$emit("save");
@@ -132,6 +131,7 @@ export default {
       }
     },
     enterTransition() {
+      console.log('modal enterTransition') 
       if (this.sourceCoords) {
         this.$refs.modal.classList.add('show')
         var co = this.getInvertedTranslation(this.sourceCoords, this.$refs['content'].getBoundingClientRect())
@@ -145,15 +145,23 @@ export default {
         self.$refs.modal.classList.add('show')
         self.$refs['content'].style.transition = '1s ease'
         self.$refs['content'].style.transform = ''
-        if (self.showing&&!self.backdropHidden) document.body.classList.add('modal-open')
+        if (self.showing && !self.backdropHidden) document.body.classList.add('modal-open')
       });
     },
     popperInstance() {
-      var target = this.target && typeof this.target == 'object' ? this.target : document.getElementById(this.target);
-      return createPopper(target, this.$refs['modal-dialog'], {
+      console.log('popperInstance',this.popper) 
+      var target = this.target && typeof this.target == 'object' ? this.target : document.querySelector(this.target);
+      console.log(target, this.$refs['modal-dialog']) 
+      if (target && this.$refs && this.$refs['modal-dialog']) return createPopper(target, this.$refs['modal-dialog'], {
         placement: this.position,
-        modifiers: [flip, preventOverflow,
+        modifiers: [arrow,flip, preventOverflow, offset, computeStyles,
+
           {
+            name: 'computeStyles',
+            options: {
+              adaptive: false,
+            },
+          }, {
             name: 'offset',
             options: {
               offset: [0, 4],
@@ -162,13 +170,14 @@ export default {
           {
             name: 'arrow',
             options: {
-              padding: 15, // 5px from the edges of the popper
+              padding: 5, // 5px from the edges of the popper
             },
           },
         ],
       });
     }
-  }
+  },
+
 }
 </script>
 <style lang="scss">
