@@ -15,14 +15,14 @@
         </div>
       </div>
     </slot>
-    <div ref="slider" class="slider" @resize="resize"  tabindex="0" @keydown="keyDown">
+    <div ref="slider" class="slider" @resize="resize" @keydown="keyDown" :tabindex="!handleVisible ? '0':'-1'">
       <div ref="sliderTrack" class="slider-track">
         <slot name="slider-track"></slot>
       </div>
       <div ref="sliderBar" class="slider-bar" :style="sliderBarStyle" v-show="!hideBar">
         <slot name="slider-bar"></slot>
       </div>
-      <div ref="handle1" class="handle" :style="handleStyle" v-show="!hideHandle" role="slider" :aria-valuemin="min" :aria-valuenow="value" :aria-valuemax="max" :aria-valuetext="getDisplayValue(value)" :aria-orientation="vertical?'vertical':'horizontal'" aria-labelledby="idTemp">
+      <div ref="handle1" class="handle" :tabindex="handleVisible ? '0':'-1'" :style="handleStyle" v-show="!hideHandle" role="slider" :aria-valuemin="min" :aria-valuenow="value" :aria-valuemax="max" :aria-valuetext="getDisplayValue(value)" :aria-orientation="vertical?'vertical':'horizontal'" aria-labelledby="idTemp">
         <slot name="handle" :value="value"></slot>
       </div>
       <div v-if="range" ref="handle2" class="handle" :style="handleStyle" v-show="!hideHandle">
@@ -230,7 +230,7 @@ export default {
       }
     },
     getColourFromValue(val) {
-      if(!this.colours) return false
+      if (!this.colours) return false
       var domain = [this.min]
       for (var i = 1; i < this.colours.length - 1; i++) { domain.push(this.max / this.colours.length * i) }
       domain.push(this.max)
@@ -327,42 +327,40 @@ export default {
       if (this.disabled) return;
       // console.log('key ' + event.key + ' (' + event.keyCode + ')')
       var value = this.value;
+      var rvFlip = this.reverse ? -1 : 1;
       var preventDefault = true
       switch (event.keyCode) {
         case 9:
           preventDefault = false
           break;
         case 33:
-          value = value + (this.step*10)
+          value = value + ((this.step * 10) * rvFlip)
           break;
         case 34:
-          value = value - (this.step*10)
+          value = value - ((this.step * 10) * rvFlip)
           break;
         case 35:
-          value = this.max
+          value = this.reverse ? this.min : this.max
           break;
         case 36:
-          value =  this.min
+          value = this.reverse ? this.max : this.min
           break;
         case 38:
         case 39:
-          value = value + this.step
+          value = value + (this.step* rvFlip)
           break;
         case 37:
         case 40:
-          value = value - this.step
+          value = value - (this.step* rvFlip)
           break;
         default:
           // code block
-          // console.log('OTHER',event.key,event.keyCode,preventDefault)
       }
-      if(preventDefault) event.preventDefault()
+      if (preventDefault) event.preventDefault()
 
       value = (value < this.min) ? this.min : (value > this.max) ? this.max : value
-      // console.log(value) 
       var pos = this.getPositionFromValue(value)
       var steppedPos = this.steps(pos)
-      // console.log(value, pos)
       this.handle1Pos = steppedPos
       this.handle1PosPx = steppedPos
       gsap.to(this.$refs.handle1, 0.2, {
@@ -518,9 +516,14 @@ $gridThinDepth:4px;
 }
 
 .slider {
+
+
+  -webkit-focus-ring-color: red;
   position: relative;
   height: $sliderRadius * 2;
   z-index: 2;
+
+
 
   .slider-track,
   .slider-bar {
@@ -615,6 +618,13 @@ $gridThinDepth:4px;
   &:hover {
     background: linear-gradient(to bottom, white 0%, gainsboro 50%, white 100%);
   }
+
+  &:focus {
+
+    box-shadow: 0 0 10px 4px orange;
+  }
+
+  ;
 }
 
 
