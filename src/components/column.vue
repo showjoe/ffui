@@ -15,9 +15,10 @@ export default {
   },
   computed: {
     getClass() {
-      var auto = this.auto ? '-auto' : ''
-      var classes = ['col' + auto]
+      var auto = this.auto ? 'col-auto' : ''
+      var classes = [auto]
       if (this.sizes) classes.push(this.sizeClass)
+        else classes.push('col')
       if (this.offset) classes.push(this.offsetClass)
       if (this.order) classes.push(this.orderClass)
       return classes
