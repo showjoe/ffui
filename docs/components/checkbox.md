@@ -29,9 +29,9 @@ Use type == 'switch' to show as a toggle switch
 ## Left aligned label
 ::: demo
 <div class="w-25 text-right">
-    <checkbox type="standard" label-left v-model="records.checkbox1" :true-value="1"> A checkbox with a clickable label </checkbox>
-    <checkbox label-left v-model="records.checkbox2" true-value="ABC" label="A second option" />
-    <checkbox type="switch" label-left v-model="records.checkbox3" > A third way is disabled </checkbox>
+	<checkbox type="standard" label-left v-model="records.checkbox1" :true-value="1"> A checkbox with a clickable label </checkbox>
+	<checkbox label-left v-model="records.checkbox2" true-value="ABC" label="A second option" />
+	<checkbox type="switch" label-left v-model="records.checkbox3" > A third way is disabled </checkbox>
 </div>
 :::
 
@@ -64,11 +64,11 @@ If you want to separate the checkbox from it's label you must remember to still 
 
 ::: demo
 <media class="border">
-    <checkbox slot="media" size="lg" id="cb1" v-model="records.checkbox1" aria-labelledby="cb-label" class="m-5"/>
-        <label for="cb1" id="cb-label" class="mt-2">
-            <h5>Label</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aut ipsa, natus tenetur suscipit quod reprehenderit quisquam! Eaque, beatae quisquam dolores, in, fugit at cupiditate molestias maiores neque animi minima.</p>
-        </label>
+	<checkbox slot="media" size="lg" id="cb1" v-model="records.checkbox1" aria-labelledby="cb-label" class="m-5"/>
+	<label for="cb1" id="cb-label" class="mt-2">
+		<h5>Label</h5>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aut ipsa, natus tenetur suscipit quod reprehenderit quisquam! Eaque, beatae quisquam dolores, in, fugit at cupiditate molestias maiores neque animi minima.</p>
+	</label>
 </media>
 :::
 
@@ -87,13 +87,13 @@ readonly    |         | makes the checkbox readonly  | `false`
 <script>
 export default {
 	data () {
-    return {
-    	records:{
-        	checkbox1: 1,
-        	checkbox2: null,
-            checkbox3: null,
-    	}
-    }
-  },
+	return {
+		records:{
+			checkbox1: 1,
+			checkbox2: null,
+			checkbox3: null,
+		}
+	}
+	},
 }
 </script>

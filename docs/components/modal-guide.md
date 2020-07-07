@@ -69,11 +69,11 @@ export default {
       		guide:{
             id:'modal-guide-1',
             steps:[
-            { target:'card-1', title:'Step 1', html:'Some instructions' },
-            { target:'card-5', title:'Step 2', html:'Some more instructions' },
-            { target:'card-9', title:'Step 3', html:'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In magnam laboriosam est numquam obcaecati, rerum adipisci consectetur, expedita, totam, saepe optio. Nemo doloremque, dolorem quasi fuga inventore reiciendis ipsa officia?' },
-            { target:'basic-setup', title:'Step 4', html:'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In magnam laboriosam est numquam obcaecati, rerum adipisci consectetur, expedita, totam, saepe optio. Nemo doloremque, dolorem quasi fuga inventore reiciendis ipsa officia?' },
-            { target:'props', title:'Step 5', html:'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis vero quaerat expedita consequuntur amet dignissimos voluptatibus, incidunt beatae illo voluptas natus voluptatem, similique odio ipsa sunt alias iste veritatis explicabo.' },
+            { target:'#card-1', title:'Step 1', html:'Some instructions' },
+            { target:'#card-5', title:'Step 2', html:'Some more instructions' },
+            { target:'#card-9', title:'Step 3', html:'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In magnam laboriosam est numquam obcaecati, rerum adipisci consectetur, expedita, totam, saepe optio. Nemo doloremque, dolorem quasi fuga inventore reiciendis ipsa officia?' },
+            { target:'#basic-setup', title:'Step 4', html:'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In magnam laboriosam est numquam obcaecati, rerum adipisci consectetur, expedita, totam, saepe optio. Nemo doloremque, dolorem quasi fuga inventore reiciendis ipsa officia?' },
+            { target:'#props', title:'Step 5', html:'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis vero quaerat expedita consequuntur amet dignissimos voluptatibus, incidunt beatae illo voluptas natus voluptatem, similique odio ipsa sunt alias iste veritatis explicabo.' },
             ]
           }
       	}

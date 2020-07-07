@@ -1,13 +1,14 @@
 # Typeahead
 
-<template>
-	<typeahead query-url="http://ukivas.local/api/meddra/" label-key="hl" array-key="items" @selected="selected"/>
-	<list-group class="mt-4">
-	  <list-group-item v-for="item in selectedItems">
-	    <span v-html="item.label"></span>
-	  </list-group-item>
-	</list-group>
-</template>
+:::demo
+<div style="min-height:600px">
+	<typeahead query-url="https://www.themealdb.com/api/json/v1/1/search.php" query-key="s" label-key="strMeal" array-key="meals" @selected="selected" class="mb-4"/>
+	<media v-for="item in selectedItems" :title="item.strMeal" class="mb-4">
+		<img slot="media" :src="item.strMealThumb" width="100" :alt="item.strMeal"  class="mr-3">
+		{{item.strInstructions}}
+	</media>	
+</div>
+:::
 
 <script>
 export default {

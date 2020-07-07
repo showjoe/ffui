@@ -11,7 +11,7 @@ module.exports = {
     extract: true,
     loaderOptions: {
       sass: {
-        includePaths: ["./node_modules"]
+        includePaths: ["./node_modules"],
       }
     }
   },

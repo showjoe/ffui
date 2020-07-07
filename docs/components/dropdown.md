@@ -1,6 +1,7 @@
 # Dropdown
 
 Dropdowns can be used with a dataitem's lookup like so:
+{{dataitems.Country}}
 
 <pre class="text-white">{{dataitems.Country.lookup}}</pre>
 <pre class="text-white">{{records}}</pre>
@@ -107,7 +108,7 @@ You should be careful to set the various aria tags when using these slots.
   </template>
   <template #dropdown="{show}">
     <div :class="['dropdown-menu',{'show':show}]" aria-labelledby="ddButton">
-      <router-link :to="{ name: 'dashboard' }" class="dropdown-item pl-3"> Test </router-link>
+      <router-link :to="{ path: '/components/dropdown.html' }" class="dropdown-item pl-3"> Test </router-link>
     </div>
   </template>
 </dropdown>
@@ -119,7 +120,7 @@ You should be careful to set the various aria tags when using these slots.
 Group your items by giving a name to the key in the lookups object this requires the items are sent as a keyed object
 
 ::: demo
-<form-group :di="deathCauses" v-slot="{di}">
+<form-group :di="deathCauses" v-slot="{di}" :cols="[{md:4},{md:8}]">
   <dropdown :group="di.lookup.group" :items="di.lookup.items" v-model="records.DeathCause" btn-split justified />
 </form-group>
 :::
@@ -217,20 +218,9 @@ export default {
             ]
           }
         },
-        OtherCountry: {
-          name: 'Country',
-          label: 'Choose a country',
-          lookup: {
-            name: 'CountryList',
-            items: [
-              { label: 'United Arab Emirates', value: 'AE' },
-              { label: 'United Kingdom', value: 'GB' },
-              { label: 'United States', value: 'US' },
-            ]
-          }
-        }
+        
       },
-      deathCauses:deathCauses
+      deathCauses
     }
   },
 }

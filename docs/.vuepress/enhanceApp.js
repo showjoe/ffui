@@ -7,6 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowCircleRight, faSquare, faCheck, faCheckSquare, faChessQueen, faCircle, faCoffee, faCog, faEdit, faTimes, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import VueDummy from "vue-dummy"
 import i18n from './i18n'
+// import DemoAndCode from './components/plugin-demo-code/DemoAndCode.vue'
 
 export default ({
   Vue, // the version of Vue being used in the VuePress app

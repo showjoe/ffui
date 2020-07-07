@@ -15,6 +15,42 @@ Wrap a form input inside a form-group to display the label and input together
 </card>
 :::
 
+## size
+Specify sm or lg to change the label size
+::: demo
+<card>
+  <row>
+    <column :sizes="[12,{lg:4}]">
+      <p>sm</p>
+      <form-group size="sm" :di="dataitems.MyDataitem1">
+       <textbox size="sm" :di="di" v-model="records.MyDataitem1"/>
+      </form-group>
+      <form-group size="sm" :di="dataitems.MyDataitem2" v-slot="{di}">
+        <btn-group size="sm" :di="di" v-model="records.MyDataitem2" justified/>
+      </form-group>
+    </column>
+    <column :sizes="[12,{lg:4}]">
+      <p>default</p>
+      <form-group :di="dataitems.MyDataitem1" v-slot="{di}">
+       <textbox :di="di" v-model="records.MyDataitem1"/>
+      </form-group>
+      <form-group :di="dataitems.MyDataitem2" v-slot="{di}">
+        <btn-group :di="di" v-model="records.MyDataitem2" justified/>
+      </form-group>
+    </column>
+    <column :sizes="[12,{lg:4}]">
+      <p>lg</p>
+      <form-group size="lg" :di="dataitems.MyDataitem1" v-slot="{di}">
+       <textbox size="lg" :di="di" v-model="records.MyDataitem1"/>
+      </form-group>
+      <form-group size="lg" :di="dataitems.MyDataitem2" v-slot="{di}">
+        <btn-group size="lg" :di="di" v-model="records.MyDataitem2" justified/>
+      </form-group>
+    </column>
+  </row>
+</card>
+:::
+
 ## cols
 Use cols to define two column layouts within the form-group
 Use a simple string version like so: '4|8' this will split the form-group into two columns with the two sizes given.

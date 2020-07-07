@@ -1,12 +1,112 @@
 $enable-gradients: true;
 @import '../../../src/assets/scss/app.scss';
 
-.page{
-	background:var(--light);
+@media (max-width: 419px) {
+  .demo-and-code-wrapper {
+    margin: -0.2rem !important;
+    margin-bottom: 1rem;
+
+    .code-wrapper {
+      margin: -1rem;
+    }
+  }
 }
+
+.theme-default-content .demo-and-code-wrapper {
+  .code-control {
+    font-size: 1rem;
+    height: auto;
+    background-color: transparent;
+    margin-bottom: 0rem;
+
+    .online-wrapper {
+      display: none;
+    }
+
+    .control-btn {
+      flex: 0;
+      min-width: 128px;
+      margin-bottom: -1rem;
+      margin-left: auto;
+    }
+  }
+
+  .code-wrapper {}
+}
+
+.border-columns {
+  .demo-and-code-wrapper {
+    margin-top: 0 !important;
+    padding: 0 1rem 0 1rem;
+  }
+
+  .code-control {
+    // margin:0 -1rem 0 -1rem!important;
+  }
+
+  .code-wrapper {
+    margin: 0 -1rem 1rem -1rem;
+  }
+
+  .row {}
+
+  .row>.col,
+  .row>.col-auto,
+  .row>[class*=col-] {
+    // padding-top: .75rem;
+    // padding-bottom: .75rem;
+    background-color: rgba(86, 61, 124, .15);
+    border: 1px solid rgba(86, 61, 124, .2);
+  }
+
+  .va-demo .row {
+    min-height: 160px;
+    border: thin solid #666;
+    background: var(--light);
+    margin-bottom: 1rem;
+  }
+}
+
+.show-form-groups.active {
+  .form-group,
+  .custom-control,
+  .row>.col,
+  .row>.col-auto,
+  .row>[class*=col-] {
+    // padding-top: .75rem;
+    // padding-bottom: .75rem;
+    background-color: rgba(86, 61, 124, .15);
+    border: 1px solid rgba(86, 61, 124, .2);
+  }
+}
+
+.list-group-demo .list-group {
+  max-width: 400px;
+}
+
+.theme-default-content:not(.custom) {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5vw 2.5vh;
+}
+
+.theme-default-content .demo-and-code-wrapper .code-control .control-btn {
+  flex: 0;
+  min-width: 128px;
+  margin-left: auto;
+}
+
+.page {
+  background: #f5faf8;
+}
+
 .bd-highlight {
   background-color: rgba(86, 61, 124, .15);
   border: 1px solid rgba(86, 61, 124, .15);
+}
+
+table {
+  @extend .table-responsive;
 }
 
 .bd-example {
@@ -78,24 +178,4 @@ kbd {
 .content:not(.custom) a.dropdown-item:hover {
   text-decoration: none;
   cursor: pointer;
-}
-
-.theme-default-content .demo-and-code-wrapper{
-	.code-control {
-		font-size: 1rem;
-		height:auto;
-		background-color:transparent;
-		margin-top:1rem;
-		margin-bottom:-1rem;
-		.online-wrapper{
-			display:none;
-		}
-	  .control-btn {
-	    flex: 0;
-	    min-width: 128px;
-	    margin-left: auto;
-	  }
-	}
-	.code-wrapper{
-	}
 }

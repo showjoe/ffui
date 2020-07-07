@@ -3,9 +3,16 @@
 
 ::: demo
 <div class="form-inline was-validated">
-      <form-group>
-            <datepicker v-model="records.date1" />
-      </form-group>
+	<form-group inline>
+		<datepicker v-model="records.date1" />
+	</form-group>
+</div>
+:::
+::: demo
+<div class="was-validated">
+	<form-group cols="8|4" bp="md">
+		<datepicker v-model="records.date1" />
+	</form-group>
 </div>
 :::
 <pre class="text-white">date1:{{records.date1?records.date1:'null'}}</pre>
@@ -14,11 +21,11 @@
 
 ::: demo
 <div class="form-inline">
-      sm
-      <datepicker size="sm" v-model="records.date2" class="mx-2"/>
-      or
-      <datepicker size="lg" v-model="records.date3" class="mx-2"/>
-      lg
+	sm
+	<datepicker size="sm" v-model="records.date2" class="mx-md-2"/>
+	or
+	<datepicker size="lg" v-model="records.date3" class="mx-md-2"/>
+	lg
 </div>
 :::
 
@@ -47,14 +54,14 @@ Maximum date is set with the second picker and passed as a prop to the first.
 
 ::: demo
 <div class="form-inline">
-      <form-group class="mr-2">
-            <datepicker :max-date="records.date7" v-model="records.date6"/>
-            maximum:{{records.date7}}
-      </form-group>
-      <form-group >
-            <datepicker :min-date="records.date6" v-model="records.date7"/>
-            minimum:{{records.date6}}
-      </form-group>
+	<form-group class="mr-2">
+		<datepicker :max-date="records.date7" v-model="records.date6"/>
+		maximum:{{records.date7}}
+	</form-group>
+	<form-group >
+		<datepicker :min-date="records.date6" v-model="records.date7"/>
+		minimum:{{records.date6}}
+	</form-group>
 </div>
 :::
 <pre class="text-white">
@@ -66,7 +73,7 @@ date7:{{records.date7?records.date7:'null'}}
 
 ::: demo
 <div class="form-inline">
-      <datepicker type="time" v-model="records.time1"/>
+		<datepicker type="time" v-model="records.time1"/>
 </div>
 
 :::
@@ -76,8 +83,8 @@ date7:{{records.date7?records.date7:'null'}}
 ## Unknown Day & Unknown Month
 ::: demo
 <div class="form-inline">
-      <form-group label="Unknown Day" class="mr-2"><datepicker v-model="records.date8"/></form-group>
-      <form-group label="Unknown Month"><datepicker v-model="records.date9"/></form-group>
+	<form-group label="Unknown Day" class="mr-2"><datepicker v-model="records.date8"/></form-group>
+	<form-group label="Unknown Month"><datepicker v-model="records.date9"/></form-group>
 </div>
 :::
 date8:{{records.date8?records.date8:'null'}}
@@ -87,12 +94,12 @@ date9:{{records.date9?records.date9:'null'}}
 Define which view datepicker should start with.
 ::: demo
 <div class="form-inline">
-      days
-      <datepicker view-mode="days" v-model="records.date10" class="m-2"/>
-      months
-      <datepicker view-mode="months" v-model="records.date10" class="m-2"/>
-      decades
-      <datepicker view-mode="decades" v-model="records.date10" class="m-2"/>
+	days
+	<datepicker view-mode="days" v-model="records.date10" class="m-2"/>
+	months
+	<datepicker view-mode="months" v-model="records.date10" class="m-2"/>
+	decades
+	<datepicker view-mode="decades" v-model="records.date10" class="m-2"/>
 </div>
 :::
 
@@ -114,11 +121,11 @@ Don't show Unknown Day / Unknown Month or allow dashes to be entered
 See if this works
 ::: demo
 <div>
-<btn @click.native="showCollapse=!showCollapse">Show</btn>
-<collapse :show="showCollapse">
-      <datepicker v-model="records.date13"/>
-</collapse>
-{{showCollapse}}
+	<btn @click.native="showCollapse=!showCollapse">Show</btn>
+	<collapse :show="showCollapse">
+			<datepicker v-model="records.date13"/>
+	</collapse>
+	{{showCollapse}}
 </div>
 :::
 
@@ -159,28 +166,28 @@ input            |        | Emits input event on value change
 import moment from 'moment';
 export default {
 	data () {
-      	return {
-                  maxDate: moment().add(7, 'days'),
-                  showCollapse:false,
-      		records:{
-      			date1:'1978-10-02',
-      			date2:null,
-      			date3:null,
-      			date4:null,
-                        date5:null,
-                        date6:null,
-                        date7:null,
-                        date8:'2010-02-00',
-                        date9:'2010-00-00',
-                        date10:null,
-                        date11:null,
-                        date12:null,
-                        date13:null,
-      			date14:'2010-02-00',
-      			time1:'01:02',
-      			datetime1:null,
-      		},
-      	}
-  	},
+		return {
+					maxDate: moment().add(7, 'days'),
+					showCollapse:false,
+			records:{
+				date1:'1978-10-02',
+				date2:null,
+				date3:null,
+				date4:null,
+						date5:null,
+						date6:null,
+						date7:null,
+						date8:'2010-02-00',
+						date9:'2010-00-00',
+						date10:null,
+						date11:null,
+						date12:null,
+						date13:null,
+				date14:'2010-02-00',
+				time1:'01:02',
+				datetime1:null,
+			},
+		}
+	},
 }
 </script>

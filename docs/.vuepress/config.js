@@ -2,14 +2,21 @@ module.exports = {
   base: '/ffui/',
   title: 'Form Factory Component Library',
   description: 'Vue.js Components using bootstrap 4 styling for use in form factory projects.',
+  head: [
+    ['link', { rel: "apple-touch-icon", sizes: "180x180", href: "/assets/favicons/apple-touch-icon.png" }],
+    ['link', { rel: "icon", type: "image/png", sizes: "32x32", href: "/assets/favicons/favicon-32x32.png" }],
+    ['link', { rel: "icon", type: "image/png", sizes: "16x16", href: "/assets/favicons/favicon-16x16.png" }],
+    ['link', { rel: "manifest", href: "/assets/favicons/site.webmanifest" }],
+    ['link', { rel: "mask-icon", href: "/assets/favicons/favicon.ico", color:"#5bbad5" }],
+    ['link', { rel: "shortcut icon", href: "/assets/favicon/safari-pinned-tab.svg", color:"#5bbad5" }],
+    ['meta', { name: "msapplication-TileColor", content: "#da532c" }],
+    ['meta', { name: "msapplication-config", content: "/assets/favicons/browserconfig.xml" }],
+    ['meta', { name: "theme-color", content: "#ffffff" }]
+  ],
   plugins: [
-    ['demo-code', {
-      onlineBtns: {
-        codepen: false,
-        jsfiddle: false,
-        codesandbox: false,
-      },
-    }]
+    require('./components/plugin-demo-code/index.js'),
+    '@vuepress/plugin-back-to-top',
+    '@vuepress/plugin-medium-zoom',
   ],
   themeConfig: {
     repo: 'showjoe/ffui',
@@ -38,6 +45,7 @@ module.exports = {
           'content/typography',
           'content/code',
           'content/images',
+          'content/tables',
           'content/figures',
         ]
       },
@@ -69,7 +77,7 @@ module.exports = {
             title: 'Forms',
             collapsable: true,
             path: '/components/forms',
-            children: ['components/form-group']
+            children: ['/components/forms', 'components/form-group']
           },
           'components/input-group',
           {
@@ -133,6 +141,7 @@ module.exports = {
     lineNumbers: true
   },
   extendMarkdown: md => {
+    md.use(require('@toycode/markdown-it-class'), { table: 'table-responsive' })
     // use more markdown-it plugins!
   }
 }

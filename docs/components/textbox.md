@@ -25,6 +25,30 @@ Use v-model to link to a string in your data object
 <textbox v-model="records.text1" />
 :::
 
+## disabled or readonly
+Use disabled or readonly to disable the input
+
+::: demo
+<textbox v-model="records.text1" disabled class="mb-2" />
+<textbox v-model="records.text1" readonly/>
+:::
+
+## plaintext
+If you want to have textbox components in your form styled as plain text, use the `plaintext` prop to remove the default form field styling and preserve the correct margin and padding.
+
+::: demo
+<form>
+	<form-group :di="{label:'Email'}" cols="2|10">
+		<textbox value="email@example.com" readonly plaintext/>
+	</form-group>
+	<form-group :di="{label:'Password'}" cols="2|10">
+		<textbox type="password" />
+	</form-group>
+</form>
+:::
+
+
+
 <hr>
 
 ### Props
@@ -46,9 +70,9 @@ input            |        | Emits input event on value change
 <script>
 export default {
 	data () {
-      	return {
-      		records:{text1:"Text linked to data"},
-      	}
-  	},
+				return {
+					records:{text1:"Text linked to data"},
+				}
+		},
 }
 </script>

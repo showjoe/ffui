@@ -225,17 +225,35 @@ Add a scrollable prop and the dialog window will scroll.
 <pre class="text-white">{{modal11}}</pre>
 
 
-### source-coords
+## target
+
+position the modal like a popover (using popper.js) by adding a target prop.  The target prop should resolve to an html element or query string.
+You can also add an optional arrow prop
+
 ::: demo
 <div>
-	<btn ref="sourceCoordsBtn" @click.native="modal12.show = true">Show</btn>
-	<modal :show="modal12.show" fade :source-coords="sourceCoords()" title="Modal Title" @close="modal12.show = false" class="bg-success">
+	<div class="clearfix">
+		<btn id="modalTarget" @click.native="modal12.show = true" class="float-right">Show</btn>
+	</div>
+	<modal :show="modal12.show" fade target="#modalTarget" arrow title="Modal Title" @close="modal12.show = false" class="bg-success">
 		Some body to my modal
 	</modal>
 </div>
 :::
 <pre class="text-white">{{modal12}}</pre>
 
+
+
+## source-coords
+pass in a source-coords prop containing a `getBoundingClientRect` object from the target
+::: demo
+<div>
+	<btn ref="sourceCoordsBtn" @click.native="modal13.show = true">Show</btn>
+	<modal :show="modal13.show" fade :source-coords="sourceCoords()" title="Modal Title" @close="modal13.show = false" class="bg-success">
+		Some body to my modal
+	</modal>
+</div>
+:::
 <script>
 export default {
 	data () {

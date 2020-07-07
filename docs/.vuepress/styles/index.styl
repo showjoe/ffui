@@ -5,7 +5,6 @@
 .theme-default-content:not(.custom) {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem 2.5rem;
 }
 .sidebar-group-items{
   font-size:1em;
@@ -14,13 +13,22 @@
   font-size:1em!important;
   
 }
+table{
+  display:table;
+}
+tr{
+  border-top:inherit;
+}
+tr:nth-child(2n){
+  background-color:inherit;
+}
 kbd {
-    padding: .2rem .4rem;
-    font-size: 87.5%;
-    color: #fff;
-    background-color: #212529;
-    border-radius: .2rem;
-    border:none;
+  padding: .2rem .4rem;
+  font-size: 87.5%;
+  color: #fff;
+  background-color: #212529;
+  border-radius: .2rem;
+  border:none;
 }
 .content:not(.custom) a.dropdown-item:hover {
   text-decoration: none;
@@ -28,7 +36,9 @@ kbd {
 }
 
 
-
+.custom-block .custom-block-title{
+  margin-bottom:1rem;
+}
 
 .theme-default-content .demo-and-code-wrapper .code-control .control-btn{
 flex: 0;
