@@ -1,28 +1,11 @@
 <template>
   <div :class="rdContainerClass">
-    <input
-    v-if="type!='standard'||type=='standard'&&!labelLeft"
-    type="radio"
-    :class="rdInputClass"
-    :id="rdId"
-    @change="update"
-    :value="value"
-    :disabled="disabled"
-    :checked="isChecked"
-    >
+    <input v-if="type!='standard'||type=='standard'&&!labelLeft" type="radio" :class="rdInputClass" :id="rdId" @change="update" :value="value" :disabled="disabled" :checked="isChecked" ref="input">
     <label :for="rdId" :class="rdLabelClass" :id="'label'+rdId">
       <slot>{{label}}</slot>
     </label>
-    <input
-    v-if="type=='standard'&&labelLeft"
-    type="radio"
-    :class="rdInputClass"
-    :id="rdId"
-    @change="update"
-    :value="value"
-    :disabled="disabled"
-    :checked="isChecked"
-    >
+    <input v-if="type=='standard'&&labelLeft" type="radio" :class="rdInputClass" :id="rdId" @change="update" :value="value" :disabled="disabled" :checked="isChecked" ref="input">
+    <feedback type="invalid" class="mb-2">{{firstError}}</feedback>
   </div>
 </template>
 <script>
@@ -35,6 +18,7 @@ export default {
   props: {
     checked: {},
     id: {},
+    error: {},
     inline: Boolean,
     label: {},
     labelLeft: Boolean,
@@ -63,7 +47,17 @@ export default {
       // checked: (this.value == this.trueValue)
     }
   },
+  mounted() {
+    this.setValidity()
+  },
   computed: {
+    hasError() {
+      return this.error ? this.error.length > 0 : false
+    },
+    firstError() {
+      if (this.hasError) return this.error[0]
+        return false
+    },
     rdId() {
       if (this.id) return this.id
       return this._uid
@@ -77,7 +71,9 @@ export default {
           ['custom-control-' + this.size]: this.type == 'custom' && this.size,
 
           'custom-control-inline': this.type == 'custom' && this.inline,
-          'label-left': this.labelLeft
+          'label-left': this.labelLeft,
+          'is-invalid': this.hasError,
+          'is-valid': !this.hasError,
         },
         { checked: this.isChecked, disabled: this.disabled, readonly: this.readonly }
       ]
@@ -95,13 +91,25 @@ export default {
       }]
     },
     isChecked() {
-      return this.value == this.checked
+      return this.value!=undefined && this.value == this.checked
     },
   },
+  watch: {
+    error: {
+      handler() {
+        this.setValidity()
+      },
+      deep: true
+    }
+  },
   methods: {
+    setValidity() {
+      var error = this.hasError ? this.error : ''
+      if (this.$refs.input) this.$refs.input.setCustomValidity(error)
+    },
     update() {
       if (this.disabled || this.readonly) return false
-      this.$emit('change',this.value)
+      this.$emit('change', this.value)
     }
   }
 }
